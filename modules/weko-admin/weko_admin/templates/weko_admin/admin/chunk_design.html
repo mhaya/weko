@@ -77,12 +77,12 @@
       <div class="col-md-12">
 
         <div class="list col-md-2">
-          <div class="grid-stack grid-stack-2" id="grid1"></div>
+          <div class="grid-stack grid-stack-2" id="grid-list"></div>
 
         </div>
 
         <div class="design col-md-9">
-          <div class="grid-stack grid-stack-9" id="grid2"></div>
+          <div class="grid-stack grid-stack-9" id="grid-design"></div>
         </div>
       </div>
     </div>
@@ -92,6 +92,10 @@
 {% block tail %}
 <script>
   $(document).ready(function() {
+    $('#btn_back').on('click', function(){
+      window.history.back();
+    });
+  
     var contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">widgetTitle</div></div>'
 
     var options1 = {
