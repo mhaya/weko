@@ -217,7 +217,10 @@ class ChunkDesignView(BaseView):
 
             # Post
             if request.method == 'POST':
-                # Get form
+                # Get json
+                json_data = request.get_json()
+                flash(json_data)
+
                 form = request.form.get('submit', None)
                 if form == 'index_form':
                     width = request.form.get('width', '3')

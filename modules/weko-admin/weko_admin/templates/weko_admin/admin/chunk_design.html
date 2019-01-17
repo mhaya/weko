@@ -177,7 +177,20 @@
       });
 
       var data = {list: listWidgets, design: designWidgets};
-      alert(JSON.stringify(data));
+
+      $.ajax({
+        url: '/admin/chunk-design/',
+        method: 'POST',
+        async: true,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function(data, status) {
+        },
+        error: function(jqXHR, status) {
+          alert('Save failed.');
+        }
+      });
+
 
 
     });
