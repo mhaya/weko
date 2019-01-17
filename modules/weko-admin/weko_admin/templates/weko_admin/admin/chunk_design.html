@@ -153,20 +153,31 @@
     $('#btn_save').on('click', function(){
 
       <!--List area-->
+      var listWidgets = [];
       $('#grid-list > .grid-stack-item:visible').each(function(index) {
         widget = {id: $(this).attr('data-gs-id'),
                   x: $(this).attr('data-gs-x'),
                   y: $(this).attr('data-gs-y'),
                   width: $(this).attr('data-gs-width'),
                   height: $(this).attr('data-gs-height')};
-        alert(widget.toString());
 
-
-
-
+        listWidgets.push(widget);
       });
 
+      <!--Design area-->
+      var designWidgets = [];
+      $('#grid-design > .grid-stack-item:visible').each(function(index) {
+        widget = {id: $(this).attr('data-gs-id'),
+                  x: $(this).attr('data-gs-x'),
+                  y: $(this).attr('data-gs-y'),
+                  width: $(this).attr('data-gs-width'),
+                  height: $(this).attr('data-gs-height')};
 
+        designWidgets.push(widget);
+      });
+
+      var data = {list: listWidgets, design: designWidgets};
+      alert(JSON.stringify(data));
 
 
     });
