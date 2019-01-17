@@ -150,6 +150,17 @@
       window.history.back();
     });
 
+    $('#btn_save').on('click', function(){
+
+      <!--List area-->
+      $('#grid-design > .grid-stack-item:visible').each(function(index) {
+        alert($(this).attr("data-gs-width"));
+      });
+
+
+
+      window.history.back();
+    });
 
 
   })
