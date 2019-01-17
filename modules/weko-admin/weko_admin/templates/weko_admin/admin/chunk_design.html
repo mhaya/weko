@@ -79,14 +79,11 @@
     </div>
     <hr/>
     <div class="row">
-      <div class="col-md-12">
-        <div>
-          <a class="btn btn-default" id="save-grid" href="#">Save Grid</a>
-          <a class="btn btn-default" id="load-grid" href="#">Load Grid</a>
-          <a class="btn btn-default" id="clear-grid" href="#">Clear Grid</a>
-          <br>
-          <textarea id="saved-data" cols="100" rows="15" readonly="readonly"></textarea>
-        </div>
+      <div class="col-sm-offset-2 col-sm-6">
+        <button type="button" class="btn btn-primary" id="btn_save">
+          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>{{_('Save')}}</button>
+        <button type="button" class="btn btn-primary" id="btn_back">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>{{_('Back')}}</button>
       </div>
     </div>
   </div>
