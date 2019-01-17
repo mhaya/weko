@@ -75,12 +75,9 @@
     <br>
     <div class="row">
       <div class="col-md-12">
-
         <div class="list col-md-2">
           <div class="grid-stack grid-stack-2" id="grid-list"></div>
-
         </div>
-
         <div class="design col-md-9">
           <div class="grid-stack grid-stack-9" id="grid-design"></div>
         </div>
@@ -92,96 +89,67 @@
 {% block tail %}
 <script>
   $(document).ready(function() {
-    $('#btn_back').on('click', function(){
-      window.history.back();
-    });
-  
-    var contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">widgetTitle</div></div>'
-
-    var options1 = {
+    var listOptions = {
         width: 2,
         height: 10,
         disableResize: true,
-        <!--float: false,-->
         acceptWidgets: true
     };
-    $('#grid1').gridstack(options1);
+    $('#grid-list').gridstack(listOptions);
 
-    var options2 = {
+    var designOptions = {
         width: 9,
         height: 10,
         acceptWidgets: true
     };
-    $('#grid2').gridstack(options2);
+    $('#grid-design').gridstack(designOptions);
 
-    var items1 = [
+    var contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">widgetTitle</div></div>'
+    var listItems = [
       {x: 0, y: 0, width: 2, height: 2, id: 'chunk1'},
       {x: 0, y: 2, width: 2, height: 2, id: 'chunk2'},
       {x: 0, y: 4, width: 2, height: 2, id: 'chunk3'}
     ];
-    $('#grid1').each(function () {
-      var grid1 = $(this).data('gridstack');
-      _.each(items1, function (node) {
+    $('#grid-list').each(function () {
+      var listGrid = $(this).data('gridstack');
+      _.each(listItems, function (node) {
         var content = contentBase.replace('widgetTitle', '<h3>'+ node.id +'</h3>')
-        grid1.addWidget($(content),
-                        node.x,
-                        node.y,
-                        node.width,
-                        node.height,
-                        true,
-                        null, null, null, null,
-                        node.id);
+        listGrid.addWidget($(content),
+                           node.x,
+                           node.y,
+                           node.width,
+                           node.height,
+                           true,
+                           null, null, null, null,
+                           node.id);
       });
     });
 
-    var items2 = [
+    var designItems = [
       {x: 4, y: 2, width: 2, height: 2, id: 'footer'},
       {x: 0, y: 2, width: 4, height: 4, id: 'main'},
       {x: 0, y: 0, width: 9, height: 2, id: 'header'}
     ];
-    items2 = GridStackUI.Utils.sort(items2, 1);
-    $('#grid2').each(function () {
-      var grid2 = $(this).data('gridstack');
-      _.each(items2, function (node) {
+    designItems = GridStackUI.Utils.sort(designItems, 1);
+    $('#grid-design').each(function () {
+      var designGrid = $(this).data('gridstack');
+      _.each(designItems, function (node) {
         var content = contentBase.replace('widgetTitle', '<h3>'+ node.id +'</h3>')
-        grid2.addWidget($(content),
-                        node.x,
-                        node.y,
-                        node.width,
-                        node.height,
-                        true,
-                        null, null, null, null,
-                        node.id);
+        designGrid.addWidget($(content),
+                             node.x,
+                             node.y,
+                             node.width,
+                             node.height,
+                             true,
+                             null, null, null, null,
+                             node.id);
       });
     });
 
-    this.saveGrid = function () {
-        this.serializedData = _.map($('#grid2 > .grid-stack-item:visible'), function (el) {
-            el = $(el);
-            var node = el.data('_gridstack_node');
-            alert(el);
-            return {
-                id: node.id,
-                x: node.x,
-                y: node.y,
-                width: node.width,
-                height: node.height
-            };
-        });
-        $('#saved-data').val(JSON.stringify(this.serializedData, null, '    '));
-        return false;
-    }.bind(this);
+    $('#btn_back').on('click', function(){
+      window.history.back();
+    });
 
-    $('#save-grid').click(this.saveGrid);
-
-    this.loadGrid = function () {
-      $('#grid2 > .grid-stack-item:visible').each(function(index) {
-        alert($(this).attr("data-gs-width"));
-      });
-
-    }.bind(this);
-
-    $('#load-grid').click(this.loadGrid);
 
 
   })
