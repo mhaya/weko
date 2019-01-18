@@ -106,7 +106,7 @@
     $('#grid-design').gridstack(designOptions);
 
     <!--Get Chunk info-->
-    chunks = $('#chunk-data').text();
+    chunks = $.parseJSON($('#chunk-data').text());
     alert(chunks);
 
 
