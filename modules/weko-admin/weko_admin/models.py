@@ -219,7 +219,88 @@ class SearchManagement(db.Model):
             raise
         return cls
 
+# TODO
+class ChunkDesign(db.Model):
 
+    __tablename__ = 'chunk_design'
+
+    id = db.Column(db.String(100), primary_key=True)
+    """identifier for chunk style setting."""
+
+    designed = db.Column(
+        db.JSON().with_variant(
+            postgresql.JSONB(none_as_null=True),
+            'postgresql',
+        ).with_variant(
+            JSONType(),
+            'sqlite',
+        ).with_variant(
+            JSONType(),
+            'mysql',
+        ),
+        default=lambda: dict(),
+        nullable=True
+    )
+    """Designed chunk info."""
+
+    others = db.Column(
+        db.JSON().with_variant(
+            postgresql.JSONB(none_as_null=True),
+            'postgresql',
+        ).with_variant(
+            JSONType(),
+            'sqlite',
+        ).with_variant(
+            JSONType(),
+            'mysql',
+        ),
+        default=lambda: dict(),
+        nullable=True
+    )
+    """Chunks not in use."""
+
+    @classmethod
+    def create(cls, community_id, **data):
+        try:
+            with db.session.begin_nested():
+                obj = cls(id=community_id, **data)
+                db.session.add(obj)
+            db.session.commit()
+            return obj
+        except Exception as ex:
+            current_app.logger.debug(ex)
+            db.session.rollback()
+        return
+
+    @classmethod
+    def get(cls, community_id):
+        """Get a style."""
+        return cls.query.filter_by(id=community_id).one_or_none()
+
+    @classmethod
+    def update(cls, community_id, **data):
+        """
+        Update chunk design info.
+        :param community_id:
+        :param data:
+        :return:
+        """
+        try:
+            with db.session.begin_nested():
+                chunk = cls.get(community_id)
+                if not chunk:
+                    return
+
+                for k, v in data.items():
+                    if "designed" in k or "others" in k:
+                        setattr(chunk, k, v)
+                db.session.merge(chunk)
+            db.session.commit()
+            return chunk
+        except Exception as ex:
+            current_app.logger.debug(ex)
+            db.session.rollback()
+        return
 
 
 __all__ = (['SearchManagement'])

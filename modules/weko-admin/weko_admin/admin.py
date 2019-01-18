@@ -20,9 +20,7 @@
 
 """WEKO3 module docstring."""
 
-import os
-import sys
-import hashlib
+import os, sys, hashlib, json
 
 from flask import abort, current_app, flash, redirect, request, url_for, jsonify
 from flask_admin import BaseView, expose
@@ -30,7 +28,7 @@ from flask_babelex import gettext as _
 
 from .permissions import admin_permission_factory
 from .utils import allowed_file
-from weko_index_tree.models import IndexStyle
+from .models import ChunkDesign
 
 class StyleSettingView(BaseView):
     @expose('/', methods=['GET', 'POST'])
@@ -204,40 +202,35 @@ class StyleSettingView(BaseView):
             abort(500)
         return checksum1 == checksum2
 
-
+# TODO
 class ChunkDesignView(BaseView):
 
     @expose('/', methods=['GET', 'POST'])
     def index(self):
         try:
             # Get record
-            style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
-            width = style.width if style else '3'
-            height = style.height if style else None
+            chunks = ChunkDesign.get('weko')
+            designed = chunks.designed if chunks else {}
+            others = chunks.others if chunks else {}
 
             # Post
             if request.method == 'POST':
                 # Get json
-                json_data = request.get_json()
-                flash(json_data)
+                widgets = request.get_json()
 
-                form = request.form.get('submit', None)
-                if form == 'index_form':
-                    width = request.form.get('width', '3')
-                    height = request.form.get('height', None)
+                if widgets is not None:
+                    designed = widgets.get('list', {})
+                    others = widgets.get('design', {})
 
-                    if style:
-                        IndexStyle.update(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'],
-                                          width=width, height=height)
+                    if chunks:
+                        ChunkDesign.update('weko', designed=designed, others=others)
                     else:
-                        IndexStyle.create(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'],
-                                          width=width, height=height)
+                        ChunkDesign.create('weko', designed=designed, others=others)
 
                     flash(_('The information was updated.'), category='success')
 
             return self.render(current_app.config['WEKO_ADMIN_CHUNK_DESIGN_TEMPLATE'],
-                               widths=current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['widths'],
-                               width_selected=width, height=height)
+                               designed=designed, others=others)
 
         except:
             current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
