@@ -106,10 +106,17 @@
     $('#grid-design').gridstack(designOptions);
 
     <!--Get Chunk info-->
-    var chunks = $('#chunk-data').text();
-    alert(chunks);
-    <!--chunks = chunks.replace(/\\'/g, "\\'");-->
-    <!--alert($.parseJSON(chunks));-->
+    $.ajax({
+      url: '/admin/chunk-design/list',
+      method: 'GET',
+      async: false,
+      success: function(data, status) {
+        alert(JSON.stringify(data));
+      },
+      error: function(jqXHR, status) {
+        alert('Load failed.');
+      }
+    });
 
 
     var contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">widgetTitle</div></div>'

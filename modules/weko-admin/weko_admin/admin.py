@@ -249,6 +249,16 @@ class ChunkDesignView(BaseView):
             current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
         return abort(400)
 
+    @expose('/list', methods=['GET'])
+    def get_chunk_list(self):
+        chunks = ChunkDesign.get('weko')
+        designed = chunks.designed if chunks else []
+        others = chunks.others if chunks else []
+
+        data = {'list': others, 'design': designed}
+
+        return jsonify(data)
+
 
 style_adminview = {
     'view_class': StyleSettingView,
