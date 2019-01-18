@@ -106,8 +106,8 @@
     $('#grid-design').gridstack(designOptions);
 
     <!--Get Chunk info-->
-    chunks = $.parseJSON($('#chunk-data').text());
-    alert(chunks);
+    chunks = $('#chunk-data').text();
+    alert($.parseJSON('chunks'));
 
 
     var contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">widgetTitle</div></div>'
