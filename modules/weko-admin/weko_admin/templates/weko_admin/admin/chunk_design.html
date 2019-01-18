@@ -107,7 +107,7 @@
 
     <!--Get Chunk info-->
     var chunks = $('#chunk-data').text();
-    chunks = chunks.replace(/\u2028|\u2029/g, '');
+    chunks = chunks.replace(/\\'/g, "\\'");
     alert($.parseJSON(chunks));
 
 
