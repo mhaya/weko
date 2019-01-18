@@ -111,7 +111,7 @@
       method: 'GET',
       async: false,
       success: function(data, status) {
-        alert(JSON.stringify(data));
+        alert(JSON.stringify(data.list));
       },
       error: function(jqXHR, status) {
         alert('Load failed.');
