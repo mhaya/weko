@@ -185,6 +185,7 @@
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function(data, status) {
+          alert('Chunk information was updated.');
         },
         error: function(jqXHR, status) {
           alert('Save failed.');

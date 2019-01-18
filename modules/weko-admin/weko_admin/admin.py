@@ -210,8 +210,8 @@ class ChunkDesignView(BaseView):
         try:
             # Get record
             chunks = ChunkDesign.get('weko')
-            designed = chunks.designed if chunks else {}
-            others = chunks.others if chunks else {}
+            designed = chunks.designed if chunks else []
+            others = chunks.others if chunks else []
 
             # Post
             if request.method == 'POST':
@@ -219,8 +219,8 @@ class ChunkDesignView(BaseView):
                 widgets = request.get_json()
 
                 if widgets is not None:
-                    designed = widgets.get('list', {})
-                    others = widgets.get('design', {})
+                    designed = widgets.get('list', [])
+                    others = widgets.get('design', [])
 
                     if chunks:
                         ChunkDesign.update('weko', designed=designed, others=others)
