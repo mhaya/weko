@@ -104,6 +104,21 @@
     };
     $('#grid-design').gridstack(designOptions);
 
+    <!--Get Chunk info-->
+    $.ajax({
+      url: '/admin/chunk-design/',
+      method: 'GET',
+      async: false,
+      success: function(data, status) {
+        alert(JSON.stringify(data));
+      },
+      error: function(jqXHR, status) {
+        alert('Load chunk info failed.');
+        return;
+      }
+    });
+
+
     var contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">widgetTitle</div></div>'
     var listItems = [
       {x: 0, y: 0, width: 2, height: 2, id: 'chunk1'},

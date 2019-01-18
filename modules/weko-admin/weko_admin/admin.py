@@ -213,6 +213,19 @@ class ChunkDesignView(BaseView):
             designed = chunks.designed if chunks else []
             others = chunks.others if chunks else []
 
+            if request.method == 'GET':
+                # props = ItemTypeProps.get_records([])
+                lists = {'list': others, 'design': designed}
+                # for k in props:
+                #     tmp = {'name': k.name, 'schema': k.schema, 'form': k.form,
+                #            'forms': k.forms, 'sort': k.sort}
+                #     lists[k.id] = tmp
+                #
+                # lists['defaults'] = current_app.config[
+                #     'WEKO_ITEMTYPES_UI_DEFAULT_PROPERTIES']
+
+                return jsonify(lists)
+
             # Post
             if request.method == 'POST':
                 # Get json
@@ -226,8 +239,6 @@ class ChunkDesignView(BaseView):
                         ChunkDesign.update('weko', designed=designed, others=others)
                     else:
                         ChunkDesign.create('weko', designed=designed, others=others)
-
-                    flash(_('The information was updated.'), category='success')
 
             return self.render(current_app.config['WEKO_ADMIN_CHUNK_DESIGN_TEMPLATE'],
                                designed=designed, others=others)
