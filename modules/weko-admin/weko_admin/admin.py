@@ -208,42 +208,26 @@ class ChunkDesignView(BaseView):
     @expose('/', methods=['GET', 'POST'])
     def index(self):
         try:
-            # Get record
-            chunks = ChunkDesign.get('weko')
-            designed = chunks.designed if chunks else []
-            others = chunks.others if chunks else []
-
-            if request.method == 'GET':
-                # props = ItemTypeProps.get_records([])
-                data = {'list': others, 'design': designed}
-                # for k in props:
-                #     tmp = {'name': k.name, 'schema': k.schema, 'form': k.form,
-                #            'forms': k.forms, 'sort': k.sort}
-                #     lists[k.id] = tmp
-                #
-                # lists['defaults'] = current_app.config[
-                #     'WEKO_ITEMTYPES_UI_DEFAULT_PROPERTIES']
-
-                return self.render(
-                    current_app.config['WEKO_ADMIN_CHUNK_DESIGN_TEMPLATE'],
-                    data=data)
-
             # Post
             if request.method == 'POST':
+                # Get record
+                chunks = ChunkDesign.get('weko')
+                designed = chunks.designed if chunks else []
+                others = chunks.others if chunks else []
+
                 # Get json
                 widgets = request.get_json()
 
                 if widgets is not None:
-                    designed = widgets.get('list', [])
-                    others = widgets.get('design', [])
+                    designed = widgets.get('designed', [])
+                    others = widgets.get('list', [])
 
                     if chunks:
                         ChunkDesign.update('weko', designed=designed, others=others)
                     else:
                         ChunkDesign.create('weko', designed=designed, others=others)
 
-            return self.render(current_app.config['WEKO_ADMIN_CHUNK_DESIGN_TEMPLATE'],
-                               designed=designed, others=others)
+            return self.render(current_app.config['WEKO_ADMIN_CHUNK_DESIGN_TEMPLATE'])
 
         except:
             current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
@@ -255,7 +239,7 @@ class ChunkDesignView(BaseView):
         designed = chunks.designed if chunks else []
         others = chunks.others if chunks else []
 
-        data = {'list': others, 'design': designed}
+        data = {'others': others, 'designed': designed}
 
         return jsonify(data)
 

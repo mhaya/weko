@@ -75,7 +75,6 @@
     <br>
     <div class="row">
       <div class="col-md-12">
-        <div id="chunk-data" hidden>{{ data }}</div>
         <div class="list col-md-2">
           <div class="grid-stack grid-stack-2" id="grid-list"></div>
         </div>
@@ -112,18 +111,11 @@
       async: false,
       success: function(data, status) {
         var contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">widgetTitle</div></div>'
-        var listItems = data.list;
-        <!--for (var listChunk in data.list) {-->
-          <!--var chunk = {x: listChunk.x,-->
-                       <!--y: listChunk.y,-->
-                       <!--width: listChunk.width,-->
-                       <!--height: listChunk.height,-->
-                       <!--id: listChunk.id}-->
-          <!--listItems.push(chunk);-->
-        <!--}-->
+
+        var listWidgets = data.others;
         $('#grid-list').each(function () {
           var listGrid = $(this).data('gridstack');
-          _.each(listItems, function (node) {
+          _.each(listWidgets, function (node) {
             var content = contentBase.replace('widgetTitle', '<h3>'+ node.id +'</h3>')
             listGrid.addWidget($(content),
                                node.x,
@@ -136,19 +128,11 @@
           });
         });
 
-        var designItems = data.design;
-        <!--for (var designChunk in data.design) {-->
-          <!--var chunk = {x: designChunk.x,-->
-                       <!--y: designChunk.y,-->
-                       <!--width: designChunk.width,-->
-                       <!--height: designChunk.height,-->
-                       <!--id: designChunk.id}-->
-          <!--designItems.push(chunk);-->
-        <!--}-->
-        designItems = GridStackUI.Utils.sort(designItems, 1);
+        var designedWidgets = data.designed;
+        designedWidgets = GridStackUI.Utils.sort(designedWidgets, 1);
         $('#grid-design').each(function () {
           var designGrid = $(this).data('gridstack');
-          _.each(designItems, function (node) {
+          _.each(designedWidgets, function (node) {
             var content = contentBase.replace('widgetTitle', '<h3>'+ node.id +'</h3>')
             designGrid.addWidget($(content),
                                  node.x,
@@ -167,49 +151,6 @@
         alert('Load failed.');
       }
     });
-
-
-    <!--var contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">widgetTitle</div></div>'-->
-    <!--var listItems = [-->
-      <!--{x: 0, y: 0, width: 2, height: 2, id: 'chunk1'},-->
-      <!--{x: 0, y: 2, width: 2, height: 2, id: 'chunk2'},-->
-      <!--{x: 0, y: 4, width: 2, height: 2, id: 'chunk3'}-->
-    <!--];-->
-    <!--$('#grid-list').each(function () {-->
-      <!--var listGrid = $(this).data('gridstack');-->
-      <!--_.each(listItems, function (node) {-->
-        <!--var content = contentBase.replace('widgetTitle', '<h3>'+ node.id +'</h3>')-->
-        <!--listGrid.addWidget($(content),-->
-                           <!--node.x,-->
-                           <!--node.y,-->
-                           <!--node.width,-->
-                           <!--node.height,-->
-                           <!--true,-->
-                           <!--null, null, null, null,-->
-                           <!--node.id);-->
-      <!--});-->
-    <!--});-->
-
-    <!--var designItems = [-->
-      <!--{x: 4, y: 2, width: 2, height: 2, id: 'footer'},-->
-      <!--{x: 0, y: 2, width: 4, height: 4, id: 'main'},-->
-      <!--{x: 0, y: 0, width: 9, height: 2, id: 'header'}-->
-    <!--];-->
-    <!--designItems = GridStackUI.Utils.sort(designItems, 1);-->
-    <!--$('#grid-design').each(function () {-->
-      <!--var designGrid = $(this).data('gridstack');-->
-      <!--_.each(designItems, function (node) {-->
-        <!--var content = contentBase.replace('widgetTitle', '<h3>'+ node.id +'</h3>')-->
-        <!--designGrid.addWidget($(content),-->
-                             <!--node.x,-->
-                             <!--node.y,-->
-                             <!--node.width,-->
-                             <!--node.height,-->
-                             <!--true,-->
-                             <!--null, null, null, null,-->
-                             <!--node.id);-->
-      <!--});-->
-    <!--});-->
 
     $('#btn_back').on('click', function(){
       window.history.back();
@@ -230,7 +171,7 @@
       });
 
       <!--Design area-->
-      var designWidgets = [];
+      var designedWidgets = [];
       $('#grid-design > .grid-stack-item:visible').each(function(index) {
         widget = {id: $(this).attr('data-gs-id'),
                   x: $(this).attr('data-gs-x'),
@@ -238,10 +179,10 @@
                   width: $(this).attr('data-gs-width'),
                   height: $(this).attr('data-gs-height')};
 
-        designWidgets.push(widget);
+        designedWidgets.push(widget);
       });
 
-      var data = {list: listWidgets, design: designWidgets};
+      var data = {list: listWidgets, designed: designedWidgets};
 
       $.ajax({
         url: '/admin/chunk-design/',
@@ -256,8 +197,6 @@
           alert('Save failed.');
         }
       });
-
-
 
     });
 
