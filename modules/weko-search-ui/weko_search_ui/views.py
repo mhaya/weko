@@ -164,5 +164,5 @@ def save_sort():
 def custom_sort():
     """Render view."""
     return render_template(
-        current_app.config['WEKO_SEARCH_UI_CUSTOM_SORT']
+        current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE']
     )
