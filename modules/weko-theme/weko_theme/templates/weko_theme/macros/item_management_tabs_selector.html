@@ -19,6 +19,6 @@
 #}
 
 {% macro tabs_selector(tab_value='custom_sort') %}
-    <li role="presentation" {% if tab_value=='custom_sort' %}class="active activity_li"{% endif %}><a href="{{url_for('weko_search_ui.custom_sort')}}">{{ _('Custom Sort') }}</a></li>
+    <li id="tab_display" role="presentation" {% if tab_value=='custom_sort' %}class="active activity_li"{% endif %}><a href="{{url_for('weko_search_ui.custom_sort')}}">{{ _('Custom Sort') }}</a></li>
     <li role="presentation" {% if tab_value=='bulk_update' %}class="active activity_li"{% endif %}><a href="#">{{ _('Bulk Update') }}</a></li>
 {% endmacro %}
