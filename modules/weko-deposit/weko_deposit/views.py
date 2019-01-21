@@ -27,6 +27,7 @@ from reportlab.pdfbase.cidfonts import UnicodeCIDFont
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.pagesizes import letter
+from fpdf import FPDF
 import io
 
 blueprint = Blueprint(
@@ -79,7 +80,6 @@ def pdf():
     #finally, write "output" to a real file
     outputStream = open(blueprint.root_path + "/destination2.pdf", "wb")
     output.write(outputStream)
-    outputStream.close()
     outputStream.close()
 
     download_file_name = 'test.pdf'

@@ -22,9 +22,11 @@
 
 import mimetypes
 import unicodedata
+import io
 
-from flask import abort, current_app, render_template, request
+from flask import abort, current_app, render_template, request, make_response, send_file, url_for
 from invenio_files_rest.views import ObjectResource
+from invenio_files_rest.models import ObjectVersion, FileInstance
 from invenio_records_files.utils import record_file_factory
 from weko_records.api import FilesMetadata, ItemTypes
 from werkzeug.datastructures import Headers
@@ -32,6 +34,12 @@ from werkzeug.urls import url_quote
 
 from .permissions import file_permission_factory
 
+from sqlalchemy import *
+from sqlalchemy.orm import *
+from PyPDF2 import PdfFileWriter, PdfFileReader
+from reportlab.pdfgen import canvas
+from reportlab.pdfbase.cidfonts import UnicodeCIDFont
+from reportlab.pdfbase import pdfmetrics
 
 def weko_view_method(pid, record, template=None, **kwargs):
     r"""Display Weko view.
@@ -161,7 +169,10 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
     if not fileobj:
         abort(404)
 
-    obj = fileobj.obj
+    # # check types
+    # obj = fileobj.obj
+    # print(type(fileobj))
+    # print(type(obj))
 
     # Check file contents permission
     if not file_permission_factory(record, fjson=fileobj).can():
@@ -170,13 +181,90 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
     # Check permissions
     # ObjectResource.check_object_permission(obj)
 
-    # Send file.
-    return ObjectResource.send_object(
-        obj.bucket, obj,
-        expected_chksum=fileobj.get('checksum'),
-        logger_data={
-            'bucket_id': obj.bucket_id,
-            'pid_type': pid.pid_type,
-            'pid_value': pid.pid_value,
-        },
-    )
+    # # Send file without its pdf cover page
+    # if ...  # Write this if statement later
+    # return ObjectResource.send_object(
+    #     obj.bucket, obj,
+    #     expected_chksum=fileobj.get('checksum'),
+    #     logger_data={
+    #         'bucket_id': obj.bucket_id,
+    #         'pid_type': pid.pid_type,
+    #         'pid_value': pid.pid_value,
+    #     },
+    # )
+
+    # Send file with its pdf cover page
+    #if ... # Write this if statement later
+
+    packet = io.BytesIO()
+    # create a new PDF with Reportlab
+    fontname = "HeiseiMin-W3"
+    pdfmetrics.registerFont(UnicodeCIDFont(fontname))
+    can = canvas.Canvas(packet)
+    can.setFont(fontname, 30)
+    content = "こんにちは、ReportLab"
+    can.drawString(10, 100, content)
+    can.save()
+
+    # move to the beginning of the StringIO buffer
+    packet.seek(0)
+    new_pdf = PdfFileReader(packet)
+    obj_file_uri = '/var/tmp/8e/be/06e0-b4b2-4e1e-b8aa-1361fcce34bc/data'
+    f = open(obj_file_uri, "rb")
+    existing_pdf = PdfFileReader(f)
+    page = existing_pdf.getPage(0)
+    page.mergePage(new_pdf.getPage(0))
+    output = PdfFileWriter()
+    output.addPage(page)
+
+    cmbpdf_path = '/var/tmp/test-pdfComb.pdf'
+    outputStream = open(cmbpdf_path, "wb")
+    output.write(outputStream)
+    outputStream.close()
+    download_file_name = 'test.pdf'
+    download_file = cmbpdf_path
+    return send_file(download_file, as_attachment = True, attachment_filename = download_file_name, mimetype ='application/pdf')
+
+    # pdf_out = page.getvalue()
+    # page.close()
+    # response = make_response(pdf_out)
+    # # response.data = open("test-pdfComb.pdf", "rb").read()
+    # response.headers['Content-Disposition'] = "attachment; filename='test-pdfcomb.pdf"
+    # response.mimetype = 'application/pdf'
+    # return response
+
+
+    # read your existing PDF
+    # existing_pdf = PdfFileReader(obj)
+    # output = PdfFileWriter()
+    # return send_file(output, as_attachment = True, attachment_filename = 'test.pdf', mimetype ='application/pdf')
+
+
+    # # add the "watermark" (which is the new pdf) on the existing page
+    # page = existing_pdf.getPage(0)
+    # page.mergePage(new_pdf.getPage(0))
+    # output.addPage(page)
+    #
+    # ########################################################
+    # # #finally, write "output" to a real file
+    # # outputStream = open(blueprint.root_path + "/destination2.pdf", "wb")
+    # # output.write(outputStream)
+    # # outputStream.close()
+    # #
+    # # download_file_name = 'test.pdf'
+    # # download_file = blueprint.root_path + '/destination2.pdf'
+    # response = make_response(output)
+    # response.headers['Content-Disposition'] = "attachment; filename='test-pdfcomb.pdf"
+    # response.mimetype = 'application/pdf'
+    #
+    # # return send_file(download_file, as_attachment=True, attachment_filename=download_file_name, mimetype='application/pdf')
+    #
+    # return ObjectResource.send_object(
+    #     obj.bucket, response,
+    #     expected_chksum=fileobj.get('checksum'),
+    #     logger_data={
+    #         'bucket_id': obj.bucket_id,
+    #         'pid_type': pid.pid_type,
+    #         'pid_value': pid.pid_value,
+    #     },
+    # )
