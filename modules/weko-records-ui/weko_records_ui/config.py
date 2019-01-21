@@ -23,6 +23,10 @@
 WEKO_RECORDS_UI_DETAIL_TEMPLATE = 'weko_records_ui/detail.html'
 WEKO_RECORDS_UI_BASE_TEMPLATE = 'weko_theme/page.html'
 
+WEKO_RECORDS_UI_BULK_UPDATE_TEMPLATE = 'weko_records_ui/bulk_update.html'
+WEKO_RECORDS_UI_BULK_UPDATE_INIT_TEMPLATE = 'weko_records_ui/bulk_update_init.html'
+"""Template for bulk update."""
+
 WEKO_PERMISSION_ROLE_USER = ('System Administrator',
                              'Repository Administrator',
                              'Contributor',
