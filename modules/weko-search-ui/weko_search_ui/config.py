@@ -53,7 +53,7 @@ WEKO_ITEM_MANAGEMENT_JSTEMPLATE_BREAD = 'templates/weko_search_ui/breadcrumbItem
 
 WEKO_SEARCH_UI_JSTEMPLATE_COUNT = 'templates/weko_search_ui/count.html'
 
-WEKO_SEARCH_UI_CUSTOM_SORT = 'weko_search_ui/item_list_display.html'
+WEKO_SEARCH_UI_CUSTOM_SORT = 'templates/weko_search_ui/item_list_display.html'
 
 SEARCH_UI_JSTEMPLATE_PAGINATION = 'templates/weko_search_ui/pagination.html'
 
