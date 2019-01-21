@@ -158,3 +158,11 @@ def save_sort():
         jfy['status'] = 405
         jfy['message'] = 'Error'
         return make_response(jsonify(jfy), jfy['status'])
+
+
+@blueprint.route("/item_management/custom_sort", methods=['GET'])
+def custom_sort():
+    """Render view."""
+    return render_template(
+        current_app.config['WEKO_SEARCH_UI_CUSTOM_SORT']
+    )
