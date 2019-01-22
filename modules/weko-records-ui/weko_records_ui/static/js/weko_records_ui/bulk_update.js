@@ -24,7 +24,32 @@ require([
 //      alert($('input[name="access_type"]:checked').val());
       contents = $(this).parents('.field-row').find('.field-content');
       contents.each(function(i, elem) {
-        alert($(elem).attr('class'));
+        var elemAttr = $(elem).attr('class');
+
+        // Access Type
+        if(elemAttr.indexOf('access-type-select') >= 0){
+          if('1' == selected.toString()){
+            $(elem).removeAttr("hidden");
+          }else {
+            $(elem).attr('hidden', 'hidden');
+          }
+
+        }else if(elemAttr.indexOf('licence-select') >= 0){
+          if('2' == selected.toString()){
+            $(elem).removeAttr("hidden");
+          }else {
+            $(elem).attr('hidden', 'hidden');
+          }
+
+        }else if(elemAttr.indexOf('licence-description') >= 0){
+          if('3' == selected.toString()){
+            $(elem).removeAttr("hidden");
+          }else {
+            $(elem).attr('hidden', 'hidden');
+          }
+
+        }
+
       });
 
       if('1' === selected.toString()){
