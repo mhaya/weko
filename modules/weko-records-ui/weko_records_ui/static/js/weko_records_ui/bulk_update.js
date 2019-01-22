@@ -4,7 +4,7 @@ require([
 ], function() {
     $('#add-field-link').on('click', function(){
 
-      insetTo = this.parent.parent;
+      insetTo = $('#add-field-row');
       $('.field-row-default').clone(true).insertBefore(insetTo);
 
 
