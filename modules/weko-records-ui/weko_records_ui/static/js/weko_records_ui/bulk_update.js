@@ -9,6 +9,13 @@ require([
       return false;
     });
 
+    $('input[name="access_type"]').change(function() {
+      var selected = $(this).val();
+      alert(selected);
+
+
+    });
+
     $('select[name="field-select"]').change(function() {
       var selected = $(this).val();
       alert($('input[name="access_type"]:checked').val());
