@@ -2,13 +2,16 @@ require([
   "jquery",
   "bootstrap"
 ], function() {
-    $('#add-field-link').on('click', function(){
 
+    $('#add-field-link').on('click', function(){
       insetTo = $('#add-link-row');
       $('.field-row').first().clone(true).insertBefore(insetTo);
-
-
       return false;
     });
 
+    $('.field-select').change(function() {
+        var text = $('option:selected').value();
+
+        alert( text );
+    });
 });
