@@ -5,7 +5,7 @@ require([
     $('#add-field-link').on('click', function(){
 
       insetTo = $('#add-link-row');
-      $('.field-row').first().clone(true).insertBefore(insetTo);
+      $('.field-row').first().clone(true).after('<br>').insertBefore(insetTo);
 
 
       return false;
