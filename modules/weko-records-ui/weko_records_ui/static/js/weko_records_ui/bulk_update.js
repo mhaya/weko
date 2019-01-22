@@ -10,8 +10,7 @@ require([
     });
 
     $('select[name="field-select"]').change(function() {
-        alert('Change!!!');
-        var text = this.value();
+        var text = this.val();
 
         alert( text );
     });
