@@ -4,8 +4,8 @@ require([
 ], function() {
     $('#add-field-link').on('click', function(){
 
-      insetTo = $('#add-field-row');
-      $('.field-row-default').clone(true).insertBefore(insetTo);
+      insetTo = $('#add-link-row');
+      $('.field-row').first().clone(true).insertBefore(insetTo);
 
 
       return false;
