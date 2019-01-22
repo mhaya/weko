@@ -66,7 +66,7 @@ def create_blueprint(app, endpoints):
         __name__,
         url_prefix='',
     )
-
+    current_app.logger.debug(endpoints)
     for endpoint, options in (endpoints or {}).items():
         if 'record_serializers' in options:
             serializers = options.get('record_serializers')
