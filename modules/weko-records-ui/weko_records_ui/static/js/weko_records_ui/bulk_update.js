@@ -10,8 +10,18 @@ require([
     });
 
     $('select[name="field-select"]').change(function() {
-        var text = $(this).val();
+      var selected = $(this).val();
 
-        alert( text );
+      contents = $(this).parents('.field-row').find('.field-content');
+      contents.each(function(i, elem) {
+          alert('content!!!');
+      });
+
+        if('3' === str(selected)){
+          $('select[name="licence-descriptiont"]')
+
+        }
+
+
     });
 });
