@@ -9,7 +9,7 @@ require([
       return false;
     });
 
-    $('.field-select').change(function() {
+    $('select[name="field-select"]').change(function() {
         var text = $('option:selected').value();
 
         alert( text );
