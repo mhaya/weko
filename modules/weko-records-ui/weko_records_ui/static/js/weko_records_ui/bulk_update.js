@@ -12,16 +12,24 @@ require([
     $('select[name="field-select"]').change(function() {
       var selected = $(this).val();
 
-      contents = $(this).parents('.field-row').find('.field-content');
-      contents.each(function(i, elem) {
-          if('4' === selected.toString()){
-            $(elem).removeAttr("hidden");
-          }else if($(elem).attr('hidden') == undefined) {
-            $(elem).attr('hidden', 'hidden');
-
-          }
-
-      });
+//      if('3' === selected.toString()){
+//        content = $(this).parents('.field-row').find('.field-content.licence-select');
+//        $(content).removeAttr("hidden");
+//      }
+//      contents.each(function(i, elem) {
+//          if('3' === selected.toString()){
+//            $('select[name="licence-select"]')
+//
+//          }
+//
+//          if('4' === selected.toString()){
+//            $(elem).removeAttr("hidden");
+//          }else if($(elem).attr('hidden') == undefined) {
+//            $(elem).attr('hidden', 'hidden');
+//
+//          }
+//
+//      });
 
 
     });
