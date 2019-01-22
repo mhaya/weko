@@ -196,35 +196,40 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
     # Send file with its pdf cover page
     #if ... # Write this if statement later
 
-    packet = io.BytesIO()
     # create a new PDF with Reportlab
-    fontname = "HeiseiMin-W3"
-    pdfmetrics.registerFont(UnicodeCIDFont(fontname))
+    packet = io.BytesIO()
+    font = "HeiseiMin-W3"
+    #font = 'HeiseiKakuGo-W5'  # Another sans-serif japanese font equipped in ReportLab by default
+    pdfmetrics.registerFont(UnicodeCIDFont(font))
     can = canvas.Canvas(packet)
-    can.setFont(fontname, 30)
-    content = "こんにちは、ReportLab"
-    can.drawString(10, 100, content)
+    can.setFont(font, 30)
+    content = "このページは表紙です"
+    can.drawString(150, 450, content)
     can.save()
 
     # move to the beginning of the StringIO buffer
     packet.seek(0)
-    new_pdf = PdfFileReader(packet)
-    obj_file_uri = '/var/tmp/8e/be/06e0-b4b2-4e1e-b8aa-1361fcce34bc/data'
+    obj_file_uri = '/var/tmp/8e/be/06e0-b4b2-4e1e-b8aa-1361fcce34bc/data' # # This will be modified with FileInstance
     f = open(obj_file_uri, "rb")
-    existing_pdf = PdfFileReader(f)
-    page = existing_pdf.getPage(0)
-    page.mergePage(new_pdf.getPage(0))
-    output = PdfFileWriter()
-    output.addPage(page)
 
-    cmbpdf_path = '/var/tmp/test-pdfComb.pdf'
-    outputStream = open(cmbpdf_path, "wb")
-    output.write(outputStream)
-    outputStream.close()
-    download_file_name = 'test.pdf'
-    download_file = cmbpdf_path
-    return send_file(download_file, as_attachment = True, attachment_filename = download_file_name, mimetype ='application/pdf')
+    # Combining cover page and existing pages to render new a PDF file using PyPDF2
+    cover_page = PdfFileReader(packet)
+    existing_pages = PdfFileReader(f)
+    combined_pages = PdfFileWriter()
+    combined_pages.addPage(cover_page.getPage(0))
+    for page_num in range(existing_pages.numPages):
+        existing_page = existing_pages.getPage(page_num)
+        combined_pages.addPage(existing_page)
+    new_pdf_path = '/var/tmp/combined-pdfs/combined-test.pdf'  # This will be modified with FileInstance
+    new_pdf = open(new_pdf_path, "wb")
+    combined_pages.write(new_pdf)
+    new_pdf.close()
 
+    # Downloading the newly generated combined PDF file
+    download_file_name = 'combined-test.pdf' # This will be modified later with variables
+    return send_file(new_pdf_path, as_attachment = True, attachment_filename = download_file_name, mimetype ='application/pdf')
+
+## Comment Outed ##
     # pdf_out = page.getvalue()
     # page.close()
     # response = make_response(pdf_out)
