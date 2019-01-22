@@ -51,9 +51,14 @@
           </div>
           <div class="col-md-9">
             <div class="field-content" hidden>
-              <textarea class="form-control" rows="3" name="licence-description">Content1</textarea>
+              <select class="form-control" name="licence-select">
+                <option value="0" selected></option>
+                {%- for licence in licences if licences %}
+                <option value="{{licence.id}}">{{licence.name}}</option>
+                {%- endfor %}
+              </select>
             </div>
-            <div class="field-content" >
+            <div class="field-content" hidden>
               <textarea class="form-control" rows="3" name="licence-description">Content2</textarea>
             </div>
 

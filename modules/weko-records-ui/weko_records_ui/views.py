@@ -286,8 +286,14 @@ def bulk_update():
               {'id': '3', 'name': 'Licence'},
               {'id': '4', 'name': 'Licence Description'}]
 
+    licences = [{'id': '1', 'name': 'Licence1'},
+                {'id': '2', 'name': 'Licence2'},
+                {'id': '3', 'name': 'Licence3'},
+                {'id': '4', 'name': 'Licence4'}]
+
     """Render view."""
     return render_template(
         current_app.config['WEKO_RECORDS_UI_BULK_UPDATE_TEMPLATE'],
-        fields=fields
+        fields=fields,
+        licences=licences
     )
