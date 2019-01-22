@@ -11,6 +11,7 @@ require([
 
     $('select[name="field-select"]').change(function() {
       var selected = $(this).val();
+      alert($('input[name="access_type"]:checked').val());
 
 //      if('3' === selected.toString()){
 //        content = $(this).parents('.field-row').find('.field-content.licence-select');
