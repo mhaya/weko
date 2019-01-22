@@ -58,8 +58,20 @@
                 {%- endfor %}
               </select>
             </div>
-            <div class="field-content" hidden>
-              <textarea class="form-control" rows="3" name="licence-description">Content2</textarea>
+            <div class="field-content access-type-select">
+              <label class="radio-inline">
+                <input type="radio" name="open_access" class="open_access" checked>{{_('Open Access')}}
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="open_access_date" class="open_access_date">{{_('Set Open Access Date')}}
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="login_user" class="login_user">{{_('Login User Only')}}
+              </label>
+
+            </div>
+            <div class="field-content licence-description">
+              <textarea class="form-control" rows="3" name="">Content2</textarea>
             </div>
 
           </div>
