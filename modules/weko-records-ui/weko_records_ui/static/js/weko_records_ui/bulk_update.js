@@ -11,7 +11,7 @@ require([
 
     $('select[name="field-select"]').change(function() {
         alert('Change!!!');
-        var text = $('option:selected').value();
+        var text = this.value();
 
         alert( text );
     });
