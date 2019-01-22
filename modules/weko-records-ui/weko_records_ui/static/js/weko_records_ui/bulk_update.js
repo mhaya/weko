@@ -2,10 +2,10 @@ require([
   "jquery",
   "bootstrap"
 ], function() {
-    $('#add-field-btn').on('click', function(){
-      alert('Add !!!!');
+    $('#add-field-link').on('click', function(){
 
-
+      insetTo = this.parent().parent();
+      $('.field-row-default').clone(true).insertBefore(insetTo);
 
 
       return false;
