@@ -40,11 +40,27 @@
         </span>
       </div>
       <div class="panel-body">
-        <textarea class="form-control pre-scrollable" rows="50" id="form2_json"></textarea>
+        <div class="row">
+          <div class="col-md-2">
+            <select class="form-control " id="update-fields">
+              <option value="0" selected></option>
+              {%- for field in fields if fields %}
+              <option value="{{field.id}}">{{field.name}}</option>
+              {%- endfor %}
+            </select>
+          </div>
+          <div class="col-md-10">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <button id="add-field-btn" type="button" class="btn btn-primary btn-block">{{_('Add Update Field')}}</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
-  <hr>
   <div class="row">
   <invenio-search
    {%- if index_id %}
