@@ -14,8 +14,11 @@ require([
 
       contents = $(this).parents('.field-row').find('.field-content');
       contents.each(function(i, elem) {
-          if('3' === selected.toString()){
+          if('4' === selected.toString()){
             $(elem).removeAttr("hidden");
+          }else if($(elem).attr('hidden') == undefined) {
+            $(elem).attr('hidden', 'hidden');
+
           }
 
       });
