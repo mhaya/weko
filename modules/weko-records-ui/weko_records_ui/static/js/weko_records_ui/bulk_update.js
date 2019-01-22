@@ -13,8 +13,10 @@ require([
       var selected = $(this).val();
       accessDate = $(this).find('input[name="access_date"]');
       if(selected == 'open_access_date'){
+        alert('open_access_date');
         $(accessDate).removeAttr("disabled");
       }else {
+        alert('other');
         $(accessDate).attr('disabled', 'disabled');
       }
 
