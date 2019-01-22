@@ -23,7 +23,7 @@
 from flask import Blueprint, current_app, render_template, request, \
     redirect, url_for, make_response, jsonify
 from xml.etree import ElementTree as ET
-from weko_index_tree.models import IndexStyle
+from weko_index_tree.models import Index, IndexStyle
 from weko_index_tree.api import Indexes
 from invenio_indexer.api import RecordIndexer
 from .api import SearchSetting
@@ -71,6 +71,11 @@ def search():
 
     height = style.height if style else None
 
+    index_link_list = []
+    for index in Index.query.all():
+        if index.index_link_enabled == True and index.public_state == True:
+            index_link_list.append((index.id, index.index_link_name_english))
+
     if 'management' in getArgs:
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
@@ -78,7 +83,10 @@ def search():
     else:
         return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
-                               sort_option=sort_options, disply_setting=disply_setting, detail_condition=detail_condition, width=width, height=height, **ctx)
+                               sort_option=sort_options, disply_setting=disply_setting,
+                               detail_condition=detail_condition, width=width, height=height,
+                               index_link_enabled=style.index_link_enabled,
+                               index_link_list=index_link_list, **ctx)
 
 
 
