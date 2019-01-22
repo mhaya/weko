@@ -59,22 +59,20 @@
               </select>
             </div>
             <div class="field-content access-type-select">
-              <label class="radio-inline">
+              <label class="radio-inline col-md-2">
                 <input type="radio" name="access_type" value="open_access" checked>{{_('Open Access')}}
               </label>
-              <label class="radio-inline">
+              <label class="radio-inline col-md-5">
                 <input type="radio" name="access_type" value="set_open_access_date">{{_('Set Open Access Date')}}
-                <input type="date" name="access_date" value="2019-01-01">
+                <input type="date" class="col-md-offset-1" name="access_date" value="2019-01-01" hidden>
               </label>
-              <label class="radio-inline">
-                <input type="radio" name="access_type" value="login_user">{{_('Login User Only')}}
+              <label class="radio-inline col-md-2">
+                <input type="radio" name="access_type" value="login_user_only">{{_('Login User Only')}}
               </label>
-
             </div>
             <div class="field-content licence-description">
-              <textarea class="form-control" rows="3" name="">Content2</textarea>
+              <textarea class="form-control" rows="3" name=""></textarea>
             </div>
-
           </div>
           <div class="col-md-1">
           </div>
