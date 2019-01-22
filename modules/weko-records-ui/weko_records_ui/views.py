@@ -281,10 +281,10 @@ def default_view_method(pid, record, template=None, **kwargs):
 
 @blueprint.route("/item_management/bulk_update", methods=['GET'])
 def bulk_update():
-    fields = [{'id': '0', 'name': 'Access Type'},
-              {'id': '1', 'name': 'Open Access'},
-              {'id': '2', 'name': 'Licence'},
-              {'id': '3', 'name': 'Licence Description'}]
+    fields = [{'id': '1', 'name': 'Access Type'},
+              {'id': '2', 'name': 'Open Access'},
+              {'id': '3', 'name': 'Licence'},
+              {'id': '4', 'name': 'Licence Description'}]
 
     """Render view."""
     return render_template(
