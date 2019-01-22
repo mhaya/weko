@@ -281,7 +281,13 @@ def default_view_method(pid, record, template=None, **kwargs):
 
 @blueprint.route("/item_management/bulk_update", methods=['GET'])
 def bulk_update():
+    fields = [{'id': '0', 'name': 'Access Type'},
+              {'id': '1', 'name': 'Open Access'},
+              {'id': '2', 'name': 'Licence'},
+              {'id': '3', 'name': 'Licence Description'}]
+
     """Render view."""
     return render_template(
-        current_app.config['WEKO_RECORDS_UI_BULK_UPDATE_TEMPLATE']
+        current_app.config['WEKO_RECORDS_UI_BULK_UPDATE_TEMPLATE'],
+        fields=fields
     )
