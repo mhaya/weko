@@ -28,6 +28,7 @@ from weko_index_tree.api import Indexes
 from invenio_indexer.api import RecordIndexer
 from .api import SearchSetting
 from weko_search_ui.api import get_search_detail_keyword
+from invenio_i18n.ext import current_i18n
 
 blueprint = Blueprint(
     'weko_search_ui',
@@ -74,7 +75,13 @@ def search():
     index_link_list = []
     for index in Index.query.all():
         if index.index_link_enabled == True and index.public_state == True:
-            index_link_list.append((index.id, index.index_link_name_english))
+            if hasattr(current_i18n, 'language'):
+                if current_i18n.language == 'ja' and index.index_link_name:
+                    index_link_list.append((index.id, index.index_link_name))
+                else:
+                    index_link_list.append((index.id, index.index_link_name_english))
+            else:
+                index_link_list.append((index.id, index.index_link_name_english))
 
     if 'management' in getArgs:
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],

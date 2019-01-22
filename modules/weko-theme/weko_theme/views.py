@@ -25,7 +25,7 @@ from flask import Blueprint, current_app, render_template, request, flash
 from weko_index_tree.models import Index, IndexStyle
 from flask_login import login_required
 from weko_search_ui.api import get_search_detail_keyword
-
+from invenio_i18n.ext import current_i18n
 
 blueprint = Blueprint(
     'weko_theme',
@@ -56,7 +56,13 @@ def index():
     index_link_list = []
     for index in Index.query.all():
         if index.index_link_enabled == True and index.public_state == True:
-            index_link_list.append((index.id, index.index_link_name_english))
+            if hasattr(current_i18n, 'language'):
+                if current_i18n.language == 'ja' and index.index_link_name:
+                    index_link_list.append((index.id, index.index_link_name))
+                else:
+                    index_link_list.append((index.id, index.index_link_name_english))
+            else:
+                index_link_list.append((index.id, index.index_link_name_english))
 
     detail_condition = get_search_detail_keyword('')
     current_app.logger.debug(index_link_list)
