@@ -14,13 +14,11 @@ require([
 
       contents = $(this).parents('.field-row').find('.field-content');
       contents.each(function(i, elem) {
-          $(elem).removeAttr("hidden");
+          if('3' === str(selected)){
+            $(elem).removeAttr("hidden");
+          }
+
       });
-
-        if('3' === str(selected)){
-          $('select[name="licence-descriptiont"]')
-
-        }
 
 
     });
