@@ -17,19 +17,17 @@
 # Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307, USA.
 #}
-  <div role="navigation">
-    <ul class="nav nav-tabs">
-      {%- block item_management_tabs %}
-        {% from "weko_theme/macros/item_management_tabs_selector.html" import tabs_selector %}
-        {{ tabs_selector('bulk_update') }}
-      {%- endblock item_management_tabs%}
+<div role="navigation">
+  <ul class="nav nav-tabs">
+    {%- block item_management_tabs %}
+      {% from "weko_theme/macros/item_management_tabs_selector.html" import tabs_selector %}
+      {{ tabs_selector('bulk_update') }}
+    {%- endblock item_management_tabs%}
 
-      <!--<li id="tab_display" role="presentation" class="active activity_li">-->
-        <!--<a class="active activity_li" data-show-tab="display">{{_('Custom Sort')}}</a></li>-->
-    </ul>
-  </div>
-  <br>
-
+    <!--<li id="tab_display" role="presentation" class="active activity_li">-->
+      <!--<a class="active activity_li" data-show-tab="display">{{_('Custom Sort')}}</a></li>-->
+  </ul>
+</div>
 <div id="invenio-search">
   <div id="item_management_bulk_update"class="hide">item_management_bulk_update</div>
   <div class="panel-body">
