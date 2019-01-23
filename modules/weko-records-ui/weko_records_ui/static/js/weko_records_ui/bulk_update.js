@@ -79,11 +79,11 @@ require([
 
     // Select All
     $('#select-all').on('click', function(){
-      alert('Select');
       allChecked = false;
       allCanceled = false;
 
       checkboxes = $(this).parent().find(input[tyle="checkbox");
+      alert(checkboxes);
       checkboxes.each(function(i, elem) {
         alert('Check');
       }
