@@ -3,9 +3,16 @@ require([
   "bootstrap"
 ], function() {
 
+    // Add field
     $('#add-field-link').on('click', function(){
       insetTo = $('#add-link-row');
       $('.field-row').first().clone(true).insertBefore(insetTo);
+      return false;
+    });
+
+    // Remove field
+    $('.del-field').on('click', function(){
+      $(this).parents('.field-row').remove();
       return false;
     });
 
@@ -34,6 +41,7 @@ require([
             $(elem).attr('hidden', 'hidden');
           }
 
+        // Licence
         }else if(elemAttr.indexOf('licence-select') >= 0){
           if('2' == selected.toString()){
             $(elem).removeAttr("hidden");
@@ -41,6 +49,7 @@ require([
             $(elem).attr('hidden', 'hidden');
           }
 
+        // Licence Description
         }else if(elemAttr.indexOf('licence-description') >= 0){
           if('3' == selected.toString()){
             $(elem).removeAttr("hidden");
@@ -51,25 +60,6 @@ require([
         }
 
       });
-
-      if('1' === selected.toString()){
-//        contents = $(this).parents('.field-row').find('.field-content');
-//        contents.each(function(i, elem) {
-//          alert($(elem).attr('class'));
-//            if('3' === selected.toString()){
-//              $('select[name="licence-select"]')
-//
-//            }
-//
-//            if('4' === selected.toString()){
-//              $(elem).removeAttr("hidden");
-//            }else if($(elem).attr('hidden') == undefined) {
-//              $(elem).attr('hidden', 'hidden');
-//
-//            }
-
-//        });
-      }
 
 
     });
