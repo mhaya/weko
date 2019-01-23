@@ -95,7 +95,8 @@ require([
       if(hasChecked && !hasCanceled) {
         alert('Cancel all');
         checkboxes.each(function(i, elem) {
-          $(elem).removeAttr("checked");
+//          $(elem).removeAttr("checked");
+          $(elem).prop("checked", false);
         });
 
       // Check all
@@ -103,7 +104,8 @@ require([
         alert('Check all');
         checkboxes.each(function(i, elem) {
           if($(elem).attr('checked') === undefined){
-            $(elem).attr('checked', 'checked');
+//            $(elem).attr('checked', 'checked');
+            $(elem).prop("checked", true);
           }
         });
       }
