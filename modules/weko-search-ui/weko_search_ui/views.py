@@ -71,14 +71,16 @@ def search():
 
     height = style.height if style else None
 
-    if 'management' in getArgs:
+    if 'item_management' in getArgs:
+        management_type = request.args.get('item_management', 'sort')
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
-                               width=width, height=height, **ctx)
+                               width=width, height=height,management_type=management_type, **ctx)
     else:
         return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
-                               sort_option=sort_options, disply_setting=disply_setting, detail_condition=detail_condition, width=width, height=height, **ctx)
+                               sort_option=sort_options, disply_setting=disply_setting,
+                               detail_condition=detail_condition, width=width, height=height, **ctx)
 
 
 

@@ -51,9 +51,12 @@
     </div>
     <div class="col-sm-9 col-md-9 col-lg-9 m-top-20">
       <div class="row">
-      {% include "weko_search_ui/item_list_display.html" %}
+        {%- if management_type == "sort" %}
+          {% include "weko_search_ui/item_list_display.html" %}
+        {%- else %}
+          {% include "weko_records_ui/bulk_update_display.html" %}
+        {%- endif %}
       </div>
     </div>
   </div>
 {%- endblock page_body_main %}
-
