@@ -65,7 +65,6 @@ def search():
 
     # add at 1206 for search management
     sort_options, display_number = SearchSetting.get_results_setting()
-    display_number = 1
     disply_setting =dict(size=display_number)
 
     detail_condition = get_search_detail_keyword('')
