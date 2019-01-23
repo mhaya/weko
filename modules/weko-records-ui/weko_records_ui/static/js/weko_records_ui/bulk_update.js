@@ -84,7 +84,7 @@ require([
 
       checkboxes = $(this).parent().find('input[type="checkbox"]');
       checkboxes.each(function(i, elem) {
-        if($(elem).attr('checked') === undefined){
+        if($(elem).prop('checked') === false){
           hasCanceled = true;
         }else {
           hasChecked = true;
@@ -103,7 +103,7 @@ require([
       }else {
         alert('Check all');
         checkboxes.each(function(i, elem) {
-          if($(elem).attr('checked') === undefined){
+          if($(elem).prop('checked') === false){
 //            $(elem).attr('checked', 'checked');
             $(elem).prop("checked", true);
           }
