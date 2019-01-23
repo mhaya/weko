@@ -165,6 +165,5 @@ def save_sort():
 @blueprint.route("/item_management/custom_sort", methods=['GET'])
 def custom_sort():
     """Render view."""
-    return render_template(
-        current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE']
-    )
+    return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
+                           management_type='sort')
