@@ -79,12 +79,17 @@ require([
 
     // Select All
     $('#select-all').on('click', function(){
-      allChecked = false;
-      allCanceled = false;
+      hasChecked = false;
+      hasCanceled = false;
 
       checkboxes = $(this).parent().find('input[type="checkbox"]');
       checkboxes.each(function(i, elem) {
-        alert($(elem).attr('checked') === undefined);
+        alert($(elem).attr('checked'));
+//        if($(elem).attr('checked') === undefined){
+//          hasCanceled = true;
+//        }else {
+//          hasChecked = true;
+//        }
 
       });
 
