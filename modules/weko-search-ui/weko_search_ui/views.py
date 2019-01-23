@@ -72,7 +72,7 @@ def search():
     detail_condition = get_search_detail_keyword('')
 
     height = style.height if style else None
-
+    current_app.logger.debug("BBBBB")
     if 'management' in getArgs:
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
