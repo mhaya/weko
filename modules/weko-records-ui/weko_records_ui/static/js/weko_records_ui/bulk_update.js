@@ -86,7 +86,6 @@ require([
       alert(checkboxes);
       checkboxes.each(function(i, elem) {
         alert('Check');
-      }
 
       });
 
