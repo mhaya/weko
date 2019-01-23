@@ -75,7 +75,22 @@ require([
         }
 
       });
-
-
     });
+
+    // Select All
+    $('#select-all').on('click', function(){
+      allChecked = false;
+      allCanceled = false;
+
+      checkboxes = $(this).parent().find(input[tyle="checkbox");
+      checkboxes.each(function(i, elem) {
+        alert($(elem).attr('checked'));
+      }
+
+      });
+
+
+      return false;
+    });
+
 });
