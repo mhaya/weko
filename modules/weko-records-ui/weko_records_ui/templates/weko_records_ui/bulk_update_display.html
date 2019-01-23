@@ -88,6 +88,14 @@
 
       </div>
     </div>
+    <div class="panel-body">
+      <div class="row">
+        <div id="search_detail_metadata" class="collapse col-sm-12 col-md-12 col-lg-12">
+          {% include "weko_theme/body_search_detail_new.html" %}
+        </div>
+      </div>
+    </div>
+
     <invenio-search
      {%- if index_id %}
        search-endpoint="{{ config.WEKO_SEARCH_UI_SEARCH_INDEX_API }}"
