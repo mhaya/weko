@@ -84,15 +84,24 @@ require([
 
       checkboxes = $(this).parent().find('input[type="checkbox"]');
       checkboxes.each(function(i, elem) {
-        alert($(elem).attr('checked'));
-//        if($(elem).attr('checked') === undefined){
-//          hasCanceled = true;
-//        }else {
-//          hasChecked = true;
-//        }
-
+        if($(elem).attr('checked') === undefined){
+          hasCanceled = true;
+        }else {
+          hasChecked = true;
+        }
       });
 
+      // Cancel all
+      if(hasChecked && !hasCanceled) {
+        checkboxes.each(function(i, elem) {
+          $(elem).removeAttr("checked");
+        });
+
+      // Check all
+      }else {
+        if($(elem).attr('checked') === undefined){
+          $(elem).attr('checked', 'checked');
+        }
 
       return false;
     });
