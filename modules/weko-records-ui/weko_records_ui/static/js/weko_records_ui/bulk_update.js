@@ -93,7 +93,6 @@ require([
 
       // Cancel all
       if(hasChecked && !hasCanceled) {
-        alert('Cancel all');
         checkboxes.each(function(i, elem) {
 //          $(elem).removeAttr("checked");
           $(elem).prop("checked", false);
@@ -101,12 +100,10 @@ require([
 
       // Check all
       }else {
-        alert('Check all');
         checkboxes.each(function(i, elem) {
-          if($(elem).prop('checked') === false){
-//            $(elem).attr('checked', 'checked');
-            $(elem).prop("checked", true);
-          }
+          $(elem).prop("checked", true);
+//          $(elem).attr('checked', 'checked');
+
         });
       }
 
