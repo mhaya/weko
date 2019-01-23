@@ -10,7 +10,8 @@
         <span class="glyphicon glyphicon-file" aria-hidden="true"></span> {{ record.metadata.hasOwnProperty('title')?record.metadata.title[0]:record.metadata['dc:title'][0] }}</a>
     </div>
   </div>
-  <!--<div class="panel-body">-->
+  <div class="panel-body">
+    <button class="btn btn-xs btn-default" value="pptx"/>
     <!--<pre class="hide">{{record.metadata._comment}}</pre>-->
     <!--<span ng-repeat="comment in record.metadata._comment track by $index"> {{ comment }} <br> </span>-->
     <!--<div class="pull-right">-->
@@ -37,5 +38,5 @@
     <!--<div ng-hide="!showSource">-->
       <!--<pre class="pre-scrollable">{{ record | json }}</pre>-->
     <!--</div>-->
-  <!--</div>-->
+  </div>
 </div>
