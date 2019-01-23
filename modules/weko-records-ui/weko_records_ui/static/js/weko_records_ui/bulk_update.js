@@ -84,7 +84,7 @@ require([
 
       checkboxes = $(this).parent().find('input[type="checkbox"]');
       checkboxes.each(function(i, elem) {
-        alert($(elem).attr('checked')=='undefined');
+        alert($(elem).attr('checked') === undefined);
 
       });
 
