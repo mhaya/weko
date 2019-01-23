@@ -5,8 +5,12 @@ require([
 
     // Add field
     $('#add-field-link').on('click', function(){
-      insetTo = $('#add-link-row');
-      $('.field-row').first().clone(true).insertBefore(insetTo);
+      newField = $('.field-row-default').first().clone(true)
+      $(newField).attr('class', 'row field-row');
+      $(newField).removeAttr("hidden");
+
+      $(newField).insertBefore($('#add-link-row'));
+
       return false;
     });
 
