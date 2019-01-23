@@ -291,8 +291,13 @@ def bulk_update():
                 {'id': '4', 'name': 'Licence4'}]
 
     """Render view."""
-    return render_template(
-        current_app.config['WEKO_RECORDS_UI_BULK_UPDATE_TEMPLATE'],
-        fields=fields,
-        licences=licences
-    )
+    # return render_template(
+    #     current_app.config['WEKO_RECORDS_UI_BULK_UPDATE_TEMPLATE'],
+    #     fields=fields,
+    #     licences=licences
+    # )
+    return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
+                           fields=fields,
+                           licences=licences,
+                           management_type='update')
+
