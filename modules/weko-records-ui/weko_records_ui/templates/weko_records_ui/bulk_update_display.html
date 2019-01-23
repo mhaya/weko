@@ -50,7 +50,7 @@
             </select>
           </div>
           <div class="col-md-9">
-            <div class="field-content licence-select">
+            <div class="field-content licence-select" hidden>
               <select class="form-control" name="licence-select">
                 <option value="0" selected></option>
                 {%- for licence in licences if licences %}
@@ -58,7 +58,7 @@
                 {%- endfor %}
               </select>
             </div>
-            <div class="field-content access-type-select">
+            <div class="field-content access-type-select" hidden>
               <label class="radio-inline col-md-2">
                 <input type="radio" name="access_type" value="open_access" checked>{{_('Open Access')}}
               </label>
@@ -70,7 +70,7 @@
                 <input type="radio" name="access_type" value="login_user_only">{{_('Login User Only')}}
               </label>
             </div>
-            <div class="field-content licence-description">
+            <div class="field-content licence-description" hidden>
               <textarea class="form-control" rows="3" name=""></textarea>
             </div>
           </div>
