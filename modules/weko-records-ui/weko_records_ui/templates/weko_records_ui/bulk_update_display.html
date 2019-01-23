@@ -17,11 +17,11 @@
 # Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307, USA.
 #}
-<div class="row">
-  <div class="col-sm-12 col-md-12 col-lg-12">
-    {% include "weko_theme/body_search.html" %}
-  </div>
-</div>
+<!--<div class="row">-->
+  <!--<div class="col-sm-12 col-md-12 col-lg-12">-->
+    <!--{% include "weko_theme/body_search.html" %}-->
+  <!--</div>-->
+<!--</div>-->
 
 <div id="invenio-search">
   <div id="item_management_bulk_update"class="hide">item_management_bulk_update</div>
@@ -93,8 +93,7 @@
 
       </div>
     </div>
-
-
+    
     <invenio-search
      {%- if index_id %}
        search-endpoint="{{ config.WEKO_SEARCH_UI_SEARCH_INDEX_API }}"
