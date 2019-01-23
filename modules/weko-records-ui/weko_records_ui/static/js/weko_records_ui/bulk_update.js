@@ -8,7 +8,7 @@ require([
       $(newField).attr('class', 'row field-row');
       $(newField).removeAttr("hidden");
 
-      $(newField).insertBefore($('#add-link-row'));
+      $(newField).insertBefore($('#add-field-row'));
 
     });
 
@@ -18,7 +18,7 @@ require([
       $(newField).attr('class', 'row field-row');
       $(newField).removeAttr("hidden");
 
-      $(newField).insertBefore($('#add-link-row'));
+      $(newField).insertBefore($('#add-field-row'));
 
       return false;
     });
