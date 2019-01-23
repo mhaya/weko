@@ -4,7 +4,6 @@ require([
 ], function() {
 
     $(document).ready(function() {
-      alert('Bulk Ready!!!!');
       newField = $('.field-row-default').first().clone(true)
       $(newField).attr('class', 'row field-row');
       $(newField).removeAttr("hidden");
