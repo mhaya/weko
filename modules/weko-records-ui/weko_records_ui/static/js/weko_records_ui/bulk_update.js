@@ -12,7 +12,9 @@ require([
 
     // Remove field
     $('.del-field').on('click', function(){
-      $(this).parents('.field-row').remove();
+      if($('#field-panel').find('.field-row').length > 1) {
+        $(this).parents('.field-row').remove();
+      }
       return false;
     });
 
