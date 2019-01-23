@@ -190,6 +190,7 @@
                 <div class="row">
                   {%- block search_item_result %}
                     <div class="col-xs-12 col-md-12">
+                      <a id="select-all" href="#">{{_('Select All')}}</a>
                       {%- block search_error %}
                       <invenio-search-error
                        template="{{ url_for('static', filename=config.SEARCH_UI_JSTEMPLATE_ERROR) }}"
