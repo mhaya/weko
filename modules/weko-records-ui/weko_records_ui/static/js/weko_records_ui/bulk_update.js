@@ -99,9 +99,12 @@ require([
 
       // Check all
       }else {
-        if($(elem).attr('checked') === undefined){
-          $(elem).attr('checked', 'checked');
-        }
+        checkboxes.each(function(i, elem) {
+          if($(elem).attr('checked') === undefined){
+            $(elem).attr('checked', 'checked');
+          }
+        });
+      }
 
       return false;
     });
