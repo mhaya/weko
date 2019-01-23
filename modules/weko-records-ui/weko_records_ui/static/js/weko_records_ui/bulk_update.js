@@ -82,8 +82,7 @@ require([
       allChecked = false;
       allCanceled = false;
 
-      checkboxes = $(this).parent().find(input[tyle="checkbox");
-      alert(checkboxes);
+      checkboxes = $(this).parent().find(input[type="checkbox"]);
       checkboxes.each(function(i, elem) {
         alert('Check');
 
