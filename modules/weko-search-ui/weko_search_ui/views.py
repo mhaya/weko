@@ -47,7 +47,6 @@ blueprint_api = Blueprint(
 
 @blueprint.route("/search/index")
 def search():
-    flash('Search!!!!!!!!!!!')
     """ Index Search page ui."""
     search_type = request.args.get('search_type', '0')
     getArgs= request.args
