@@ -164,7 +164,7 @@ require([
             var btn = sessionStorage.getItem('btn', '');
 
             if($("#item_management_bulk_update").length != 0) {
-              window.location.href = ('/item_management/bulk_update');
+              window.location.href = ('/search?page=1&item_management=update&' + query).slice(0, -1);
             }else {
               window.location.href = ('/search?page=1&' + query).slice(0, -1);
             }
