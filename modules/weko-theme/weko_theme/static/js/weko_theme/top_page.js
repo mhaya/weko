@@ -163,9 +163,12 @@ require([
             }
             var btn = sessionStorage.getItem('btn', '');
 
-            alert($('#item_management_bulk_update'));
+            if($("#item_management_bulk_update").length != 0) {
+              window.location.href = ('/item_management/bulk_update');
+            }else {
+              window.location.href = ('/search?page=1&' + query).slice(0, -1);
+            }
 
-            window.location.href = ('/search?page=1&' + query).slice(0, -1);
             // stop the form from submitting the normal way and refreshing the page
             event.preventDefault();
         })
