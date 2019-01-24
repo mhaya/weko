@@ -87,11 +87,6 @@
     </div>
   </div>
 
-  <div class="panel-body">
-    <div class="col-sm-12 col-md-12 col-lg-12">
-      {% include "weko_theme/body_search.html" %}
-    </div>
-  </div>
 
   <div id="invenio-search">
     <invenio-search
@@ -109,6 +104,13 @@
      template="{{ url_for('static', filename=config.WEKO_SEARCH_UI_JSTEMPLATE_INDEX) }}">
     </invenio-search-results>
     {%- endblock search_index_results %}
+
+    <div class="panel-body">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        {% include "weko_theme/body_search.html" %}
+      </div>
+    </div>
+
     <div class="panel panel-default">
       <div class="panel-heading clearfix">
         <span class="panel-title">{{_('Item list')}}</span>
