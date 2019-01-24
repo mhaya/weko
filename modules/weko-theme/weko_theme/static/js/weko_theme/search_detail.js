@@ -142,10 +142,9 @@
                 var url = '/search?page=1' + query_str
 
                 if(angular.element('#item_management_bulk_update').length != 0) {
-                  window.location.href = ('/item_management/bulk_update');
-                }else {
-                  window.location.href = url;
+                  url = url + '&item_management=update';
                 }
+                window.location.href = url;
             }
             //
             $scope.detail_search_clear = function () {
