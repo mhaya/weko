@@ -146,8 +146,6 @@
                 }else {
                   window.location.href = url;
                 }
-
-
             }
             //
             $scope.detail_search_clear = function () {
