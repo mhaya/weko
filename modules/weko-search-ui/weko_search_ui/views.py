@@ -85,7 +85,8 @@ def search():
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
                                width=width, height=height,management_type=management_type,
-                               fields=fields, licences = licences, **ctx)
+                               fields=fields, licences = licences,
+                               detail_condition=detail_condition, **ctx)
     else:
         return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
