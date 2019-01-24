@@ -141,7 +141,7 @@
                 sessionStorage.setItem('detail_search_conditions', angular.toJson($scope.condition_data));
                 var url = '/search?page=1' + query_str
 
-                if(document.getElementById('item_management_bulk_update').length != 0) {
+                if(angular.element('#item_management_bulk_update').length != 0) {
                   window.location.href = ('/item_management/bulk_update');
                 }else {
                   window.location.href = url;
