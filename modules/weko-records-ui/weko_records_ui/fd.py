@@ -22,24 +22,17 @@
 
 import mimetypes
 import unicodedata
-import io
 
-from flask import abort, current_app, render_template, request, make_response, send_file, url_for
-from invenio_files_rest.views import ObjectResource
-from invenio_files_rest.models import ObjectVersion, FileInstance
+from flask import abort, current_app, render_template, request
+#from invenio_files_rest.views import ObjectResource
+#from invenio_files_rest.models import ObjectVersion, FileInstance
 from invenio_records_files.utils import record_file_factory
 from weko_records.api import FilesMetadata, ItemTypes
+from .pdf import  make_combined_pdf
 from werkzeug.datastructures import Headers
 from werkzeug.urls import url_quote
 
 from .permissions import file_permission_factory
-
-from sqlalchemy import *
-from sqlalchemy.orm import *
-from PyPDF2 import PdfFileWriter, PdfFileReader
-from reportlab.pdfgen import canvas
-from reportlab.pdfbase.cidfonts import UnicodeCIDFont
-from reportlab.pdfbase import pdfmetrics
 
 def weko_view_method(pid, record, template=None, **kwargs):
     r"""Display Weko view.
@@ -181,7 +174,7 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
     # Check permissions
     # ObjectResource.check_object_permission(obj)
 
-    # # Send file without its pdf cover page
+    #### Send file without its pdf cover page ####
     # if ...  # Write this if statement later
     # return ObjectResource.send_object(
     #     obj.bucket, obj,
@@ -193,83 +186,6 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
     #     },
     # )
 
-    # Send file with its pdf cover page
+    #### Send file with its pdf cover page ####
     #if ... # Write this if statement later
-
-    # create a new PDF with Reportlab
-    packet = io.BytesIO()
-    font = "HeiseiMin-W3"
-    #font = 'HeiseiKakuGo-W5'  # Another sans-serif japanese font equipped in ReportLab by default
-    pdfmetrics.registerFont(UnicodeCIDFont(font))
-    can = canvas.Canvas(packet)
-    can.setFont(font, 30)
-    content = "このページは表紙です"
-    can.drawString(150, 450, content)
-    can.save()
-
-    # move to the beginning of the StringIO buffer
-    packet.seek(0)
-    obj_file_uri = '/var/tmp/8e/be/06e0-b4b2-4e1e-b8aa-1361fcce34bc/data' # # This will be modified with FileInstance
-    f = open(obj_file_uri, "rb")
-
-    # Combining cover page and existing pages to render new a PDF file using PyPDF2
-    cover_page = PdfFileReader(packet)
-    existing_pages = PdfFileReader(f)
-    combined_pages = PdfFileWriter()
-    combined_pages.addPage(cover_page.getPage(0))
-    for page_num in range(existing_pages.numPages):
-        existing_page = existing_pages.getPage(page_num)
-        combined_pages.addPage(existing_page)
-    new_pdf_path = '/var/tmp/combined-pdfs/combined-test.pdf'  # This will be modified with FileInstance
-    new_pdf = open(new_pdf_path, "wb")
-    combined_pages.write(new_pdf)
-    new_pdf.close()
-
-    # Downloading the newly generated combined PDF file
-    download_file_name = 'combined-test.pdf' # This will be modified later with variables
-    return send_file(new_pdf_path, as_attachment = True, attachment_filename = download_file_name, mimetype ='application/pdf')
-
-## Comment Outed ##
-    # pdf_out = page.getvalue()
-    # page.close()
-    # response = make_response(pdf_out)
-    # # response.data = open("test-pdfComb.pdf", "rb").read()
-    # response.headers['Content-Disposition'] = "attachment; filename='test-pdfcomb.pdf"
-    # response.mimetype = 'application/pdf'
-    # return response
-
-
-    # read your existing PDF
-    # existing_pdf = PdfFileReader(obj)
-    # output = PdfFileWriter()
-    # return send_file(output, as_attachment = True, attachment_filename = 'test.pdf', mimetype ='application/pdf')
-
-
-    # # add the "watermark" (which is the new pdf) on the existing page
-    # page = existing_pdf.getPage(0)
-    # page.mergePage(new_pdf.getPage(0))
-    # output.addPage(page)
-    #
-    # ########################################################
-    # # #finally, write "output" to a real file
-    # # outputStream = open(blueprint.root_path + "/destination2.pdf", "wb")
-    # # output.write(outputStream)
-    # # outputStream.close()
-    # #
-    # # download_file_name = 'test.pdf'
-    # # download_file = blueprint.root_path + '/destination2.pdf'
-    # response = make_response(output)
-    # response.headers['Content-Disposition'] = "attachment; filename='test-pdfcomb.pdf"
-    # response.mimetype = 'application/pdf'
-    #
-    # # return send_file(download_file, as_attachment=True, attachment_filename=download_file_name, mimetype='application/pdf')
-    #
-    # return ObjectResource.send_object(
-    #     obj.bucket, response,
-    #     expected_chksum=fileobj.get('checksum'),
-    #     logger_data={
-    #         'bucket_id': obj.bucket_id,
-    #         'pid_type': pid.pid_type,
-    #         'pid_value': pid.pid_value,
-    #     },
-    # )
+    return make_combined_pdf()
