@@ -30,7 +30,6 @@
 
 {%- block javascript %}
   {{ super() }}
-  {% assets "weko_theme_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_theme_js_treeview" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_theme_js_top_page" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_theme_js_detail_search" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
@@ -47,12 +46,6 @@
 
 {%- block page_body_main %}
   <div class="hide" id="cur_index_id">{{index_id}}</div>
-  <div class="row">
-    <div class="col-sm-12 col-md-12 col-lg-12">
-      {% include "weko_theme/body_search.html" %}
-    </div>
-  </div>
-
   <div class="row">
     <div class="col-sm-3 col-md-3 col-lg-3">
       {% include "weko_theme/body_index.html" %}
