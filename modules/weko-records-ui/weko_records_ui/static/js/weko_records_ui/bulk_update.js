@@ -13,7 +13,7 @@ require([
     });
 
     // Add field
-    $('#add-field-link').on('click', function(){
+    $('#add-field-link').on('click', function() {
       newField = $('.field-row-default').first().clone(true)
       $(newField).attr('class', 'row field-row');
       $(newField).removeAttr("hidden");
@@ -24,7 +24,7 @@ require([
     });
 
     // Remove field
-    $('.del-field').on('click', function(){
+    $('.del-field').on('click', function() {
       if($('#field-panel').find('.field-row').length > 1) {
         $(this).parents('.field-row').remove();
       }
@@ -78,7 +78,7 @@ require([
     });
 
     // Select All
-    $('#select-all').on('click', function(){
+    $('#select-all').on('click', function() {
       hasChecked = false;
       hasCanceled = false;
 
@@ -108,6 +108,12 @@ require([
       }
 
       return false;
+    });
+
+    // Bulk Update
+    $('#submit-btn').on('click', function() {
+
+
     });
 
 });
