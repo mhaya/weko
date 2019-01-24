@@ -29,63 +29,63 @@
   </ul>
 </div>
 
-  <div id="item_management_bulk_update" class="hide">item_management_bulk_update</div>
-  <div class="panel-body">
-    <div class="panel panel-default">
-      <div class="panel-heading clearfix">
-        <span class="panel-title">
-          {{_('Fields For Update')}}
-        </span>
-      </div>
-      <div id="field-panel" class="panel-body">
-        <div class="row field-row-default" hidden>
-          <div class="col-md-2">
-            <select class="form-control" name="field-select">
+<div id="item_management_bulk_update" class="hide">item_management_bulk_update</div>
+<div class="panel-body">
+  <div class="panel panel-default">
+    <div class="panel-heading clearfix">
+      <span class="panel-title">
+        {{_('Fields For Update')}}
+      </span>
+    </div>
+    <div id="field-panel" class="panel-body">
+      <div class="row field-row-default" hidden>
+        <div class="col-md-2">
+          <select class="form-control" name="field-select">
+            <option value="0" selected></option>
+            {%- for field in fields if fields %}
+            <option value="{{field.id}}">{{field.name}}</option>
+            {%- endfor %}
+          </select>
+        </div>
+        <div class="col-md-9">
+          <div class="field-content licence-select" hidden>
+            <select class="form-control" name="licence-select">
               <option value="0" selected></option>
-              {%- for field in fields if fields %}
-              <option value="{{field.id}}">{{field.name}}</option>
+              {%- for licence in licences if licences %}
+              <option value="{{licence.id}}">{{licence.name}}</option>
               {%- endfor %}
             </select>
           </div>
-          <div class="col-md-9">
-            <div class="field-content licence-select" hidden>
-              <select class="form-control" name="licence-select">
-                <option value="0" selected></option>
-                {%- for licence in licences if licences %}
-                <option value="{{licence.id}}">{{licence.name}}</option>
-                {%- endfor %}
-              </select>
-            </div>
-            <div class="field-content access-type-select" hidden>
-              <label class="radio-inline col-md-2">
-                <input type="radio" name="access_type" value="open_access" checked>{{_('Open Access')}}
-              </label>
-              <label class="radio-inline col-md-4">
-                <input type="radio" name="access_type" value="open_access_date">{{_('Open Access Date')}}
-                <input type="date" class="col-md-offset-1" name="access_date" value="2018-04-01" disabled>
-              </label>
-              <label class="radio-inline col-md-3">
-                <input type="radio" name="access_type" value="login_user_only">{{_('Login User Only')}}
-              </label>
-            </div>
-            <div class="field-content licence-description" hidden>
-              <textarea class="form-control" rows="3" name=""></textarea>
-            </div>
+          <div class="field-content access-type-select" hidden>
+            <label class="radio-inline col-md-2">
+              <input type="radio" name="access_type" value="open_access" checked>{{_('Open Access')}}
+            </label>
+            <label class="radio-inline col-md-4">
+              <input type="radio" name="access_type" value="open_access_date">{{_('Open Access Date')}}
+              <input type="date" class="col-md-offset-1" name="access_date" value="2018-04-01" disabled>
+            </label>
+            <label class="radio-inline col-md-3">
+              <input type="radio" name="access_type" value="login_user_only">{{_('Login User Only')}}
+            </label>
           </div>
-          <div class="col-md-1">
-            <a class="del-field" href='#'><span class='glyphicon glyphicon-remove'></span></a>
+          <div class="field-content licence-description" hidden>
+            <textarea class="form-control" rows="3" name=""></textarea>
           </div>
         </div>
-
-        <br id="add-field-row">
-        <div class="row">
-          <div class="col-md-2">
-            <a id="add-field-link" href="#">{{_('Add Update Field')}}</a>
-          </div>
+        <div class="col-md-1">
+          <a class="del-field" href='#'><span class='glyphicon glyphicon-remove'></span></a>
         </div>
-
       </div>
+
+      <br id="add-field-row">
+      <div class="row">
+        <div class="col-md-2">
+          <a id="add-field-link" href="#">{{_('Add Update Field')}}</a>
+        </div>
+      </div>
+
     </div>
+  </div>
 
   <div id="invenio-search">
     <invenio-search
@@ -224,10 +224,11 @@
         </div>
       </div>
     </div>
-    </invenio-search></div><br>
-    <div class="col-sm-12 col-md-12 text-center">
-      <a id="submit-btn" class="btn btn-primary btn-md">{{ _('Bulk Update') }}</a>
-    </div>
-
+    </invenio-search>
+  </div><br>
+  <div class="col-sm-12 col-md-12 text-center">
+    <a id="submit-btn" class="btn btn-primary btn-md">{{ _('Bulk Update') }}</a>
   </div>
+
+</div>
 
