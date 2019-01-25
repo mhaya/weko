@@ -36,7 +36,7 @@ def abcd():
     """
 
 
-@abcd.command()
+@abcd.command('init')
 @with_appcontext
 def init_sherpa():
     click.secho('Just do test!!!!!', fg='red')
