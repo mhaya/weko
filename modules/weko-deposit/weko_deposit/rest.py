@@ -161,7 +161,6 @@ class ItemResource(ContentNegotiatedMethodView):
         """"""
         try:
             data = request.get_json()
-            flash(data)
             pid = kwargs.get('pid_value').value
 
             # item metadata cached on Redis by pid

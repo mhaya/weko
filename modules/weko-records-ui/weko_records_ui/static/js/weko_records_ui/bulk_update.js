@@ -112,6 +112,7 @@ require([
 
     // Bulk Update
     $('#submit-btn').on('click', function() {
+      alert('submit!!!');
 
 
     });
