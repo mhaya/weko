@@ -22,7 +22,7 @@
 
 import json
 
-from flask import Blueprint, abort, current_app, jsonify, request
+from flask import Blueprint, abort, current_app, jsonify, request, flash
 from invenio_pidstore import current_pidstore
 from invenio_records.api import Record
 from invenio_records_rest.links import default_links_factory
@@ -161,6 +161,7 @@ class ItemResource(ContentNegotiatedMethodView):
         """"""
         try:
             data = request.get_json()
+            flash(data)
             pid = kwargs.get('pid_value').value
 
             # item metadata cached on Redis by pid
