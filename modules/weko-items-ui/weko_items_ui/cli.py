@@ -29,14 +29,14 @@ from invenio_db import db
 
 
 @click.group()
-def sherpa():
+def abcd():
     """
     Get SHERPA/ReMOO data !!
     :return:
     """
 
 
-@sherpa.command('init')
+@abcd.command()
 @with_appcontext
-def init_s_r():
+def init_sherpa():
     click.secho('Just do test!!!!!', fg='red')

@@ -84,7 +84,7 @@ setup(
     platforms='any',
     entry_points={
         'flask.commands': [
-            'sherpa = weko_workflow.cli:sherpa',
+            'abcd = weko_items_ui.cli:abcd',
         ],
         'invenio_base.apps': [
             'weko_items_ui = weko_items_ui:WekoItemsUI',
