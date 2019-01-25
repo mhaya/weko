@@ -83,6 +83,9 @@ setup(
     include_package_data=True,
     platforms='any',
     entry_points={
+        'flask.commands': [
+            'sherpa = weko_workflow.cli:sherpa',
+        ],
         'invenio_base.apps': [
             'weko_items_ui = weko_items_ui:WekoItemsUI',
         ],
