@@ -225,7 +225,9 @@ require([
             cache: false,
             data: indexData,
             contentType: "application/json",
-            success: function(){},
+            success: function(){
+              alert('Success!!!!');
+            },
             error: function() {
               alert('Error at Post item data');
 
