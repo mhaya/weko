@@ -72,20 +72,13 @@ def search():
     height = style.height if style else None
 
     if 'item_management' in getArgs:
-        fields = [{'id': '1', 'name': 'Access Type'},
-                  {'id': '2', 'name': 'Licence'},
-                  {'id': '3', 'name': 'Licence Description'}]
-
-        licences = [{'id': '1', 'name': 'Licence1'},
-                    {'id': '2', 'name': 'Licence2'},
-                    {'id': '3', 'name': 'Licence3'},
-                    {'id': '4', 'name': 'Licence4'}]
 
         management_type = request.args.get('item_management', 'sort')
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
                                width=width, height=height,management_type=management_type,
-                               fields=fields, licences = licences,
+                               fields=current_app.config['WEKO_RECORDS_UI_BULK_UPDATE_FIELDS']['fields'],
+                               licences = current_app.config['WEKO_RECORDS_UI_BULK_UPDATE_FIELDS']['licences'],
                                detail_condition=detail_condition, **ctx)
     else:
         return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
