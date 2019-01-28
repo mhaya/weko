@@ -27,7 +27,7 @@ from flask.cli import with_appcontext
 from sqlalchemy import asc
 from invenio_db import db
 from flask import request
-import urllib2
+import urllib.request
 
 
 @click.group()
@@ -52,7 +52,7 @@ def init_item_metadata_reference():
     #     response_text = response.read()
 
     url = 'http://www.sherpa.ac.uk/romeo/api29.php?all=yes'
-    response = urllib2.urlopen(url)
+    response = urllib.request.urlopen(url)
     response_text = response.read()
     click.secho(response_text, fg='green')
     click.secho('Just do test!!!!!', fg='red')
