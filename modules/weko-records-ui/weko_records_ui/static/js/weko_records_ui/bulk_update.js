@@ -143,9 +143,9 @@ require([
           Object.keys(itemsMeta).forEach(function(pid) {
 
             if (Object.keys(itemsMeta[pid].contents).length !== 0) {
-              alert(JSON.stringify(itemsMeta[pid].contents));
 
               Object.keys(itemsMeta[pid].contents).forEach( function(key) {
+                alert(contentKey);
 
 
                 var contentsMeta = itemsMeta[pid].contents[contentKey];
