@@ -149,7 +149,7 @@ require([
                 $.each( contentsMeta, function( key, value ) {
                   value.licensetype = 'license_3';
                 });
-                itemsMeta[pid].contentKey = contentsMeta
+                itemsMeta[pid].meta.contentKey = contentsMeta
 
 //                for (var contentsMeta in itemsMeta[pid].contents[key]) {
 //                  alert(JSON.stringify(contentsMeta));
