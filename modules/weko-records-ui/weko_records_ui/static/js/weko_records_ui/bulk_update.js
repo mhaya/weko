@@ -144,6 +144,7 @@ require([
 
             if (Object.keys(itemsMeta[pid].contents).length !== 0) {
               Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
+                alert(contentKey);
 
                 var contentsMeta = itemsMeta[pid].contents[contentKey];
                 $.each( contentsMeta, function( key, value ) {
@@ -151,7 +152,7 @@ require([
                 });
 //                alert(JSON.stringify(itemsMeta[pid].meta.contentKey));
                 itemsMeta[pid].meta.contentKey = contentsMeta
-                alert(JSON.stringify(itemsMeta[pid].meta));
+//                alert(JSON.stringify(itemsMeta[pid].meta));
 
 //                for (var contentsMeta in itemsMeta[pid].contents[key]) {
 //                  alert(JSON.stringify(contentsMeta));
