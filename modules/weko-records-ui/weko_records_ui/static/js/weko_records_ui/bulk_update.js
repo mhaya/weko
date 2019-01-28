@@ -113,12 +113,15 @@ require([
     // Bulk Update
     $('#submit-btn').on('click', function() {
 
+      getUrl = '/bulk_update/items_metadata?pids=3/4';
+
+
+
       $.ajax({
         method: 'GET',
-        url: '/bulk_update/items_metadata',
+        url: getUrl,
         async: false,
         success: function(data, status){
-          alert(JSON.stringify(data['4']));
 
           itemsMeta = data;
           Object.keys(itemsMeta).forEach(function(key) {
