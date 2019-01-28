@@ -150,7 +150,7 @@ require([
                   value.licensetype = 'license_3';
                 });
                 itemsMeta[pid].meta[contentKey] = contentsMeta
-                alert(JSON.stringify(itemsMeta[pid].meta[contentKey]));
+//                alert(JSON.stringify(itemsMeta[pid].meta[contentKey]));
 
 //                for (var contentsMeta in itemsMeta[pid].contents[key]) {
 //                  alert(JSON.stringify(contentsMeta));
@@ -166,19 +166,19 @@ require([
 
 //            alert(JSON.stringify(itemsMeta));
 
-//            meta = JSON.stringify(itemsMeta[pid].meta);
-//            index = JSON.stringify(itemsMeta[pid].index);
-//
+            meta = JSON.stringify(itemsMeta[pid].meta);
+            index = JSON.stringify(itemsMeta[pid].index);
+
 //            alert(meta);
-//
-//            index_url = redirect_url + "/" + pid;
-//            self_url = items_url + "/" + pid;
-//
-//            // Update items
-//            updateItems(index_url,
-//                        self_url,
-//                        meta,
-//                        index);
+
+            index_url = redirect_url + "/" + pid;
+            self_url = items_url + "/" + pid;
+
+            // Update items
+            updateItems(index_url,
+                        self_url,
+                        meta,
+                        index);
 
           // Get bucket
 //          $.ajax({
