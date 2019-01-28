@@ -151,9 +151,7 @@ require([
             updateItems(index_url,
                         self_url,
                         meta,
-                        index,
-                        error,
-                        errorFlg);
+                        index);
 
           // Get bucket
 //          $.ajax({
@@ -209,7 +207,7 @@ require([
 
     });
 
-    function updateItems(index_url, self_url, itemData, indexData, error, errorFlg) {
+    function updateItems(index_url, self_url, itemData, indexData) {
       // Post to index select
       $.ajax({
         type: "PUT",
@@ -229,14 +227,13 @@ require([
             contentType: "application/json",
             success: function(){},
             error: function() {
-              errorFlg = true;
-              error['eMsg'] = "Error in item data posting.";
+              alert('Error at Post item data');
+
             }
           });
         },
         error: function() {
-          errorFlg = true;
-          error['eMsg'] = "Error in index selection.";
+          alert('Error at Post to index select');
         }
       });
     }
