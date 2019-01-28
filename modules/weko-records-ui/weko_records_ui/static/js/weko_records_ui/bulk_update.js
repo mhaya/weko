@@ -147,7 +147,7 @@ require([
               Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
                 var contentsMeta = itemsMeta[pid].contents[contentKey];
                 $.each( contentsMeta, function( key, value ) {
-                  value.licensetype = 'license_3';
+                  value.licensetype = 'license_1';
                 });
                 itemsMeta[pid].meta[contentKey] = contentsMeta
 //                alert(JSON.stringify(itemsMeta[pid].meta[contentKey]));
