@@ -141,17 +141,19 @@ require([
 
           itemsMeta = data;
           Object.keys(itemsMeta).forEach(function(key) {
-            meta = JSON.stringify(itemsMeta[key].meta);
-            index = JSON.stringify(itemsMeta[key].index);
+            alert(itemsMeta[key].meta.lang);
 
-            index_url = redirect_url + "/" + key;
-            self_url = items_url + "/" + key;
-
-            // Update items
-            updateItems(index_url,
-                        self_url,
-                        meta,
-                        index);
+//            meta = JSON.stringify(itemsMeta[key].meta);
+//            index = JSON.stringify(itemsMeta[key].index);
+//
+//            index_url = redirect_url + "/" + key;
+//            self_url = items_url + "/" + key;
+//
+//            // Update items
+//            updateItems(index_url,
+//                        self_url,
+//                        meta,
+//                        index);
 
           // Get bucket
 //          $.ajax({
