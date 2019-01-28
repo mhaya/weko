@@ -143,8 +143,10 @@ require([
           Object.keys(itemsMeta).forEach(function(key) {
 
             if (Object.keys(itemsMeta[key].contents).length === 0) {
-              alert('Empty Contents!!');
-              return;
+              alert('Empty!!');
+
+            }else {
+              alert('Not Empty!!');
             }
 //            alert(JSON.stringify(itemsMeta[key].contents));
 
