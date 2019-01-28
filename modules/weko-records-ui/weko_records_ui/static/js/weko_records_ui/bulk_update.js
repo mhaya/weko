@@ -144,7 +144,7 @@ require([
 
             if (Object.keys(itemsMeta[pid].contents).length !== 0) {
               Object.keys(itemsMeta[pid].contents).forEach(function(key) {
-                alert(itemsMeta[pid].contents[key]);
+                alert(JSON.stringify(itemsMeta[pid].contents[key]));
 
 
               });
