@@ -113,6 +113,12 @@ require([
     // Bulk Update
     $('#submit-btn').on('click', function() {
 
+      $('input[type="checkbox"]').each(function(i, elem) {
+        if($(elem).prop('checked') === true){
+          alert($(elem).prop('value'));
+        }
+      });
+
       getUrl = '/bulk_update/items_metadata?pids=3/4';
 
 
@@ -127,7 +133,7 @@ require([
           Object.keys(itemsMeta).forEach(function(key) {
             meta = JSON.stringify(itemsMeta[key]);
 
-            alert(meta);
+//            alert(meta);
 
 
           });
