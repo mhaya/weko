@@ -141,7 +141,7 @@ require([
 
           itemsMeta = data;
           Object.keys(itemsMeta).forEach(function(key) {
-            itemsMeta[key].meta.lang = 'ja';
+            itemsMeta[key].meta.lang = 'en';
 //            alert(JSON.stringify(itemsMeta[key].meta));
 
             meta = JSON.stringify(itemsMeta[key].meta);

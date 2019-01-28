@@ -326,6 +326,6 @@ def get_items_metadata():
         if record:
             data[pid] = {}
             data[pid]['meta'] = record
-            data[pid]['index'] = {"index": ["1548047894181"], "actions": "private"}
+            data[pid]['index'] = {"index": ["1548047894181"]}
 
     return jsonify(data)
