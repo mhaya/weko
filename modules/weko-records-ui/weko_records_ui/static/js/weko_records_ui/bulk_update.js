@@ -129,55 +129,70 @@ require([
         return;
       }
 
-      getUrl = '/bulk_update/items_metadata?pids=' + pids;
-      $.ajax({
-        method: 'GET',
-        url: getUrl,
-        async: false,
-        success: function(data, status){
+      // Get setting fields
+      licences = $('select[name="licence-select"]');
+      licences.each(function(i, elem) {
+        alert($(elem).prop('value'));
 
-          var redirect_url = "/api/deposits/redirect";
-          var items_url = "/api/deposits/items";
-
-          itemsMeta = data;
-          Object.keys(itemsMeta).forEach(function(pid) {
-
-            if (Object.keys(itemsMeta[pid].contents).length !== 0) {
-
-              Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
-                var contentsMeta = itemsMeta[pid].contents[contentKey];
-                $.each( contentsMeta, function( key, value ) {
-                  value.licensetype = 'license_1';
-
-
-
-
-                });
-                itemsMeta[pid].meta[contentKey] = contentsMeta
-
-              });
-
-            }
-
-            meta = JSON.stringify(itemsMeta[pid].meta);
-            index = JSON.stringify(itemsMeta[pid].index);
-
-            index_url = redirect_url + "/" + pid;
-            self_url = items_url + "/" + pid;
-
-            // Update items
-            updateItems(index_url,
-                        self_url,
-                        meta,
-                        index);
-
-          });
-
-        },
-        error: function(status, error){
-          console.log(error);
-        }
+//        if($(elem).prop('value') === false){
+//          hasCanceled = true;
+//        }else {
+//          hasChecked = true;
+//        }
       });
+
+
+
+
+//      getUrl = '/bulk_update/items_metadata?pids=' + pids;
+//      $.ajax({
+//        method: 'GET',
+//        url: getUrl,
+//        async: false,
+//        success: function(data, status){
+//
+//          var redirect_url = "/api/deposits/redirect";
+//          var items_url = "/api/deposits/items";
+//
+//          itemsMeta = data;
+//          Object.keys(itemsMeta).forEach(function(pid) {
+//
+//            if (Object.keys(itemsMeta[pid].contents).length !== 0) {
+//
+//              Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
+//                var contentsMeta = itemsMeta[pid].contents[contentKey];
+//                $.each( contentsMeta, function( key, value ) {
+//                  value.licensetype = 'license_1';
+//
+//
+//
+//
+//                });
+//                itemsMeta[pid].meta[contentKey] = contentsMeta
+//
+//              });
+//
+//            }
+//
+//            meta = JSON.stringify(itemsMeta[pid].meta);
+//            index = JSON.stringify(itemsMeta[pid].index);
+//
+//            index_url = redirect_url + "/" + pid;
+//            self_url = items_url + "/" + pid;
+//
+//            // Update items
+//            updateItems(index_url,
+//                        self_url,
+//                        meta,
+//                        index);
+//
+//          });
+//
+//        },
+//        error: function(status, error){
+//          console.log(error);
+//        }
+//      });
 
 
     });
