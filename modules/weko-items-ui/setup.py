@@ -104,6 +104,8 @@ setup(
         ],
         'invenio_access.actions': [
             'item_access = weko_items_ui.permissions:action_item_access',
+        ],'invenio_db.models': [
+            'weko_items_ui = weko_items_ui.models',
         ],
     },
     extras_require=extras_require,
