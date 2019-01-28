@@ -322,6 +322,7 @@ class WekoDeposit(Deposit):
     def commit(self, *args, **kwargs):
         """Store changes on current instance in database and index it."""
 
+        flash('Commit!!!!')
         super(WekoDeposit, self).commit(*args, **kwargs)
         if self.data and len(self.data):
             # save item metadata
