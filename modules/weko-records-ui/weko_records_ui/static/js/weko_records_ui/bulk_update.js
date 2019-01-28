@@ -144,7 +144,7 @@ require([
 
             if (Object.keys(itemsMeta[pid].contents).length !== 0) {
 
-              Object.keys(itemsMeta[pid].contents).forEach( function(key) {
+              Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
                 alert(contentKey);
 
 
