@@ -148,28 +148,19 @@ require([
                 var contentsMeta = itemsMeta[pid].contents[contentKey];
                 $.each( contentsMeta, function( key, value ) {
                   value.licensetype = 'license_1';
+
+
+
+
                 });
                 itemsMeta[pid].meta[contentKey] = contentsMeta
-//                alert(JSON.stringify(itemsMeta[pid].meta[contentKey]));
-
-//                for (var contentsMeta in itemsMeta[pid].contents[key]) {
-//                  alert(JSON.stringify(contentsMeta));
-//                  contentsMeta.licensetype = 'license_3';
-
-//                }
-//                alert(JSON.stringify(itemsMeta[pid].contents[key]));
-
 
               });
 
             }
 
-//            alert(JSON.stringify(itemsMeta));
-
             meta = JSON.stringify(itemsMeta[pid].meta);
             index = JSON.stringify(itemsMeta[pid].index);
-
-//            alert(meta);
 
             index_url = redirect_url + "/" + pid;
             self_url = items_url + "/" + pid;
@@ -179,49 +170,6 @@ require([
                         self_url,
                         meta,
                         index);
-
-          // Get bucket
-//          $.ajax({
-//            type: "POST",
-//            url: index_url,
-//            async: false,
-//            cache: false,
-//            data: {},
-//            contentType: "application/json",
-//            processData: false,
-//            success: function(data) {
-//              // Upload files
-//              for (var fileName in files) {
-//                file_url = data['links']['bucket'] + "/" + fileName;
-//                $.ajax({
-//                  type: "PUT",
-//                  url: file_url,
-//                  async: false,
-//                  cache: false,
-//                  data: files[fileName],
-//                  contentType: "application/json",
-//                  processData: false,
-//                  success: function() {
-//                    // Update items
-//                    updateItems(index_url,
-//                                self_url,
-//                                JSON.stringify(itemData),
-//                                JSON.stringify(indexData),
-//                                error,
-//                                errorFlg);
-//                  },
-//                  error: function() {
-//                    errorFlg = true;
-//                    error['eMsg'] = "Error in file uploading.";
-//                  }
-//                });
-//              }
-//            },
-//            error: function() {
-//              errorFlg = true;
-//              error['eMsg'] = "Error in bucket requesting.";
-//            }
-//          });
 
           });
 

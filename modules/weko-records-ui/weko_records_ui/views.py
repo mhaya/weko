@@ -285,25 +285,20 @@ def default_view_method(pid, record, template=None, **kwargs):
 
 @blueprint.route("/item_management/bulk_update", methods=['GET'])
 def bulk_update():
-    fields = [{'id': '1', 'name': 'Access Type'},
-              {'id': '2', 'name': 'Licence'},
-              {'id': '3', 'name': 'Licence Description'}]
-
-    licences = [{'id': '1', 'name': 'Licence1'},
-                {'id': '2', 'name': 'Licence2'},
-                {'id': '3', 'name': 'Licence3'},
-                {'id': '4', 'name': 'Licence4'}]
+    # fields = [{'id': '1', 'name': 'Access Type'},
+    #           {'id': '2', 'name': 'Licence'},
+    #           {'id': '3', 'name': 'Licence Description'}]
+    #
+    # licences = [{'id': '1', 'name': 'Licence1'},
+    #             {'id': '2', 'name': 'Licence2'},
+    #             {'id': '3', 'name': 'Licence3'},
+    #             {'id': '4', 'name': 'Licence4'}]
 
     """Render view."""
-    # return render_template(
-    #     current_app.config['WEKO_RECORDS_UI_BULK_UPDATE_TEMPLATE'],
-    #     fields=fields,
-    #     licences=licences
-    # )
     detail_condition = get_search_detail_keyword('')
     return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
-                           fields=fields,
-                           licences=licences,
+                           fields=current_app.config['WEKO_RECORDS_UI_BULK_UPDATE_FIELDS']['fields'],
+                           licences=current_app.config['WEKO_RECORDS_UI_BULK_UPDATE_FIELDS']['licences'],
                            management_type='update',
                            detail_condition=detail_condition)
 
