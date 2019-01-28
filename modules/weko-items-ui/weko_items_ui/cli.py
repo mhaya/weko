@@ -54,5 +54,6 @@ def init_item_metadata_reference():
     url = 'http://www.sherpa.ac.uk/romeo/api29.php?all=yes'
     response = urllib.request.urlopen(url)
     response_text = response.read()
-    click.secho(response_text, fg='green')
+    str_text=str(response_text, encoding='utf-8')
+    click.secho(str_text, fg='green')
     click.secho('Just do test!!!!!', fg='red')
