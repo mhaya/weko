@@ -113,28 +113,88 @@ require([
     // Bulk Update
     $('#submit-btn').on('click', function() {
 
+      // Get id
+      pids = '';
       $('input[type="checkbox"]').each(function(i, elem) {
         if($(elem).prop('checked') === true){
-          alert($(elem).prop('value'));
+          if(pids === '') {
+            pids = $(elem).prop('value');
+          } else {
+            pids = pids + '/' + $(elem).prop('value');
+          }
         }
       });
 
-      getUrl = '/bulk_update/items_metadata?pids=3/4';
-
-
-
+      getUrl = '/bulk_update/items_metadata?pids=' + pids;
       $.ajax({
         method: 'GET',
         url: getUrl,
         async: false,
         success: function(data, status){
 
+          var redirect_url = "/api/deposits/redirect";
+          var items_url = "/api/deposits/items";
+
           itemsMeta = data;
           Object.keys(itemsMeta).forEach(function(key) {
-            meta = JSON.stringify(itemsMeta[key]);
+            meta = JSON.stringify(itemsMeta[key].meta);
+            index = JSON.stringify(itemsMeta[key].index);
 
-//            alert(meta);
+            alert(index);
 
+            index_url = redirect_url + "/" + key;
+            self_url = items_url + "/" + key;
+
+            // Update items
+//            updateItems(index_url,
+//                        self_url,
+//                        meta,
+//                        index,
+//                        error,
+//                        errorFlg);
+
+          // Get bucket
+//          $.ajax({
+//            type: "POST",
+//            url: index_url,
+//            async: false,
+//            cache: false,
+//            data: {},
+//            contentType: "application/json",
+//            processData: false,
+//            success: function(data) {
+//              // Upload files
+//              for (var fileName in files) {
+//                file_url = data['links']['bucket'] + "/" + fileName;
+//                $.ajax({
+//                  type: "PUT",
+//                  url: file_url,
+//                  async: false,
+//                  cache: false,
+//                  data: files[fileName],
+//                  contentType: "application/json",
+//                  processData: false,
+//                  success: function() {
+//                    // Update items
+//                    updateItems(index_url,
+//                                self_url,
+//                                JSON.stringify(itemData),
+//                                JSON.stringify(indexData),
+//                                error,
+//                                errorFlg);
+//                  },
+//                  error: function() {
+//                    errorFlg = true;
+//                    error['eMsg'] = "Error in file uploading.";
+//                  }
+//                });
+//              }
+//            },
+//            error: function() {
+//              errorFlg = true;
+//              error['eMsg'] = "Error in bucket requesting.";
+//            }
+//          });
 
           });
 
@@ -146,5 +206,38 @@ require([
 
 
     });
+
+    function updateItems(index_url, self_url, itemData, indexData, error, errorFlg) {
+      // Post to index select
+      $.ajax({
+        type: "PUT",
+        url: index_url,
+        async: false,
+        cache: false,
+        data: itemData,
+        contentType: "application/json",
+        success: function() {
+          // Post item data
+          $.ajax({
+            type: "PUT",
+            url: self_url,
+            async: false,
+            cache: false,
+            data: indexData,
+            contentType: "application/json",
+            success: function(){},
+            error: function() {
+              errorFlg = true;
+              error['eMsg'] = "Error in item data posting.";
+            }
+          });
+        },
+        error: function() {
+          errorFlg = true;
+          error['eMsg'] = "Error in index selection.";
+        }
+      });
+    }
+
 
 });
