@@ -317,7 +317,7 @@ def get_items_metadata():
     pid_list = []
     if pids is not None:
         pid_list = pids.split('/')
-    
+
     data = {}
     for pid in pid_list:
         pidObject = PersistentIdentifier.get('recid', pid)

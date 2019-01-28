@@ -124,6 +124,10 @@ require([
           }
         }
       });
+      if (pids === '') {
+        alert('Please select items to update.');
+        return;
+      }
 
       getUrl = '/bulk_update/items_metadata?pids=' + pids;
 
