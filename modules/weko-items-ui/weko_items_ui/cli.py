@@ -26,6 +26,8 @@ import uuid
 from flask.cli import with_appcontext
 from sqlalchemy import asc
 from invenio_db import db
+from flask import request
+import urllib2
 
 
 @click.group()
@@ -38,5 +40,19 @@ def abcd():
 
 @abcd.command('init')
 @with_appcontext
-def init_sherpa():
+def init_item_metadata_reference():
+    """
+    Init table item_metadata_reference.
+    :return:
+    """
+
+    # def get_reference_data():
+    #     url = 'http://www.baidu.com/'
+    #     response = urllib2.urlopen(url)  ##urlopen接受传入参数是string或者是request
+    #     response_text = response.read()
+
+    url = 'http://www.sherpa.ac.uk/romeo/api29.php?all=yes'
+    response = urllib2.urlopen(url)
+    response_text = response.read()
+    click.secho(response_text, fg='green')
     click.secho('Just do test!!!!!', fg='red')
