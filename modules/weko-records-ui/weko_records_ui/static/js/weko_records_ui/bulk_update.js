@@ -163,7 +163,7 @@ require([
 
             }
 
-            alert(JSON.stringify(itemsMeta);
+            alert(JSON.stringify(itemsMeta));
 
 //            meta = JSON.stringify(itemsMeta[pid].meta);
 //            index = JSON.stringify(itemsMeta[pid].index);
