@@ -31,7 +31,7 @@ from weko_index_tree.models import IndexStyle
 from .permissions import check_created_id
 from weko_deposit.api import WekoRecord
 from weko_search_ui.api import get_search_detail_keyword
-from weko_records.api import ItemMetadata
+from weko_records.api import ItemsMetadata
 
 
 blueprint = Blueprint(
@@ -319,7 +319,7 @@ def get_items_metadata():
         pid_list = pids.split('/')
 
     pid = PersistentIdentifier.get('recid', '4')
-    record = ItemMetadata.get_record(id_=pid.object_uuid)
+    record = ItemsMetadata.get_record(pid.object_uuid)
 
     flash('get_record_by_pid!')
     flash(record)
