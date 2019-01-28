@@ -28,6 +28,7 @@ from sqlalchemy import asc
 from invenio_db import db
 from flask import request
 import urllib.request
+import xml.etree.cElementTree as ET
 
 
 @click.group()
@@ -55,6 +56,6 @@ def init_item_metadata_reference():
     url = 'http://www.sherpa.ac.uk/romeo/api29.php?jtitle=modern&qtype=contains'
     response = urllib.request.urlopen(url)
     response_text = response.read()
-    str_text=str(response_text, encoding='utf-8')
+    str_text = ET.fromstring(response_text)
     click.secho(str_text, fg='green')
     click.secho('Just do test!!!!!', fg='red')
