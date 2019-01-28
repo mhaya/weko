@@ -23,14 +23,16 @@
 import six
 from flask import Blueprint, abort, current_app, render_template, \
     make_response, redirect, request, url_for, jsonify, flash
-
+from flask_login import current_user, login_required
 from invenio_records_ui.utils import obj_or_import_string
 from invenio_records_ui.signals import record_viewed
+from invenio_pidstore.models import PersistentIdentifier, PIDStatus
 from weko_index_tree.models import IndexStyle
 from .permissions import check_created_id
 from weko_deposit.api import WekoRecord
 from weko_search_ui.api import get_search_detail_keyword
-from flask_login import current_user, login_required
+from weko_records.api import ItemMetadata
+
 
 blueprint = Blueprint(
     'weko_records_ui',
@@ -316,7 +318,9 @@ def get_items_metadata():
     if pids is not None:
         pid_list = pids.split('/')
 
-    record = WekoRecord.get_record_by_pid('4')
+    pid = PersistentIdentifier.get('recid', '4')
+    record = ItemMetadata.get_record(id_=pid.object_uuid)
+
     flash('get_record_by_pid!')
     flash(record)
 
