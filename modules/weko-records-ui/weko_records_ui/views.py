@@ -327,5 +327,16 @@ def get_items_metadata():
             data[pid] = {}
             data[pid]['meta'] = record
             data[pid]['index'] = {"index": ["1548047894181"]}
+            data[pid]['contents'] = get_file_data(record)
 
     return jsonify(data)
+
+def get_file_data(meta):
+    file_data = {}
+    for key in meta:
+        if isinstance(meta.get(key), list):
+            for item in meta.get(key):
+                if 'filename' in item:
+                    file_data[key] = meta.get(key)
+                    break
+    return file_data
