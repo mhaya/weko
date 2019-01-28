@@ -146,7 +146,7 @@ require([
               Object.keys(itemsMeta[pid].contents).forEach( function(key) {
 
                 for (var contentsMeta in itemsMeta[pid].contents[key]) {
-                  alert(JSON.stringify(contentsMeta.licensetype));
+                  alert(contentsMeta.licensetype);
 //                  contentsMeta.licensetype = 'license_3';
 
                 }
