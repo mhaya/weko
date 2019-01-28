@@ -143,12 +143,12 @@ require([
           Object.keys(itemsMeta).forEach(function(pid) {
 
             if (Object.keys(itemsMeta[pid].contents).length !== 0) {
-              Object.keys(itemsMeta[pid].contents).forEach( function(key) {
+              Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
 
-                var contentsMeta = itemsMeta[pid].contents[key];
-                $.each( itemsMeta[pid].contents[key], function( key, value ) {
-                  alert(value);
-                });                
+                var contentsMeta = itemsMeta[pid].contents[contentKey];
+                $.each( contentsMeta, function( key, value ) {
+                  alert(key);
+                });
 //                for (var contentsMeta in itemsMeta[pid].contents[key]) {
 //                  alert(JSON.stringify(contentsMeta));
 //                  contentsMeta.licensetype = 'license_3';
