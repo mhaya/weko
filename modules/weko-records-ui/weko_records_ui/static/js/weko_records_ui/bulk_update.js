@@ -112,7 +112,49 @@ require([
 
     // Bulk Update
     $('#submit-btn').on('click', function() {
-      alert('submit!!!');
+
+      $.ajax({
+        method: 'GET',
+        url: '/bulk_update/items_metadata',
+        async: false,
+        success: function(data, status){
+          alert('Get!!!!');
+//          properties_obj = data;
+//
+//          defProps = data.defaults;
+//          isSelected = true;
+//          Object.keys(defProps).forEach(function(key) {
+//            if (isSelected) {
+//              select_option = select_option + '<option value="' + defProps[key].value + '" selected>' + defProps[key].name + '</option>';
+//              isSelected = false;
+//            } else {
+//              select_option = select_option + '<option value="' + defProps[key].value + '">' + defProps[key].name + '</option>';
+//            }
+//          });
+//
+//          odered = {}
+//          others = ''
+//          for (var key in data) {
+//            if (key == 'defaults') continue;
+//
+//            option = '<option value="cus_' + key + '">' + data[key].name + '</option>'
+//            if (data[key].sort != null) {
+//              odered[data[key].sort] = option;
+//            } else {
+//              others = others + option;
+//            }
+//          }
+//
+//          Object.keys(odered).forEach(function(key) {
+//            select_option = select_option + odered[key];
+//          });
+//          select_option = select_option + others;
+
+        },
+        error: function(status, error){
+          console.log(error);
+        }
+      });
 
 
     });

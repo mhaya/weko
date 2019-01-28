@@ -22,14 +22,15 @@
 
 import six
 from flask import Blueprint, abort, current_app, render_template, \
-    make_response, redirect, request, url_for
+    make_response, redirect, request, url_for, jsonify, flash
 
 from invenio_records_ui.utils import obj_or_import_string
 from invenio_records_ui.signals import record_viewed
 from weko_index_tree.models import IndexStyle
 from .permissions import check_created_id
+from weko_deposit.api import WekoRecord
 from weko_search_ui.api import get_search_detail_keyword
-from weko_search_ui.api import get_search_detail_keyword
+from flask_login import current_user, login_required
 
 blueprint = Blueprint(
     'weko_records_ui',
@@ -304,3 +305,24 @@ def bulk_update():
                            management_type='update',
                            detail_condition=detail_condition)
 
+
+@blueprint.route('/bulk_update/items_metadata', methods=['GET'])
+@login_required
+def get_items_metadata():
+    """Get the metadata of items to bulk update."""
+
+    pids = request.values.get('pids')
+    pid_list = []
+    if pids is not None:
+        pid_list = pids.split('/')
+
+    record = WekoRecord.get_record_by_pid('4')
+    flash('get_record_by_pid!')
+    flash(record)
+
+
+    # prop = ItemTypeProps.get_record(property_id)
+    # tmp = {'id': prop.id, 'name': prop.name, 'schema': prop.schema,
+    #        'form': prop.form, 'forms': prop.forms}
+    data = {'4': record}
+    return jsonify(data)
