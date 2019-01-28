@@ -321,10 +321,6 @@ def get_items_metadata():
     pid = PersistentIdentifier.get('recid', '4')
     record = ItemsMetadata.get_record(pid.object_uuid)
 
-    flash('get_record_by_pid!')
-    flash(record)
-
-
     # prop = ItemTypeProps.get_record(property_id)
     # tmp = {'id': prop.id, 'name': prop.name, 'schema': prop.schema,
     #        'form': prop.form, 'forms': prop.forms}
