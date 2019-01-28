@@ -144,7 +144,7 @@ require([
 
             if (Object.keys(itemsMeta[pid].contents).length === 0) {
               alert('Empty');
-              continue;
+//              continue;
 
             }else {
               alert('Not Empty');
