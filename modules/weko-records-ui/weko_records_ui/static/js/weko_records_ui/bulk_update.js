@@ -143,8 +143,8 @@ require([
           Object.keys(itemsMeta).forEach(function(pid) {
 
             if (Object.keys(itemsMeta[pid].contents).length !== 0) {
-              Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
-                alert(contentKey);
+              Object.keys(itemsMeta[pid].contents).forEach( function(key) {
+                alert(key);
 
                 var contentsMeta = itemsMeta[pid].contents[contentKey];
                 $.each( contentsMeta, function( key, value ) {
