@@ -118,7 +118,7 @@ require([
         url: '/bulk_update/items_metadata',
         async: false,
         success: function(data, status){
-          alert(JSON.stringify(data));
+          alert(JSON.stringify(data['4']));
 //          properties_obj = data;
 //
 //          defProps = data.defaults;
