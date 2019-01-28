@@ -142,17 +142,12 @@ require([
           itemsMeta = data;
           Object.keys(itemsMeta).forEach(function(pid) {
 
-            if (Object.keys(itemsMeta[pid].contents).length === 0) {
-              alert('Empty');
-//              continue;
+            if (Object.keys(itemsMeta[pid].contents).length !== 0) {
+              Object.keys(itemsMeta[pid].contents).forEach(function(key) {
+                alert(itemsMeta[pid].contents[key]);
 
-            }else {
-              alert('Not Empty');
-//              Object.keys(itemsMeta[pid].contents).forEach(function(key) {
-//
-//
-//              });
 
+              });
 
             }
 
