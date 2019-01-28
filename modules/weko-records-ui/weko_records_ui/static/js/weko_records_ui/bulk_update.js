@@ -145,15 +145,15 @@ require([
             if (Object.keys(itemsMeta[pid].contents).length !== 0) {
 
               Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
-                alert(contentKey);
 
+                alert(JSON.stringify(itemsMeta[pid].meta.contentKey));
 
                 var contentsMeta = itemsMeta[pid].contents[contentKey];
                 $.each( contentsMeta, function( key, value ) {
                   value.licensetype = 'license_3';
                 });
 //                alert(JSON.stringify(itemsMeta[pid].meta.contentKey));
-                itemsMeta[pid].meta.contentKey = contentsMeta
+//                itemsMeta[pid].meta.contentKey = contentsMeta
 //                alert(JSON.stringify(itemsMeta[pid].meta));
 
 //                for (var contentsMeta in itemsMeta[pid].contents[key]) {
