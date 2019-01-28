@@ -142,7 +142,11 @@ require([
           itemsMeta = data;
           Object.keys(itemsMeta).forEach(function(key) {
 
-            alert(JSON.stringify(itemsMeta[key].contents));
+            if (Object.keys(itemsMeta[key].contents).length === 0) {
+              alert('Empty Contents!!');
+              return;
+            }
+//            alert(JSON.stringify(itemsMeta[key].contents));
 
 //            meta = JSON.stringify(itemsMeta[key].meta);
 //            index = JSON.stringify(itemsMeta[key].index);
