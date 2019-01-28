@@ -126,6 +126,8 @@ require([
       });
 
       getUrl = '/bulk_update/items_metadata?pids=' + pids;
+
+      alert(getUrl);
       $.ajax({
         method: 'GET',
         url: getUrl,
