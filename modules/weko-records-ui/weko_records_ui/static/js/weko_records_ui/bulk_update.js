@@ -140,14 +140,22 @@ require([
           var items_url = "/api/deposits/items";
 
           itemsMeta = data;
-          Object.keys(itemsMeta).forEach(function(key) {
+          Object.keys(itemsMeta).forEach(function(pid) {
 
-            if (Object.keys(itemsMeta[key].contents).length === 0) {
-              alert('Empty!!');
+            if (Object.keys(itemsMeta[pid].contents).length === 0) {
+              alert('Empty');
+              continue;
 
             }else {
-              alert('Not Empty!!');
+              alert('Not Empty');
+//              Object.keys(itemsMeta[pid].contents).forEach(function(key) {
+//
+//
+//              });
+
+
             }
+
 //            alert(JSON.stringify(itemsMeta[key].contents));
 
 //            meta = JSON.stringify(itemsMeta[key].meta);
