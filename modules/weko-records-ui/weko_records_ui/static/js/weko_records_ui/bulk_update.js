@@ -163,19 +163,19 @@ require([
 
             }
 
-//            alert(JSON.stringify(itemsMeta[key].contents));
+            alert(JSON.stringify(itemsMeta);
 
-            meta = JSON.stringify(itemsMeta[pid].meta);
-            index = JSON.stringify(itemsMeta[pid].index);
-
-            index_url = redirect_url + "/" + pid;
-            self_url = items_url + "/" + pid;
-
-            // Update items
-            updateItems(index_url,
-                        self_url,
-                        meta,
-                        index);
+//            meta = JSON.stringify(itemsMeta[pid].meta);
+//            index = JSON.stringify(itemsMeta[pid].index);
+//
+//            index_url = redirect_url + "/" + pid;
+//            self_url = items_url + "/" + pid;
+//
+//            // Update items
+//            updateItems(index_url,
+//                        self_url,
+//                        meta,
+//                        index);
 
           // Get bucket
 //          $.ajax({
