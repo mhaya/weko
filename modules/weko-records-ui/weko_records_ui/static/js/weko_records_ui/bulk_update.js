@@ -147,7 +147,7 @@ require([
 
                 var contentsMeta = itemsMeta[pid].contents[contentKey];
                 $.each( contentsMeta, function( key, value ) {
-                  alert(key);
+                  alert(JSON.stringify(value));
                 });
 //                for (var contentsMeta in itemsMeta[pid].contents[key]) {
 //                  alert(JSON.stringify(contentsMeta));
