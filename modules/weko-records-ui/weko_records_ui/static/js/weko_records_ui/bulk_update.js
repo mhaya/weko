@@ -70,6 +70,7 @@ require([
           $(elem).attr('hidden', 'hidden')
         });
         fields = [];
+        isDuplicate = false;
         return;
       }
 
