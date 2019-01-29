@@ -71,6 +71,7 @@ require([
       });
       alert(fields.length);
       alert($.unique(fields).length);
+      return;
 //      if(fields.length !== $.unique(fields).length) {
 //        alert('Field already exists.');
 //        $(this).val('unselected');
