@@ -52,6 +52,7 @@ require([
         var field = $($(row).find('select[name="field_sel"]')[0]);
         if(field.prop('value') !== 'unselected') {
           if($.inArray(selected, fields) !== -1) {
+            alert(fields);
             alert(field.prop('value'));
 //            alert('Field already exists.');
             // Initialize
