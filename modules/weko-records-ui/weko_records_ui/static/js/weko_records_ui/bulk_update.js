@@ -41,6 +41,7 @@ require([
     });
 
     $('select[name="field_sel"]').change(function() {
+      alert('Change!!!');
       var selected = $(this).val();
       var contents = $(this).parents('.field-row').find('.field-content');
 
@@ -62,7 +63,7 @@ require([
       });
 
       if(isDuplicate) {
-        alert('Field already exists.');
+//        alert('Field already exists.');
         $(this).val('unselected');
         contents.each( function(i, elem) {
           $(elem).attr('hidden', 'hidden')
