@@ -130,11 +130,8 @@ require([
         $(row).find('select[name="field-select"]').each( function(i, field) {
           // Access Type
           if($(field).prop('value') === '1') {
-            alert($(row).find('input[name="access_type"]:checked').length);
-//            $(row).find('input[name="access_type"]:checked').each( function(i, field) {
-//            
-//
-//            });
+            var accessType = $(row).find('input[name="access_type"]:checked')[0].prop('value');
+            alert(accessType);
 
           }else if($(field).prop('value') === '2') {
             alert('Licence');
