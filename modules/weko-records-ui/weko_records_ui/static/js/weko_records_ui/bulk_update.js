@@ -69,17 +69,15 @@ require([
 
 
       });
-      alert(fields);
-      var uniqueFields = array = fields.filter(function (x, i, self) {
+
+      var uniqueFields = fields.filter(function (x, i, self) {
         return self.indexOf(x) === i;
       });
-      alert(uniqueFields);
-      return;
-//      if(fields.length !== $.unique(fields).length) {
-//        alert('Field already exists.');
-//        $(this).val('unselected');
-//        return;
-//      }
+      if(fields.length !== uniqueFields.length) {
+        alert('Field already exists.');
+        $(this).val('unselected');
+        return;
+      }
 
 
 //      alert(fields +' : ' + selected);
