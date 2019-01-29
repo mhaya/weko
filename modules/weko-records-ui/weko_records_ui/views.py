@@ -308,8 +308,11 @@ def get_items_metadata():
     data = {}
     for pid in pid_list:
         record = WekoRecord.get_record_by_pid(pid)
-        flash(record)
-        
+        flash(record.get('path'))
+        # if isinstance(record.get('path'), list):
+        #     for item in meta.get(key):
+
+
         pidObject = PersistentIdentifier.get('recid', pid)
         meta = ItemsMetadata.get_record(pidObject.object_uuid)
 
