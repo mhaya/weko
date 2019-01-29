@@ -76,7 +76,7 @@ require([
 
     $('select[name="licence_sel"]').change(function() {
       var selected = $(this).val();
-      var des = $($(this).parent().find('textarea[name="licence_des"]'));
+      var des = $($(this).parent().find('.licence-des'));
 
       if(selected === 'license_free') {
         des.removeAttr("hidden");
