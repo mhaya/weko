@@ -144,8 +144,8 @@ require([
 
         // Licence
         }else if(field.prop('value') === '2') {
-          licence = $($(row).find('select[name="licence-select"]')[0]).prop('value');
-         alert(licence);
+//          licence = $($(row).find('select[name="licence-select"]')[0]).prop('value');
+//         alert(licence);
 
         }else if(field.prop('value') === '3') {
           alert('Licence Description');
