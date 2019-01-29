@@ -67,6 +67,7 @@ require([
         contents.each( function(i, elem) {
           $(elem).attr('hidden', 'hidden')
         });
+        fields = [];
         return;
       }
 
