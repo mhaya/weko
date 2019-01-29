@@ -307,14 +307,17 @@ def get_items_metadata():
 
     data = {}
     for pid in pid_list:
+        record = WekoRecord.get_record_by_pid(pid)
+        flash(record)
+        
         pidObject = PersistentIdentifier.get('recid', pid)
-        record = ItemsMetadata.get_record(pidObject.object_uuid)
+        meta = ItemsMetadata.get_record(pidObject.object_uuid)
 
-        if record:
+        if meta:
             data[pid] = {}
-            data[pid]['meta'] = record
+            data[pid]['meta'] = meta
             data[pid]['index'] = {"index": ["1548047894181"]}
-            data[pid]['contents'] = get_file_data(record)
+            data[pid]['contents'] = get_file_data(meta)
 
     return jsonify(data)
 
