@@ -53,6 +53,8 @@ require([
 
       var contents = $(this).parents('.field-row').find('.field-content');
       var selected = $(this).val();
+      alert(fields +' : ' + selected);
+      alert($.inArray(selected, fields));
       if(selected !== 'unselected' && $.inArray(selected, fields) !== -1) {
         alert('Field already exists.');
 
