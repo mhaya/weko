@@ -41,13 +41,14 @@ require([
     });
 
     $('select[name="field_sel"]').change(function() {
-      alert('Change!!!');
+
       var selected = $(this).val();
       var contents = $(this).parents('.field-row').find('.field-content');
 
       // Get selected fields
       var isDuplicate = false;
       var fields = [];
+      alert(fields);
       $('.row.field-row').each(function(i, row) {
         var field = $($(row).find('select[name="field_sel"]')[0]);
         if(field.prop('value') !== 'unselected') {
