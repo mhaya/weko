@@ -149,7 +149,7 @@ require([
 
         }else if(field.prop('value') === '3') {
           licenceDes = $($(row).find('textarea[name="licence_des"]')[0]).prop('value');
-          alert(licenceDes);
+          alert(licenceDes === '');
 
         }
 
