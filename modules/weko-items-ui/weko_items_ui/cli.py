@@ -54,10 +54,9 @@ def init_item_metadata_reference():
     #     response = urllib2.urlopen(url)  ##urlopen接受传入参数是string或者是request
     #     response_text = response.read()
 
-    # url = 'http://www.sherpa.ac.uk/romeo/api29.php?all=yes'
-    url = 'http://www.sherpa.ac.uk/romeo/api29.php?jtitle=modern&qtype=contains'
+    url = 'http://www.sherpa.ac.uk/romeo/api29.php?all=yes'
+    # url = 'http://www.sherpa.ac.uk/romeo/api29.php?jtitle=modern&qtype=contains'
     response = urllib.request.urlopen(url)
     response_text = response.read()
     str = dumps(bf.data(fromstring(response_text)))
     click.secho(str, fg='green')
-    click.secho('Just do test!!!!!', fg='red')
