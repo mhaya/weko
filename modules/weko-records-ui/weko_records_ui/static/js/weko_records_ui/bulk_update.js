@@ -163,19 +163,21 @@ require([
           itemsMeta = data;
           Object.keys(itemsMeta).forEach(function(pid) {
 
+            // Contents Meta
             if (Object.keys(itemsMeta[pid].contents).length !== 0) {
 
               Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
                 var contentsMeta = itemsMeta[pid].contents[contentKey];
                 $.each( contentsMeta, function( key, value ) {
+                  alert(JSON.stringify(value));
 
 
-                  if (Object.keys(accessType).length !== 0) {
-                    Object.keys(accessType).forEach( function(key) {
-                     alert(value[key]);
-                    });
-
-                  }
+//                  if (Object.keys(accessType).length !== 0) {
+//                    Object.keys(accessType).forEach( function(key) {
+//                     alert(value[key]);
+//                    });
+//
+//                  }
 
                   // Licence
                   if(licence !== 'unselected') {
