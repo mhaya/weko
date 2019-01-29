@@ -47,15 +47,17 @@ require([
       // Get selected fields
       var fields = [];
       $('.row.field-row').each(function(i, row) {
-        var field = $($(row).find('select[name="field_sel"]')[0]).prop('value');
-        if(field !== 'unselected') {
+        var field = $($(row).find('select[name="field_sel"]')[0]);
+        if(field.prop('value') !== 'unselected') {
           if($.inArray(selected, fields) !== -1) {
             alert('Field already exists.');
             // Initialize
-            $(this).val('unselected');
+            field.val('unselected');
             contents.each( function(i, elem) {
               $(elem).attr('hidden', 'hidden')
             });
+            return;
+
           } else {
             fields.push(selected);
           }
