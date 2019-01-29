@@ -63,7 +63,7 @@ require([
           }
 
         // Licence Description
-        }else if(elemAttr.indexOf('licence-description') >= 0){
+        }else if(elemAttr.indexOf('licence-des') >= 0){
           if('3' === selected.toString()){
             $(elem).removeAttr("hidden");
           }else {
@@ -128,6 +128,7 @@ require([
       // Get setting fields
       var accessTypes = {};
       var licence= '';
+      var licenceDes= '';
       $('.row.field-row').each(function(i, row) {
 //        $(row).find('select[name="field-select"]').each( function(i, field) {
 //        });
@@ -145,10 +146,10 @@ require([
         // Licence
         }else if(field.prop('value') === '2') {
           licence = $($(row).find('select[name="licence-select"]')[0]).prop('value');
-          alert(licence);
 
         }else if(field.prop('value') === '3') {
-          alert('Licence Description');
+          licenceDes = $($(row).find('textarea[name="licence_des"]')[0]).prop('value');
+          alert(licenceDes);
 
         }
 
