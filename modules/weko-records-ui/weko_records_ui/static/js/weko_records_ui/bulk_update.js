@@ -171,9 +171,10 @@ require([
                 $.each( contentsMeta, function( key, value ) {
 
                   if (Object.keys(accessType).length !== 0) {
-                    Object.keys(accessType).forEach( function(key) {
-                     alert(key);
+                    Object.keys(accessType).forEach( function(field) {
+                    value[field] =  accessType[field];
                     });
+                    alert(JSON.stringify(value));
 
                   }
 
