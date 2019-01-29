@@ -41,29 +41,43 @@ require([
     });
 
     $('select[name="field_sel"]').change(function() {
+      var selected = $(this).val();
+      var contents = $(this).parents('.field-row').find('.field-content');
+
       // Get selected fields
       var fields = [];
       $('.row.field-row').each(function(i, row) {
-        $(row).find('select[name="field_sel"]').each(function(i, field) {
-          if($(field).prop('value') !== 'unselected') {
-            fields.push($(field).prop('value'));
+        var field = $($(row).find('select[name="field_sel"]')[0]).prop('value');
+        if(field !== 'unselected') {
+          if($.inArray(selected, fields) !== -1) {
+            alert('Field already exists.');
+            // Initialize
+            $(this).val('unselected');
+            contents.each( function(i, elem) {
+              $(elem).attr('hidden', 'hidden')
+            });
+          } else {
+            fields.push(selected);
           }
-        });
+        }
+
+
+
+//        $(row).find('select[name="field_sel"]').each(function(i, field) {
+//          if($(field).prop('value') !== 'unselected') {
+//            fields.push($(field).prop('value'));
+//          }
+//        });
       });
 
-      var contents = $(this).parents('.field-row').find('.field-content');
-      var selected = $(this).val();
-      alert(fields +' : ' + selected);
-      alert($.inArray(selected, fields));
-      if(selected !== 'unselected' && $.inArray(selected, fields) !== -1) {
-        alert('Field already exists.');
 
-        // Initialize
-        $(this).val('unselected');
-        contents.each( function(i, elem) {
-          $(elem).attr('hidden', 'hidden')
-        });
-      }
+
+//      alert(fields +' : ' + selected);
+//      alert($.inArray(selected, fields));
+//      if(selected !== 'unselected' && $.inArray(selected, fields) !== -1) {
+//
+//
+//      }
 
       contents.each(function(i, elem) {
         var elemAttr = $(elem).attr('class');
