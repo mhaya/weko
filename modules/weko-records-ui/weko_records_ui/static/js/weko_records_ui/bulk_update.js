@@ -169,27 +169,22 @@ require([
               Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
                 var contentsMeta = itemsMeta[pid].contents[contentKey];
                 $.each( contentsMeta, function( key, value ) {
-
-                  alert(JSON.stringify(value));
+                  // Access Type
                   if (Object.keys(accessType).length !== 0) {
                     Object.keys(accessType).forEach( function(field) {
                     value[field] =  accessType[field];
                     });
-                    alert(JSON.stringify(value));
-
                   }
-
                   // Licence
                   if(licence !== 'unselected') {
-                    value.licensetype = 'license_1';
+                    value['licensetype'] = licence;
                   }
-
-
-
-
-
+                  // Licence Description
+                  if(licenceDes !== '' && licence === 'license_free') {
+                    value['licensefree'] = licenceDes;
+                  }
                 });
-                itemsMeta[pid].meta[contentKey] = contentsMeta
+                itemsMeta[pid].meta[contentKey] = contentsMeta;
 
               });
 
