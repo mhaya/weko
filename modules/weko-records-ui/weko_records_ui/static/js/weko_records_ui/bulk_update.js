@@ -69,8 +69,8 @@ require([
 
 
       });
-      alert(fields.length);
-      alert($.unique(fields).length);
+      alert(fields);
+      alert($.unique(fields));
       return;
 //      if(fields.length !== $.unique(fields).length) {
 //        alert('Field already exists.');
