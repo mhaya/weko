@@ -126,9 +126,20 @@ require([
       }
 
       // Get setting fields
+      $('.row.field-row').each(function(i, elem) {
+        $(elem).find('select[name="field-select"]').each( function(i, sel) {
+          alert($(sel).prop('value'));
+        });
+
+
+
+      });
+
+
+
       accessTypes = [];
       $('input[name="access_type"]:checked').each( function(i, elem) {
-        alert($(elem).prop('value'));
+//        alert($(elem).prop('value'));
 //        if($(elem).prop('value') !== 'unselected'){
 //          licences.push($(elem).prop('value'));
 //        }
