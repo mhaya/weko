@@ -36,7 +36,7 @@ require([
       accessDate = $(this).parents('.access-type-select').find('input[name="access_date"]');
       if(selected == 'open_date'){
         $(accessDate).removeAttr("disabled");
-      }else {
+      } else {
         $(accessDate).attr('disabled', 'disabled');
       }
     });
@@ -159,19 +159,10 @@ require([
           if(licence === 'license_free') {
             licenceDes = $($(row).find('textarea[name="licence_des"]')[0]).prop('value');
           }
-
         }
-//        else if(field.prop('value') === '3') {
-//          licenceDes = $($(row).find('textarea[name="licence_des"]')[0]).prop('value');
-//        }
-
       });
 
-      alert(JSON.stringify(accessType));
-      alert(licence);
-      alert(licenceDes);
-      return;
-
+      // Update
       getUrl = '/bulk_update/items_metadata?pids=' + pids;
       $.ajax({
         method: 'GET',
@@ -207,6 +198,8 @@ require([
                   }
                 });
                 itemsMeta[pid].meta[contentKey] = contentsMeta;
+
+                alert(JSON.stringify(itemsMeta[pid].meta[contentKey]));
 
               });
 
