@@ -130,8 +130,6 @@ require([
       var licence= '';
       var licenceDes= '';
       $('.row.field-row').each(function(i, row) {
-//        $(row).find('select[name="field-select"]').each( function(i, field) {
-//        });
         var field = $($(row).find('select[name="field-select"]')[0]);
 
         // Access Type
@@ -143,38 +141,17 @@ require([
           }
           accessTypes.push(accessType);
 
+          alert(type);
+
         // Licence
         }else if(field.prop('value') === '2') {
           licence = $($(row).find('select[name="licence-select"]')[0]).prop('value');
 
         }else if(field.prop('value') === '3') {
           licenceDes = $($(row).find('textarea[name="licence_des"]')[0]).prop('value');
-          alert(licenceDes === '');
-
         }
 
-
-
       });
-
-
-
-      accessTypes = [];
-      $('input[name="access_type"]:checked').each( function(i, elem) {
-//        alert($(elem).prop('value'));
-//        if($(elem).prop('value') !== 'unselected'){
-//          licences.push($(elem).prop('value'));
-//        }
-      });
-
-      licences = [];
-      $('select[name="licence-select"]').each( function(i, elem) {
-        if($(elem).prop('value') !== 'unselected'){
-          licences.push($(elem).prop('value'));
-        }
-      });
-
-
 
 //      getUrl = '/bulk_update/items_metadata?pids=' + pids;
 //      $.ajax({
