@@ -45,6 +45,7 @@ require([
       var contents = $(this).parents('.field-row').find('.field-content');
 
       // Get selected fields
+      var isDuplicate = false;
       var fields = [];
       $('.row.field-row').each(function(i, row) {
         var field = $($(row).find('select[name="field_sel"]')[0]);
@@ -52,15 +53,19 @@ require([
           if($.inArray(selected, fields) !== -1) {
             alert('Field already exists.');
             // Initialize
-            field.val('unselected');
-            contents.each( function(i, elem) {
-              $(elem).attr('hidden', 'hidden')
-            });
-            return;
-
+//            field.val('unselected');
+            isDuplicate = true;
           } else {
             fields.push(selected);
           }
+        }
+        if(isDuplicate) {
+          alert('Field already exists.');
+          $(this).val('unselected');
+          contents.each( function(i, elem) {
+            $(elem).attr('hidden', 'hidden')
+          });
+          return;
         }
 
 
