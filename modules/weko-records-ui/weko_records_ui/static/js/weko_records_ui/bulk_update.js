@@ -52,7 +52,7 @@ require([
 
 
         var field = $($(row).find('select[name="field_sel"]')[0]);
-        alert(fields);
+
         if(field.prop('value') !== 'unselected') {
           if($.inArray(selected, fields) !== -1) {
 //            alert(fields);
@@ -65,6 +65,8 @@ require([
             fields.push(selected);
           }
         }
+
+        alert(fields);
       });
 //      alert(isDuplicate);
 
