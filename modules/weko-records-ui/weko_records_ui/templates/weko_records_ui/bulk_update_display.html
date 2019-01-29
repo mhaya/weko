@@ -41,24 +41,26 @@
       <div class="row field-row-default" hidden>
         <div class="col-md-2">
           <select class="form-control" name="field-select">
-            <option value="0" selected></option>
+            <option value="unselected" selected></option>
             {%- for field in fields if fields %}
             <option value="{{field.id}}">{{field.name}}</option>
             {%- endfor %}
           </select>
         </div>
         <div class="col-md-9">
+          <!-- Licence -->
           <div class="field-content licence-select" hidden>
             <select class="form-control" name="licence-select">
-              <option value="0" selected></option>
+              <option value="unselected" selected></option>
               {%- for licence in licences if licences %}
               <option value="{{licence.id}}">{{licence.name}}</option>
               {%- endfor %}
             </select>
           </div>
+          <!-- Access Type -->
           <div class="field-content access-type-select" hidden>
             <label class="radio-inline col-md-2">
-              <input type="radio" name="access_type" value="open_access" checked>{{_('Open Access')}}
+              <input type="radio" name="access_type" value="open_access">{{_('Open Access')}}
             </label>
             <label class="radio-inline col-md-4">
               <input type="radio" name="access_type" value="open_access_date">{{_('Open Access Date')}}
@@ -68,6 +70,7 @@
               <input type="radio" name="access_type" value="login_user_only">{{_('Login User Only')}}
             </label>
           </div>
+          <!-- Licence Description -->
           <div class="field-content licence-description" hidden>
             <textarea class="form-control" rows="3" name=""></textarea>
           </div>
@@ -76,24 +79,20 @@
           <a class="del-field" href='#'><span class='glyphicon glyphicon-remove'></span></a>
         </div>
       </div>
-
       <br id="add-field-row">
       <div class="row">
         <div class="col-md-2">
           <a id="add-field-link" href="#">{{_('Add Update Field')}}</a>
         </div>
       </div>
-
     </div>
   </div>
-
   <div class="panel panel-default">
     <div class="panel-heading clearfix">
       <span class="panel-title">
         {{_('Search')}}
       </span>
     </div>
-
     <div class="panel-body">
       <div class="col-sm-12 col-md-12 col-lg-12">
         {% include "weko_theme/body_search.html" %}

@@ -43,14 +43,12 @@ require([
 
     $('select[name="field-select"]').change(function() {
       var selected = $(this).val();
-//      alert($('input[name="access_type"]:checked').val());
       contents = $(this).parents('.field-row').find('.field-content');
       contents.each(function(i, elem) {
         var elemAttr = $(elem).attr('class');
-
         // Access Type
         if(elemAttr.indexOf('access-type-select') >= 0){
-          if('1' == selected.toString()){
+          if('1' === selected.toString()){
             $(elem).removeAttr("hidden");
           }else {
             $(elem).attr('hidden', 'hidden');
@@ -58,7 +56,7 @@ require([
 
         // Licence
         }else if(elemAttr.indexOf('licence-select') >= 0){
-          if('2' == selected.toString()){
+          if('2' === selected.toString()){
             $(elem).removeAttr("hidden");
           }else {
             $(elem).attr('hidden', 'hidden');
@@ -66,14 +64,12 @@ require([
 
         // Licence Description
         }else if(elemAttr.indexOf('licence-description') >= 0){
-          if('3' == selected.toString()){
+          if('3' === selected.toString()){
             $(elem).removeAttr("hidden");
           }else {
             $(elem).attr('hidden', 'hidden');
           }
-
         }
-
       });
     });
 
@@ -130,17 +126,20 @@ require([
       }
 
       // Get setting fields
-      licences = $('select[name="licence-select"]');
-      licences.each(function(i, elem) {
+      accessTypes = [];
+      $('input[name="access_type"]').each( function(i, elem) {
         alert($(elem).prop('value'));
-
-//        if($(elem).prop('value') === false){
-//          hasCanceled = true;
-//        }else {
-//          hasChecked = true;
+//        if($(elem).prop('value') !== 'unselected'){
+//          licences.push($(elem).prop('value'));
 //        }
       });
 
+      licences = [];
+      $('select[name="licence-select"]').each( function(i, elem) {
+        if($(elem).prop('value') !== 'unselected'){
+          licences.push($(elem).prop('value'));
+        }
+      });
 
 
 
