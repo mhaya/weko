@@ -34,14 +34,14 @@ require([
     $('input[name="access_type"]').change(function() {
       var selected = $(this).val();
       accessDate = $(this).parents('.access-type-select').find('input[name="access_date"]');
-      if(selected == 'open_access_date'){
+      if(selected == 'open_date'){
         $(accessDate).removeAttr("disabled");
       }else {
         $(accessDate).attr('disabled', 'disabled');
       }
     });
 
-    $('select[name="field-select"]').change(function() {
+    $('select[name="field_select"]').change(function() {
       var selected = $(this).val();
       contents = $(this).parents('.field-row').find('.field-content');
       contents.each(function(i, elem) {
@@ -55,7 +55,7 @@ require([
           }
 
         // Licence
-        }else if(elemAttr.indexOf('licence-select') >= 0){
+        } else if(elemAttr.indexOf('licence-select') >= 0){
           if('2' === selected.toString()){
             $(elem).removeAttr("hidden");
           }else {
@@ -63,10 +63,10 @@ require([
           }
 
         // Licence Description
-        }else if(elemAttr.indexOf('licence-des') >= 0){
+        } else if(elemAttr.indexOf('licence-des') >= 0){
           if('3' === selected.toString()){
             $(elem).removeAttr("hidden");
-          }else {
+          } else {
             $(elem).attr('hidden', 'hidden');
           }
         }
@@ -79,7 +79,7 @@ require([
       hasCanceled = false;
 
       checkboxes = $(this).parent().find('input[type="checkbox"]');
-      checkboxes.each(function(i, elem) {
+      checkboxes.each( function(i, elem) {
         if($(elem).prop('checked') === false){
           hasCanceled = true;
         }else {
@@ -130,17 +130,15 @@ require([
       var licence= '';
       var licenceDes= '';
       $('.row.field-row').each(function(i, row) {
-        var field = $($(row).find('select[name="field-select"]')[0]);
+        var field = $($(row).find('select[name="field_select"]')[0]);
 
         // Access Type
         if(field.prop('value') === '1') {
           var type = $($(row).find('input[name="access_type"]:checked')[0]).prop('value');
-          accessType = {'type': type};
-          if (type === 'open_access_date') {
-            accessType['date'] = $($(row).find('input[name="access_date"]')[0]).prop('value');
+          accessType = {'accessrole': type};
+          if (type === 'open_date') {
+            accessType['accessdate'] = $($(row).find('input[name="access_date"]')[0]).prop('value');
           }
-
-          alert(type);
 
         // Licence
         }else if(field.prop('value') === '2') {
@@ -152,36 +150,49 @@ require([
 
       });
 
-//      getUrl = '/bulk_update/items_metadata?pids=' + pids;
-//      $.ajax({
-//        method: 'GET',
-//        url: getUrl,
-//        async: false,
-//        success: function(data, status){
-//
-//          var redirect_url = "/api/deposits/redirect";
-//          var items_url = "/api/deposits/items";
-//
-//          itemsMeta = data;
-//          Object.keys(itemsMeta).forEach(function(pid) {
-//
-//            if (Object.keys(itemsMeta[pid].contents).length !== 0) {
-//
-//              Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
-//                var contentsMeta = itemsMeta[pid].contents[contentKey];
-//                $.each( contentsMeta, function( key, value ) {
-//                  value.licensetype = 'license_1';
-//
-//
-//
-//
-//                });
-//                itemsMeta[pid].meta[contentKey] = contentsMeta
-//
-//              });
-//
-//            }
-//
+      getUrl = '/bulk_update/items_metadata?pids=' + pids;
+      $.ajax({
+        method: 'GET',
+        url: getUrl,
+        async: false,
+        success: function(data, status){
+
+          var redirect_url = "/api/deposits/redirect";
+          var items_url = "/api/deposits/items";
+
+          itemsMeta = data;
+          Object.keys(itemsMeta).forEach(function(pid) {
+
+            if (Object.keys(itemsMeta[pid].contents).length !== 0) {
+
+              Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
+                var contentsMeta = itemsMeta[pid].contents[contentKey];
+                $.each( contentsMeta, function( key, value ) {
+
+
+                  if (Object.keys(accessType).length !== 0) {
+                    Object.keys(accessType).forEach( function(key) {
+                     alert(value[key]);
+                    });
+
+                  }
+
+                  // Licence
+                  if(licence !== 'unselected') {
+                    value.licensetype = 'license_1';
+                  }
+
+
+
+
+
+                });
+                itemsMeta[pid].meta[contentKey] = contentsMeta
+
+              });
+
+            }
+
 //            meta = JSON.stringify(itemsMeta[pid].meta);
 //            index = JSON.stringify(itemsMeta[pid].index);
 //
@@ -193,14 +204,14 @@ require([
 //                        self_url,
 //                        meta,
 //                        index);
-//
-//          });
-//
-//        },
-//        error: function(status, error){
-//          console.log(error);
-//        }
-//      });
+
+          });
+
+        },
+        error: function(status, error){
+          console.log(error);
+        }
+      });
 
 
     });

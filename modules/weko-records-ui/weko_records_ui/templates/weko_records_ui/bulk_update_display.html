@@ -40,7 +40,7 @@
     <div id="field-panel" class="panel-body">
       <div class="row field-row-default" hidden>
         <div class="col-md-2">
-          <select class="form-control" name="field-select">
+          <select class="form-control" name="field_select">
             <option value="unselected" selected></option>
             {%- for field in fields if fields %}
             <option value="{{field.id}}">{{field.name}}</option>
@@ -63,11 +63,11 @@
               <input type="radio" name="access_type" value="open_access" checked>{{_('Open Access')}}
             </label>
             <label class="radio-inline col-md-4">
-              <input type="radio" name="access_type" value="open_access_date">{{_('Open Access Date')}}
+              <input type="radio" name="access_type" value="open_date">{{_('Open Access Date')}}
               <input type="date" class="col-md-offset-1" name="access_date" value="2018-04-01" disabled>
             </label>
             <label class="radio-inline col-md-3">
-              <input type="radio" name="access_type" value="login_user_only">{{_('Login User Only')}}
+              <input type="radio" name="access_type" value="open_login">{{_('Login User Only')}}
             </label>
           </div>
           <!-- Licence Description -->
