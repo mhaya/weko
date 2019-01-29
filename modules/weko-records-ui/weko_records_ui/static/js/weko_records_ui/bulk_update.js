@@ -41,13 +41,21 @@ require([
     });
 
     $('select[name="field_sel"]').change(function() {
-      var selected = $(this).val();
-
+      // Get selected fields
+      var fields = [];
       $('.row.field-row').each(function(i, row) {
         $(row).find('select[name="field_sel"]').each(function(i, field) {
-          alert($(field).prop('value'));
+          if($(field).prop('value') !== 'unselected') {
+            fields.push($(field).prop('value'));
+          }
         });
       });
+
+      var selected = $(this).val();
+      if(selected !== 'unselected' && $.inArray(selected, fields)) {
+        alert('Field already exists.');
+        $(this).val('unselected');
+      }
 
 
 
