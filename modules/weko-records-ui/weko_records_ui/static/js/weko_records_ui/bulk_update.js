@@ -49,7 +49,7 @@ require([
       // Get selected fields
       var isDuplicate = false;
 
-      $('.row.field-row').each(function(i, row) {
+      $(this).parents('.field-row').next('.field-row').each(function(i, row) {
 
         var field = $($(row).find('select[name="field_sel"]')[0]);
         alert(field.prop('value'));
