@@ -40,6 +40,7 @@ require([
       }
     });
 
+    var fields = [];
     $('select[name="field_sel"]').change(function() {
 
       var selected = $(this).val();
@@ -47,14 +48,13 @@ require([
 
       // Get selected fields
       var isDuplicate = false;
-      var fields = [];
-      $(this).parents('.field-row').next('.field-row').each(function(i, row) {
 
+      $('.row.field-row').each(function(i, row) {
 
         var field = $($(row).find('select[name="field_sel"]')[0]);
 
         if(field.prop('value') !== 'unselected') {
-          fields.push(selected);
+          fields.push(field.prop('value'));
 //          if($.inArray(selected, fields) !== -1) {
 //            // Initialize
 //            isDuplicate = true;
