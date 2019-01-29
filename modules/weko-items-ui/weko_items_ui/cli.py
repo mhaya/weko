@@ -28,7 +28,9 @@ from sqlalchemy import asc
 from invenio_db import db
 from flask import request
 import urllib.request
-import xml.etree.cElementTree as ET
+from xml.etree.ElementTree import fromstring
+from json import dumps
+from xmljson import badgerfish as bf
 
 
 @click.group()
@@ -56,6 +58,6 @@ def init_item_metadata_reference():
     url = 'http://www.sherpa.ac.uk/romeo/api29.php?jtitle=modern&qtype=contains'
     response = urllib.request.urlopen(url)
     response_text = response.read()
-    root = ET.fromstring(response_text)
-    click.secho(root.tag, fg='green')
+    str = dumps(bf.data(fromstring('<p id="main">Hello<b>bold</b></p>')))
+    click.secho(str, fg='green')
     click.secho('Just do test!!!!!', fg='red')
