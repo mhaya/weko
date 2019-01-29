@@ -59,24 +59,16 @@ require([
             fields.push(selected);
           }
         }
-        if(isDuplicate) {
-          alert('Field already exists.');
-          $(this).val('unselected');
-          contents.each( function(i, elem) {
-            $(elem).attr('hidden', 'hidden')
-          });
-          return;
-        }
-
-
-
-//        $(row).find('select[name="field_sel"]').each(function(i, field) {
-//          if($(field).prop('value') !== 'unselected') {
-//            fields.push($(field).prop('value'));
-//          }
-//        });
       });
 
+      if(isDuplicate) {
+        alert('Field already exists.');
+        $(this).val('unselected');
+        contents.each( function(i, elem) {
+          $(elem).attr('hidden', 'hidden')
+        });
+        return;
+      }
 
 
 //      alert(fields +' : ' + selected);
