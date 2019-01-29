@@ -126,7 +126,7 @@ require([
       }
 
       // Get setting fields
-      var accessTypes = {};
+      var accessType = {};
       var licence= '';
       var licenceDes= '';
       $('.row.field-row').each(function(i, row) {
@@ -135,11 +135,10 @@ require([
         // Access Type
         if(field.prop('value') === '1') {
           var type = $($(row).find('input[name="access_type"]:checked')[0]).prop('value');
-          var accessType = {'type': type};
+          accessType = {'type': type};
           if (type === 'open_access_date') {
             accessType['date'] = $($(row).find('input[name="access_date"]')[0]).prop('value');
           }
-          accessTypes.push(accessType);
 
           alert(type);
 
