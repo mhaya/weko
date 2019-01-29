@@ -58,6 +58,6 @@ def init_item_metadata_reference():
     url = 'http://www.sherpa.ac.uk/romeo/api29.php?jtitle=modern&qtype=contains'
     response = urllib.request.urlopen(url)
     response_text = response.read()
-    str = dumps(bf.data(fromstring('<p id="main">Hello<b>bold</b></p>')))
+    str = dumps(bf.data(fromstring(response_text)))
     click.secho(str, fg='green')
     click.secho('Just do test!!!!!', fg='red')
