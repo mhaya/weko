@@ -170,6 +170,7 @@ require([
                 var contentsMeta = itemsMeta[pid].contents[contentKey];
                 $.each( contentsMeta, function( key, value ) {
 
+                  alert(JSON.stringify(value));
                   if (Object.keys(accessType).length !== 0) {
                     Object.keys(accessType).forEach( function(field) {
                     value[field] =  accessType[field];
