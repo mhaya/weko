@@ -127,7 +127,7 @@ require([
 
       // Get setting fields
       accessTypes = [];
-      $('input[name="access_type"]').each( function(i, elem) {
+      $('input[name="access_type"]:checked').each( function(i, elem) {
         alert($(elem).prop('value'));
 //        if($(elem).prop('value') !== 'unselected'){
 //          licences.push($(elem).prop('value'));
