@@ -70,7 +70,10 @@ require([
 
       });
       alert(fields);
-      alert($.unique(fields));
+      var uniqueFields = array = fields.filter(function (x, i, self) {
+        return self.indexOf(x) === i;
+      });
+      alert(uniqueFields);
       return;
 //      if(fields.length !== $.unique(fields).length) {
 //        alert('Field already exists.');
