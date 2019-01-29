@@ -172,7 +172,7 @@ require([
 
                   if (Object.keys(accessType).length !== 0) {
                     Object.keys(accessType).forEach( function(key) {
-                     alert(value.key);
+                     alert(key);
                     });
 
                   }
