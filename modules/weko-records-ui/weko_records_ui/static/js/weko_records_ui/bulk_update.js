@@ -50,18 +50,19 @@ require([
           }
         });
       });
-      alert($.inArray('1', fields));
 
+      var contents = $(this).parents('.field-row').find('.field-content');
       var selected = $(this).val();
-      if(selected !== 'unselected' && $.inArray(selected, fields)) {
+      if(selected !== 'unselected' && $.inArray(selected, fields) !== -1) {
         alert('Field already exists.');
+
+        // Initialize
         $(this).val('unselected');
+        contents.each( function(i, elem) {
+          $(elem).attr('hidden', 'hidden')
+        });
       }
 
-
-
-
-      contents = $(this).parents('.field-row').find('.field-content');
       contents.each(function(i, elem) {
         var elemAttr = $(elem).attr('class');
         // Access Type
