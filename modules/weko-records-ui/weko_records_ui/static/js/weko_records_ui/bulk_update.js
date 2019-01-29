@@ -54,7 +54,10 @@ require([
         var field = $($(row).find('select[name="field_sel"]')[0]);
 
         if(field.prop('value') !== 'unselected') {
-          fields.push(field.prop('value'));
+          if($.inArray(selected, fields) === -1) {
+            fields.push(field.prop('value'));
+          }
+         
 //          if($.inArray(selected, fields) !== -1) {
 //            // Initialize
 //            isDuplicate = true;
