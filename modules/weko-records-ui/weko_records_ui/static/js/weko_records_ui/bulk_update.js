@@ -40,7 +40,7 @@ require([
       }
     });
 
-    var fields = [];
+
     $('select[name="field_sel"]').change(function() {
 
       var selected = $(this).val();
@@ -48,16 +48,16 @@ require([
 
       // Get selected fields
       var isDuplicate = false;
-
+      var fields = [];
       $('.row.field-row').each(function(i, row) {
 
-        var field = $($(row).find('select[name="field_sel"]')[0]);
-        alert(field.prop('value'));
+        var field = $($(row).find('select[name="field_sel"]')[0]).prop('value');
+        if(field !== 'unselected') {
+          fields.push(field);
 
-        if(field.prop('value') !== 'unselected') {
-          if($.inArray(selected, fields) === -1) {
-            fields.push(field.prop('value'));
-          }
+//          if($.inArray(selected, fields) === -1) {
+//            fields.push(field.prop('value'));
+//          }
 
 //          if($.inArray(selected, fields) !== -1) {
 //            // Initialize
@@ -69,16 +69,14 @@ require([
 
 
       });
-//      alert(fields);
-
-      if(isDuplicate) {
-//        alert('Field already exists.');
-        $(this).val('unselected');
-        contents.each( function(i, elem) {
-          $(elem).attr('hidden', 'hidden')
-        });
-        fields = [];
-        isDuplicate = false;
+      if(fields.length !=== $.unique(fields).length) {
+        alert('Field already exists.');
+//        $(this).val('unselected');
+//        contents.each( function(i, elem) {
+//          $(elem).attr('hidden', 'hidden')
+//        });
+//        fields = [];
+//        isDuplicate = false;
         return;
       }
 
