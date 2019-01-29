@@ -9,7 +9,6 @@ require([
       $(newField).removeAttr("hidden");
 
       $(newField).insertBefore($('#add-field-row'));
-
     });
 
     // Add field
@@ -43,6 +42,16 @@ require([
 
     $('select[name="field_sel"]').change(function() {
       var selected = $(this).val();
+
+      $('.row.field-row').each(function(i, row) {
+        $(row).find('select[name="field_sel"]').each(function(i, field) {
+          alert($(field).prop('value'));
+        });
+      });
+
+
+
+
       contents = $(this).parents('.field-row').find('.field-content');
       contents.each(function(i, elem) {
         var elemAttr = $(elem).attr('class');
@@ -61,20 +70,11 @@ require([
           }else {
             $(elem).attr('hidden', 'hidden');
           }
-
-        // Licence Description
         }
-//        else if(elemAttr.indexOf('licence-des') >= 0){
-//          if('3' === selected.toString()){
-//            $(elem).removeAttr("hidden");
-//          } else {
-//            $(elem).attr('hidden', 'hidden');
-//          }
-//        }
       });
     });
 
-    $('select[name="licence_sel"]').change(function() {
+    $('select[name="licence_sel"]').change( function() {
       var selected = $(this).val();
       var des = $($(this).parent().find('.licence-des'));
 
@@ -101,17 +101,14 @@ require([
 
       // Cancel all
       if(hasChecked && !hasCanceled) {
-        checkboxes.each(function(i, elem) {
-//          $(elem).removeAttr("checked");
+        checkboxes.each( function(i, elem) {
           $(elem).prop("checked", false);
         });
 
       // Check all
       }else {
-        checkboxes.each(function(i, elem) {
+        checkboxes.each( function(i, elem) {
           $(elem).prop("checked", true);
-//          $(elem).attr('checked', 'checked');
-
         });
       }
 

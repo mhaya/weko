@@ -300,6 +300,16 @@ def bulk_update():
 def get_items_metadata():
     """Get the metadata of items to bulk update."""
 
+    def get_file_data(meta):
+        file_data = {}
+        for key in meta:
+            if isinstance(meta.get(key), list):
+                for item in meta.get(key):
+                    if 'filename' in item:
+                        file_data[key] = meta.get(key)
+                        break
+        return file_data
+
     pids = request.values.get('pids')
     pid_list = []
     if pids is not None:
@@ -308,10 +318,10 @@ def get_items_metadata():
     data = {}
     for pid in pid_list:
         record = WekoRecord.get_record_by_pid(pid)
-        flash(record.get('path'))
-        # if isinstance(record.get('path'), list):
-        #     for item in meta.get(key):
-
+        indexes = []
+        if isinstance(record.get('path'), list):
+            for path in record.get('path'):
+                indexes.append(path.split('/')[-1])
 
         pidObject = PersistentIdentifier.get('recid', pid)
         meta = ItemsMetadata.get_record(pidObject.object_uuid)
@@ -319,17 +329,7 @@ def get_items_metadata():
         if meta:
             data[pid] = {}
             data[pid]['meta'] = meta
-            data[pid]['index'] = {"index": ["1548047894181"]}
+            data[pid]['index'] = {"index": indexes}
             data[pid]['contents'] = get_file_data(meta)
 
     return jsonify(data)
-
-def get_file_data(meta):
-    file_data = {}
-    for key in meta:
-        if isinstance(meta.get(key), list):
-            for item in meta.get(key):
-                if 'filename' in item:
-                    file_data[key] = meta.get(key)
-                    break
-    return file_data
