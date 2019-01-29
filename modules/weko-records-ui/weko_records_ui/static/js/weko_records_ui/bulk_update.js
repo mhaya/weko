@@ -69,7 +69,7 @@ require([
 
 
       });
-      if(fields.length !=== $.unique(fields).length) {
+      if(fields.length !== $.unique(fields).length) {
         alert('Field already exists.');
 //        $(this).val('unselected');
 //        contents.each( function(i, elem) {
