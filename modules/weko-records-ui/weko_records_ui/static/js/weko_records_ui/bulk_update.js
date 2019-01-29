@@ -167,6 +167,11 @@ require([
 
       });
 
+      alert(JSON.stringify(accessType));
+      alert(licence);
+      alert(licenceDes);
+      return;
+
       getUrl = '/bulk_update/items_metadata?pids=' + pids;
       $.ajax({
         method: 'GET',
