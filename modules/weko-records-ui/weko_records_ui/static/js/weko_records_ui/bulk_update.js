@@ -66,9 +66,9 @@ require([
           }
         }
 
-        alert(fields);
+
       });
-//      alert(isDuplicate);
+      alert(fields);
 
       if(isDuplicate) {
 //        alert('Field already exists.');
