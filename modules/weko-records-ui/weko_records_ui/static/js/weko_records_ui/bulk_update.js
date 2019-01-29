@@ -128,8 +128,13 @@ require([
       // Get setting fields
       $('.row.field-row').each(function(i, row) {
         $(row).find('select[name="field-select"]').each( function(i, field) {
+          // Access Type
           if($(field).prop('value') === '1') {
-            alert('Access Type');
+            alert($(row).find('input[name="access_type"]:checked').length);
+//            $(row).find('input[name="access_type"]:checked').each( function(i, field) {
+//            
+//
+//            });
 
           }else if($(field).prop('value') === '2') {
             alert('Licence');
