@@ -126,7 +126,8 @@ require([
       }
 
       // Get setting fields
-      var accessTypes = [];
+      var accessTypes = {};
+      var licence= '';
       $('.row.field-row').each(function(i, row) {
 //        $(row).find('select[name="field-select"]').each( function(i, field) {
 //        });
@@ -139,10 +140,12 @@ require([
           if (type === 'open_access_date') {
             accessType['date'] = $($(row).find('input[name="access_date"]')[0]).prop('value');
           }
-          alert(JSON.stringify(accessType));
+          accessTypes.push(accessType);
 
+        // Licence
         }else if(field.prop('value') === '2') {
-          alert('Licence');
+          licence = $($(row).find('select[name="licence-select"]')[0]).prop('value');
+         alert(licence);
 
         }else if(field.prop('value') === '3') {
           alert('Licence Description');
