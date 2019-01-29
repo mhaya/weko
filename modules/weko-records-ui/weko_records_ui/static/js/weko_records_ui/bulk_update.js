@@ -126,21 +126,28 @@ require([
       }
 
       // Get setting fields
+      var accessTypes = [];
       $('.row.field-row').each(function(i, row) {
-        $(row).find('select[name="field-select"]').each( function(i, field) {
-          // Access Type
-          if($(field).prop('value') === '1') {
-//            var accessType = $(row).find('input[name="access_type"]:checked')[0].prop('value');
-            alert($($(row).find('input[name="access_type"]:checked')[0]).prop('value'));
+//        $(row).find('select[name="field-select"]').each( function(i, field) {
+//        });
+        var field = $($(row).find('select[name="field-select"]')[0]);
 
-          }else if($(field).prop('value') === '2') {
-            alert('Licence');
-
-          }else if($(field).prop('value') === '3') {
-            alert('Licence Description');
-
+        // Access Type
+        if(field.prop('value') === '1') {
+          var type = $($(row).find('input[name="access_type"]:checked')[0]).prop('value');
+          var accessType = {'type': type};
+          if (sel === 'open_access_date') {
+            accessType['date'] = $($(row).find('input[name="access_date"]')[0]).prop('value');
           }
-        });
+          alert(JSON.stringify(accessType));
+
+        }else if(field.prop('value') === '2') {
+          alert('Licence');
+
+        }else if(field.prop('value') === '3') {
+          alert('Licence Description');
+
+        }
 
 
 
