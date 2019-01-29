@@ -50,10 +50,9 @@ require([
           }
         });
       });
-      alert(fields);
+      alert($.inArray('1', fields));
 
       var selected = $(this).val();
-      alert(selected);
       if(selected !== 'unselected' && $.inArray(selected, fields)) {
         alert('Field already exists.');
         $(this).val('unselected');
