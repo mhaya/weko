@@ -49,11 +49,14 @@ require([
       var isDuplicate = false;
       var fields = [];
       $('.row.field-row').each(function(i, row) {
+
+
         var field = $($(row).find('select[name="field_sel"]')[0]);
+        alert((field.prop('value'));
         if(field.prop('value') !== 'unselected') {
           if($.inArray(selected, fields) !== -1) {
-            alert(fields);
-            alert(field.prop('value'));
+//            alert(fields);
+//            alert(field.prop('value'));
 //            alert('Field already exists.');
             // Initialize
 //            field.val('unselected');
