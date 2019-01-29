@@ -40,7 +40,7 @@
     <div id="field-panel" class="panel-body">
       <div class="row field-row-default" hidden>
         <div class="col-md-2">
-          <select class="form-control" name="field_select">
+          <select class="form-control" name="field_sel">
             <option value="unselected" selected></option>
             {%- for field in fields if fields %}
             <option value="{{field.id}}">{{field.name}}</option>
@@ -50,14 +50,14 @@
         <div class="col-md-9">
           <!-- Licence -->
           <div class="field-content licence-select" hidden>
-            <select class="form-control" name="licence-select">
+            <select class="form-control" name="licence_sel">
               <option value="unselected" selected></option>
               {%- for licence in licences if licences %}
               <option value="{{licence.id}}">{{licence.name}}</option>
               {%- endfor %}
             </select>
             <!-- Licence Description -->
-            <textarea class="form-control" rows="3" name="licence_des" value=""></textarea>
+            <textarea class="form-control" rows="3" name="licence_des" value="" hidden></textarea>
           </div>
           <!-- Access Type -->
           <div class="field-content access-type-select" hidden>
@@ -73,9 +73,9 @@
             </label>
           </div>
           <!-- Licence Description -->
-          <div class="field-content licence-des" hidden>
-            <textarea class="form-control" rows="3" name="licence_des" value=""></textarea>
-          </div>
+          <!--<div class="field-content licence-des" hidden>-->
+            <!--<textarea class="form-control" rows="3" name="licence_des" value=""></textarea>-->
+          <!--</div>-->
         </div>
         <div class="col-md-1">
           <a class="del-field" href='#'><span class='glyphicon glyphicon-remove'></span></a>

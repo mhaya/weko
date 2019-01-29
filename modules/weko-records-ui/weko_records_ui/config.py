@@ -34,8 +34,8 @@ WEKO_PERMISSION_ROLE_USER = ('System Administrator',
 
 WEKO_RECORDS_UI_BULK_UPDATE_FIELDS = {
     'fields': [{'id': '1', 'name': 'Access Type'},
-               {'id': '2', 'name': 'Licence'},
-               {'id': '3', 'name': 'Licence Description'}],
+               {'id': '2', 'name': 'Licence'}],
+               # {'id': '3', 'name': 'Licence Description'}],
 
     'licences': [{'id': 'license_free', 'name': '自由入力'},
                  {'id': 'license_0', 'name': 'Creative Commons : 表示'},

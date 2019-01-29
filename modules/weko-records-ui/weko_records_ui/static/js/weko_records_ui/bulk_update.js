@@ -41,7 +41,7 @@ require([
       }
     });
 
-    $('select[name="field_select"]').change(function() {
+    $('select[name="field_sel"]').change(function() {
       var selected = $(this).val();
       contents = $(this).parents('.field-row').find('.field-content');
       contents.each(function(i, elem) {
@@ -63,14 +63,26 @@ require([
           }
 
         // Licence Description
-        } else if(elemAttr.indexOf('licence-des') >= 0){
-          if('3' === selected.toString()){
-            $(elem).removeAttr("hidden");
-          } else {
-            $(elem).attr('hidden', 'hidden');
-          }
         }
+//        else if(elemAttr.indexOf('licence-des') >= 0){
+//          if('3' === selected.toString()){
+//            $(elem).removeAttr("hidden");
+//          } else {
+//            $(elem).attr('hidden', 'hidden');
+//          }
+//        }
       });
+    });
+
+    $('select[name="licence_sel"]').change(function() {
+      var selected = $(this).val();
+      var des = $($(this).parent().find('textarea[name="licence_des"]'));
+
+      if(selected === 'license_free') {
+        des.removeAttr("hidden");
+      } else {
+        des.attr('hidden', 'hidden');
+      }
     });
 
     // Select All
@@ -130,7 +142,7 @@ require([
       var licence= '';
       var licenceDes= '';
       $('.row.field-row').each(function(i, row) {
-        var field = $($(row).find('select[name="field_select"]')[0]);
+        var field = $($(row).find('select[name="field_sel"]')[0]);
 
         // Access Type
         if(field.prop('value') === '1') {
@@ -142,11 +154,16 @@ require([
 
         // Licence
         }else if(field.prop('value') === '2') {
-          licence = $($(row).find('select[name="licence-select"]')[0]).prop('value');
+          licence = $($(row).find('select[name="licence_sel"]')[0]).prop('value');
 
-        }else if(field.prop('value') === '3') {
-          licenceDes = $($(row).find('textarea[name="licence_des"]')[0]).prop('value');
+          if(licence === 'license_free') {
+            licenceDes = $($(row).find('textarea[name="licence_des"]')[0]).prop('value');
+          }
+
         }
+//        else if(field.prop('value') === '3') {
+//          licenceDes = $($(row).find('textarea[name="licence_des"]')[0]).prop('value');
+//        }
 
       });
 
