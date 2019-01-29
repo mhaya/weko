@@ -48,7 +48,6 @@ require([
       // Get selected fields
       var isDuplicate = false;
       var fields = [];
-      alert(fields);
       $('.row.field-row').each(function(i, row) {
         var field = $($(row).find('select[name="field_sel"]')[0]);
         if(field.prop('value') !== 'unselected') {
@@ -62,6 +61,7 @@ require([
           }
         }
       });
+      alert(isDuplicate);
 
       if(isDuplicate) {
 //        alert('Field already exists.');
