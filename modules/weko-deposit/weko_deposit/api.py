@@ -56,8 +56,16 @@ PRESERVE_FIELDS = (
 )
 
 
+""" Class for storing file's statistics such as download count, preview count """
+class WekoFileStats(object):
+    downloads = 0
+    previews = 0
+
+
 class WekoFileObject(FileObject):
     """Extend FileObject for detail page."""
+    """ Object for storing file's statistics """
+    stats = WekoFileStats()
 
     def __init__(self, obj, data):
         """Bind to current bucket."""
