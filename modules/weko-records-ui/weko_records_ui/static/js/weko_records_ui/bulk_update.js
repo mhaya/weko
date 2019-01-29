@@ -52,7 +52,7 @@ require([
 
 
         var field = $($(row).find('select[name="field_sel"]')[0]);
-        alert((field.prop('value'));
+        alert(field.prop('value'));
         if(field.prop('value') !== 'unselected') {
           if($.inArray(selected, fields) !== -1) {
 //            alert(fields);
