@@ -165,6 +165,7 @@ require([
             // Contents Meta
             if (Object.keys(itemsMeta[pid].contents).length !== 0) {
               Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
+
                 var contentsMeta = itemsMeta[pid].contents[contentKey];
                 $.each( contentsMeta, function( key, value ) {
                   // Access Type
@@ -198,6 +199,8 @@ require([
                         index);
 
           });
+
+          alert('All selected items have been updated.');
         },
         error: function(status, error){
           console.log(error);
@@ -224,7 +227,6 @@ require([
             data: indexData,
             contentType: "application/json",
             success: function(){
-              alert('All selected items have been updated.');
             },
             error: function() {
               alert('Error in item data posting.');
