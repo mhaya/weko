@@ -194,9 +194,6 @@ require([
             meta = JSON.stringify(itemsMeta[pid].meta);
             index = JSON.stringify(itemsMeta[pid].index);
 
-            alert(meta);
-            alert(index);
-
             index_url = redirect_url + "/" + pid;
             self_url = items_url + "/" + pid;
             // Update items
