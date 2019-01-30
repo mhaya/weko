@@ -161,11 +161,16 @@ require([
         url: getUrl,
         async: false,
         success: function(data, status){
+          var errorMsgs = [];
+
           var redirect_url = "/api/deposits/redirect";
           var items_url = "/api/deposits/items";
 
           itemsMeta = data;
           Object.keys(itemsMeta).forEach(function(pid) {
+            var errorFlg = false;
+            var error = '';
+
             // Contents Meta
             if (Object.keys(itemsMeta[pid].contents).length !== 0) {
               Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
@@ -189,18 +194,23 @@ require([
                 });
                 itemsMeta[pid].meta[contentKey] = contentsMeta;
               });
+
+              meta = JSON.stringify(itemsMeta[pid].meta);
+              index = JSON.stringify(itemsMeta[pid].index);
+
+              alert(meta);
+              
+              index_url = redirect_url + "/" + pid;
+              self_url = items_url + "/" + pid;
+
+              // Update items
+//              updateItems(index_url, self_url, meta, index, error, errorFlg);
             }
 
-            meta = JSON.stringify(itemsMeta[pid].meta);
-            index = JSON.stringify(itemsMeta[pid].index);
+            if(errorFlg) {
+              errorMsgs.push(error);
+            }
 
-            index_url = redirect_url + "/" + pid;
-            self_url = items_url + "/" + pid;
-            // Update items
-            updateItems(index_url,
-                        self_url,
-                        meta,
-                        index);
 
           });
 
@@ -212,7 +222,7 @@ require([
       });
     });
 
-    function updateItems(index_url, self_url, itemData, indexData) {
+    function updateItems(index_url, self_url, itemData, indexData, error, errorFlg) {
       // Post to index select
       $.ajax({
         type: "PUT",
@@ -233,12 +243,14 @@ require([
             success: function(){
             },
             error: function() {
-              alert('Error in item data posting.');
+              errorFlg = true;
+              error = "Error in item data posting.";
             }
           });
         },
         error: function() {
-          alert('Error in index selection.');
+          errorFlg = true;
+          error = "Error in index selection.";
         }
       });
     }
