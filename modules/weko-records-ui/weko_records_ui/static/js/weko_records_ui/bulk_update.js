@@ -211,6 +211,7 @@ require([
               var msg = 'ID: '+pid.toString()+', Title: '+itemsMeta[pid].meta.title_ja+', Error: '+error;
               errorMsgs.push(msg);
             }
+            alert(errorFlg);
           });
 
           // Result
