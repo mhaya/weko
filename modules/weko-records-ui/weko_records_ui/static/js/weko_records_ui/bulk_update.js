@@ -205,11 +205,12 @@ require([
 
               // Update items
               updateItems(index_url, self_url, meta, index, error, errorFlg);
-            }
 
-            if(errorFlg) {
-              var msg = 'ID: '+pid.toString()+', Title: '+itemsMeta[pid].meta.title_ja+', Error: '+error;
-              errorMsgs.push(msg);
+              alert(errorFlg);
+              if(errorFlg) {
+                var msg = 'ID: '+pid.toString()+', Title: '+itemsMeta[pid].meta.title_ja+', Error: '+error;
+                errorMsgs.push(msg);
+              }
             }
           });
 
@@ -255,7 +256,6 @@ require([
           });
         },
         error: function() {
-          alert('Error!');
           errorFlg = true;
           error = "Error in index selection.";
         }
