@@ -210,7 +210,7 @@ require([
               updateItems(index_url, self_url, meta, index, error);
 
               if(error.isError) {
-                var msg = 'ID: '+pid.toString()+', Title: '+itemsMeta[pid].meta.title_ja+', Error: '+error+'\n';
+                var msg = 'ID: '+pid.toString()+', Title: '+itemsMeta[pid].meta.title_ja+', Error: '+error.msg;
                 errorMsgs.push(msg.toString());
               }
             }
@@ -218,6 +218,7 @@ require([
 
           // Result
           if(errorMsgs.length !== 0) {
+            var msg = 'Error List:\n'+errorMsgs.join('\n');
             alert(errorMsgs);
 
           } else {
