@@ -217,7 +217,7 @@ require([
             alert(msg);
 
           } else {
-            alert('All selected items have been updated.');
+            alert('All selected items have been updated successfully.');
           }
         },
         error: function(status, error){
