@@ -17,6 +17,7 @@
 # Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307, USA.
 #}
+<div id="invenio-search">
 <div role="navigation">
   <ul class="nav nav-tabs">
     {%- block item_management_tabs %}
@@ -101,7 +102,7 @@
   </div>
 <!--</div>-->
 <!--<div class="row panel-row">-->
-  <div id="invenio-search">
+  <!--<div id="invenio-search">-->
     <invenio-search
      {%- if index_id %}
        search-endpoint="{{ config.WEKO_SEARCH_UI_SEARCH_INDEX_API }}"
