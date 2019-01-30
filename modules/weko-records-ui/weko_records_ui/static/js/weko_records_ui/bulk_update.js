@@ -168,8 +168,8 @@ require([
 
           itemsMeta = data;
           Object.keys(itemsMeta).forEach(function(pid) {
-            var errorFlg = false;
-            var error = '';
+//            var errorFlg = false;
+//            var error = '';
 
             // Contents Meta
             if (Object.keys(itemsMeta[pid].contents).length !== 0) {
@@ -202,6 +202,9 @@ require([
 //              self_url = items_url + "/" + pid;
               index_url = "/" + pid;
               self_url = "/" + pid;
+
+              var errorFlg = false;
+              var error = '';
 
               // Update items
               updateItems(index_url, self_url, meta, index, error, errorFlg);
