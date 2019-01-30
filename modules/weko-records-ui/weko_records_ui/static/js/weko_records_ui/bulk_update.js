@@ -198,8 +198,8 @@ require([
               meta = JSON.stringify(itemsMeta[pid].meta);
               index = JSON.stringify(itemsMeta[pid].index);
 
-              alert(meta);
-              
+              alert(itemsMeta[pid].meta.title_ja);
+
               index_url = redirect_url + "/" + pid;
               self_url = items_url + "/" + pid;
 
