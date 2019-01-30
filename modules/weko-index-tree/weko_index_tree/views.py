@@ -46,8 +46,15 @@ blueprint = Blueprint(
 def index():
     """Render the index tree edit page."""
 
+    # return render_template(
+    #     current_app.config['WEKO_INDEX_TREE_INDEX_TEMPLATE'],
+    #     get_tree_json=current_app.config['WEKO_INDEX_TREE_LIST_API'],
+    #     upt_tree_json='',
+    #     mod_tree_detail=current_app.config['WEKO_INDEX_TREE_API']
+    # )
+
     return render_template(
-        current_app.config['WEKO_INDEX_TREE_INDEX_TEMPLATE'],
+        current_app.config['WEKO_INDEX_TREE_EDIT_TEMPLATE'],
         get_tree_json=current_app.config['WEKO_INDEX_TREE_LIST_API'],
         upt_tree_json='',
         mod_tree_detail=current_app.config['WEKO_INDEX_TREE_API']
