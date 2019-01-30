@@ -58,7 +58,7 @@ install_requires = [
     'Flask-BabelEx>=0.9.2',
     'invenio-records-rest>=1.0.0b3,<1.3.0',
     'invenio-records>=1.0.0b1,<1.1.0',
-    'invenio-deposit>=1.0.0a9',
+    'invenio-deposit>=1.0.0a3',
 
 ]
 
