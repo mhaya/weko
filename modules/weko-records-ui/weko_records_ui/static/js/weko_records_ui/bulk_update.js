@@ -15,6 +15,7 @@ require([
       $(newField).insertBefore($('#add-field-row'));
 
 //      addField();
+      return false;
     });
 
     // Remove field
