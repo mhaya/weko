@@ -191,14 +191,15 @@ require([
                 itemsMeta[pid].meta[contentKey] = contentsMeta;
               });
 
-              meta = JSON.stringify(itemsMeta[pid].meta);
-              index = JSON.stringify(itemsMeta[pid].index);
+              // Data
+              var meta = JSON.stringify(itemsMeta[pid].meta);
+              var index = JSON.stringify(itemsMeta[pid].index);
 
-              index_url = redirect_url + "/" + pid;
-//              self_url = items_url + "/" + pid;
+              // URL
+              var index_url = redirect_url + "/" + pid;
+              var self_url = items_url + "/" + pid;
 
               var error = {};
-              self_url = items_url + pid;
 
               // Update items
               updateItems(index_url, self_url, meta, index, error);
@@ -218,7 +219,6 @@ require([
           } else {
             alert('All selected items have been updated.');
           }
-
         },
         error: function(status, error){
           console.log(error);
