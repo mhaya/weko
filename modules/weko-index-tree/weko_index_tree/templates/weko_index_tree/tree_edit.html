@@ -26,7 +26,7 @@
 
 {%- block javascript %}
   {{ super() }}
-  {% assets "weko_index_tree_view" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+  {% assets "invenio_deposit_dependencies_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_index_tree_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
 {%- endblock javascript %}
 
@@ -37,6 +37,34 @@
 
 {%- block page_body_main %}
   This is test page !!!
+
+  <div class="row">
+        <div class="col-md-12">
+          <div class="jumbotron">
+            <h1>Invenio Records Demo</h1>
+          </div>
+          <div class="alert alert-info" role="alert">
+            <strong>Head up!</strong> Remember to change the attributes.
+          </div>
+          <pre>You can specify your own personal field templates by using the ``form-templates`` attribute.</pre>
+          <div ng-app="invenioRecordsDemo">
+            <invenio-records
+              extra-params="{}"
+              record='{}'
+              initialization="http://locahost:5000/deposition"
+              form="../static/json/form.json"
+              schema="../static/json/schema.json"
+            >
+              <invenio-records-form
+                form-templates-base='../static/template/weko_index_tree/'
+                form-templates='{"default": "default.html", "textarea": "textarea.html"}'
+                template="./form.html">
+              </invenio-records-form>
+            </invenio-records>
+          </div>
+        </div>
+      </div>
+
 {%- endblock page_body_main %}
 {%- block page_body %}
 {{ super() }}
