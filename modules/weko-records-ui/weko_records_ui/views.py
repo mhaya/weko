@@ -32,6 +32,7 @@ from weko_index_tree.models import IndexStyle
 from .permissions import check_created_id
 from weko_search_ui.api import get_search_detail_keyword
 from weko_deposit.api import WekoIndexer
+from weko_deposit.api import WekoFileStats
 
 blueprint = Blueprint(
     'weko_records_ui',
@@ -278,20 +279,26 @@ def default_view_method(pid, record, template=None, **kwargs):
         record["relation"] = {}
 
     """ Fetch file's statistics"""
+    stats = {}
     files = record.files
     for file in files:
-        events = Search(
+        query = Search(
             using=current_search_client,
-            index='events-stats-file-download-*'
+            index='stats-file-download',
+            doc_type='file-download-day-aggregation'
         ).filter(
             'match', file_id=file.file_id
         )
-        file.stats.downloads = events.count()
+        results = query.execute()
+        stats[file.file_id] = WekoFileStats()
+        if len(results) > 0:
+            stats[file.file_id].downloads = results[0].count
 
     return render_template(
         template,
         pid=pid,
         record=record,
+        stats=stats,
         community_id=community_id,
         width=width,
         detail_condition=detail_condition,
