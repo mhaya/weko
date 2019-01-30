@@ -26,6 +26,11 @@
   {{ super() }}
   {% assets "invenio_search_ui_search_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
   {% assets "weko_search_ui_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
+  <style>
+    .panel-row {
+      margin-left: 0px;
+      margin-right: 5px;
+    }
 {%- endblock css %}
 
 {%- block javascript %}
@@ -51,7 +56,11 @@
     </div>
     <div class="col-sm-9 col-md-9 col-lg-9 m-top-20">
       <div class="row">
-      {% include "weko_search_ui/item_list_display.html" %}
+        {%- if management_type == "sort" %}
+          {% include "weko_search_ui/item_list_display.html" %}
+        {%- else %}
+          {% include "weko_records_ui/bulk_update_display.html" %}
+        {%- endif %}
       </div>
     </div>
   </div>
