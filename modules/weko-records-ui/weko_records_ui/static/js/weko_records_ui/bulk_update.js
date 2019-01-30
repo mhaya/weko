@@ -198,23 +198,29 @@ require([
               meta = JSON.stringify(itemsMeta[pid].meta);
               index = JSON.stringify(itemsMeta[pid].index);
 
-              alert(itemsMeta[pid].meta.title_ja);
-
-              index_url = redirect_url + "/" + pid;
-              self_url = items_url + "/" + pid;
+//              index_url = redirect_url + "/" + pid;
+//              self_url = items_url + "/" + pid;
+              index_url = "/" + pid;
+              self_url = "/" + pid;
 
               // Update items
-//              updateItems(index_url, self_url, meta, index, error, errorFlg);
+              updateItems(index_url, self_url, meta, index, error, errorFlg);
             }
 
             if(errorFlg) {
-              errorMsgs.push(error);
+              var msg = 'ID: '+pid.toString()+', Title: '+itemsMeta[pid].meta.title_ja+', Error: '+error;
+              errorMsgs.push(msg);
             }
-
-
           });
 
-          alert('All selected items have been updated.');
+          // Result
+          if(errorMsgs.length !== 0) {
+            alert(errorMsgs);
+
+          } else {
+            alert('All selected items have been updated.');
+          }
+
         },
         error: function(status, error){
           console.log(error);
