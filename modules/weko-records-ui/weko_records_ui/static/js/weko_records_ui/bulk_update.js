@@ -211,7 +211,7 @@ require([
 
               if(error.isError) {
                 var msg = 'ID: '+pid.toString()+', Title: '+itemsMeta[pid].meta.title_ja+', Error: '+error;
-                errorMsgs.push(msg);
+                errorMsgs.push(error.msg);
               }
             }
           });
@@ -252,16 +252,14 @@ require([
             success: function(){
             },
             error: function() {
-              errorFlg = true;
-              error = "Error in item data posting.";
+              error['isError'] = true;
+              error['msg'] = "Error in item data posting.";
             }
           });
         },
         error: function() {
           error['isError'] = true;
           error['msg'] = "Error in index selection.";
-//          errorFlg = true;
-//          error = "Error in index selection.";
         }
       });
     }
