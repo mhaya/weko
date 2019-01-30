@@ -47,6 +47,9 @@ require([
       if(fields.length !== uniqueFields.length) {
         alert('Field already exists.');
         $(this).val('unselected');
+        contents.each(function(i, elem) {
+          $(elem).attr('hidden', 'hidden');
+        });
         return;
       }
 
