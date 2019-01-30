@@ -204,8 +204,8 @@ require([
               updateItems(index_url, self_url, meta, index, error);
 
               if(error.isError) {
-                errorMsgs.push('ID: '+pid.toString()+', Title: '+
-                               itemsMeta[pid].meta.title_ja+', Error: '+error.msg);
+                errorMsgs.push('[ ID: '+pid.toString()+', Title: '+
+                               itemsMeta[pid].meta.title_ja+', Error: '+error.msg+' ]');
               }
             }
           });
