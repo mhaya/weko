@@ -203,13 +203,13 @@ require([
               index_url = "/" + pid;
               self_url = "/" + pid;
 
-              var errorFlg = false;
-              var error = '';
+//              var errorFlg = false;
+              var error = {};
 
               // Update items
-              updateItems(index_url, self_url, meta, index, error, errorFlg);
+              updateItems(index_url, self_url, meta, index, error);
 
-              alert(error);
+              alert(error.isError);
               if(errorFlg) {
                 var msg = 'ID: '+pid.toString()+', Title: '+itemsMeta[pid].meta.title_ja+', Error: '+error;
                 errorMsgs.push(msg);
@@ -232,7 +232,7 @@ require([
       });
     });
 
-    function updateItems(index_url, self_url, itemData, indexData, error, errorFlg) {
+    function updateItems(index_url, self_url, itemData, indexData, error) {
       // Post to index select
       $.ajax({
         type: "PUT",
@@ -259,8 +259,10 @@ require([
           });
         },
         error: function() {
-          errorFlg = true;
-          error = "Error in index selection.";
+          error['isError'] = true;
+          error['msg'] = "Error in index selection.";
+//          errorFlg = true;
+//          error = "Error in index selection.";
         }
       });
     }
