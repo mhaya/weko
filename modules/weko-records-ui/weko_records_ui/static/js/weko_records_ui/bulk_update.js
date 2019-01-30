@@ -2,24 +2,11 @@ require([
   "jquery",
   "bootstrap"
 ], function() {
-
     $(document).ready(function() {
-      newField = $('.field-row-default').first().clone(true)
-      $(newField).attr('class', 'row field-row');
-      $(newField).removeAttr("hidden");
-
-      $(newField).insertBefore($('#add-field-row'));
+      addField();
     });
-
-    // Add field
     $('#add-field-link').on('click', function() {
-      newField = $('.field-row-default').first().clone(true)
-      $(newField).attr('class', 'row field-row');
-      $(newField).removeAttr("hidden");
-
-      $(newField).insertBefore($('#add-field-row'));
-
-      return false;
+      addField();
     });
 
     // Remove field
@@ -40,52 +27,28 @@ require([
       }
     });
 
-
     $('select[name="field_sel"]').change(function() {
-
       var selected = $(this).val();
       var contents = $(this).parents('.field-row').find('.field-content');
 
       // Get selected fields
-      var isDuplicate = false;
       var fields = [];
       $('.row.field-row').each(function(i, row) {
-
         var field = $($(row).find('select[name="field_sel"]')[0]).prop('value');
         if(field !== 'unselected') {
           fields.push(field);
-
-//          if($.inArray(selected, fields) === -1) {
-//            fields.push(field.prop('value'));
-//          }
-
-//          if($.inArray(selected, fields) !== -1) {
-//            // Initialize
-//            isDuplicate = true;
-//          } else {
-//            fields.push(selected);
-//          }
         }
-
-
       });
 
       var uniqueFields = fields.filter(function (x, i, self) {
         return self.indexOf(x) === i;
       });
+      // Check fields
       if(fields.length !== uniqueFields.length) {
         alert('Field already exists.');
         $(this).val('unselected');
         return;
       }
-
-
-//      alert(fields +' : ' + selected);
-//      alert($.inArray(selected, fields));
-//      if(selected !== 'unselected' && $.inArray(selected, fields) !== -1) {
-//
-//
-//      }
 
       contents.each(function(i, elem) {
         var elemAttr = $(elem).attr('class');
@@ -138,20 +101,17 @@ require([
         checkboxes.each( function(i, elem) {
           $(elem).prop("checked", false);
         });
-
       // Check all
       }else {
         checkboxes.each( function(i, elem) {
           $(elem).prop("checked", true);
         });
       }
-
       return false;
     });
 
     // Bulk Update
     $('#submit-btn').on('click', function() {
-
       // Get id
       pids = '';
       $('input[type="checkbox"]').each(function(i, elem) {
@@ -174,7 +134,6 @@ require([
       var licenceDes= '';
       $('.row.field-row').each(function(i, row) {
         var field = $($(row).find('select[name="field_sel"]')[0]);
-
         // Access Type
         if(field.prop('value') === '1') {
           var type = $($(row).find('input[name="access_type"]:checked')[0]).prop('value');
@@ -182,11 +141,9 @@ require([
           if (type === 'open_date') {
             accessType['accessdate'] = $($(row).find('input[name="access_date"]')[0]).prop('value');
           }
-
         // Licence
         }else if(field.prop('value') === '2') {
           licence = $($(row).find('select[name="licence_sel"]')[0]).prop('value');
-
           if(licence === 'license_free') {
             licenceDes = $($(row).find('textarea[name="licence_des"]')[0]).prop('value');
           }
@@ -200,16 +157,13 @@ require([
         url: getUrl,
         async: false,
         success: function(data, status){
-
           var redirect_url = "/api/deposits/redirect";
           var items_url = "/api/deposits/items";
 
           itemsMeta = data;
           Object.keys(itemsMeta).forEach(function(pid) {
-
             // Contents Meta
             if (Object.keys(itemsMeta[pid].contents).length !== 0) {
-
               Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
                 var contentsMeta = itemsMeta[pid].contents[contentKey];
                 $.each( contentsMeta, function( key, value ) {
@@ -229,9 +183,7 @@ require([
                   }
                 });
                 itemsMeta[pid].meta[contentKey] = contentsMeta;
-
               });
-
             }
 
             meta = JSON.stringify(itemsMeta[pid].meta);
@@ -239,7 +191,6 @@ require([
 
             index_url = redirect_url + "/" + pid;
             self_url = items_url + "/" + pid;
-
             // Update items
             updateItems(index_url,
                         self_url,
@@ -247,14 +198,11 @@ require([
                         index);
 
           });
-
         },
         error: function(status, error){
           console.log(error);
         }
       });
-
-
     });
 
     function updateItems(index_url, self_url, itemData, indexData) {
@@ -276,19 +224,25 @@ require([
             data: indexData,
             contentType: "application/json",
             success: function(){
-              alert('Success!!!!');
+              alert('All selected items have been updated.');
             },
             error: function() {
-              alert('Error at Post item data');
-
+              alert('Error in item data posting.');
             }
           });
         },
         error: function() {
-          alert('Error at Post to index select');
+          alert('Error in index selection.');
         }
       });
     }
 
+    // Add field
+    function addField() {
+      newField = $('.field-row-default').first().clone(true)
+      $(newField).attr('class', 'row field-row');
+      $(newField).removeAttr("hidden");
+      $(newField).insertBefore($('#add-field-row'));
+    }
 
 });
