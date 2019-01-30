@@ -3,18 +3,10 @@ require([
   "bootstrap"
 ], function() {
     $(document).ready(function() {
-      newField = $('.field-row-default').first().clone(true)
-      $(newField).attr('class', 'row field-row');
-      $(newField).removeAttr("hidden");
-      $(newField).insertBefore($('#add-field-row'));
+      addField();
     });
     $('#add-field-link').on('click', function() {
-      newField = $('.field-row-default').first().clone(true)
-      $(newField).attr('class', 'row field-row');
-      $(newField).removeAttr("hidden");
-      $(newField).insertBefore($('#add-field-row'));
-
-//      addField();
+      addField();
       return false;
     });
 
