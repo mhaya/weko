@@ -162,15 +162,11 @@ require([
         async: false,
         success: function(data, status){
           var errorMsgs = [];
-
           var redirect_url = "/api/deposits/redirect";
           var items_url = "/api/deposits/items";
 
           itemsMeta = data;
           Object.keys(itemsMeta).forEach(function(pid) {
-//            var errorFlg = false;
-//            var error = '';
-
             // Contents Meta
             if (Object.keys(itemsMeta[pid].contents).length !== 0) {
               Object.keys(itemsMeta[pid].contents).forEach( function(contentKey) {
@@ -198,12 +194,10 @@ require([
               meta = JSON.stringify(itemsMeta[pid].meta);
               index = JSON.stringify(itemsMeta[pid].index);
 
-//              index_url = redirect_url + "/" + pid;
+              index_url = redirect_url + "/" + pid;
 //              self_url = items_url + "/" + pid;
-              index_url = "/" + pid;
               self_url = "/" + pid;
 
-//              var errorFlg = false;
               var error = {};
 
               // Update items
