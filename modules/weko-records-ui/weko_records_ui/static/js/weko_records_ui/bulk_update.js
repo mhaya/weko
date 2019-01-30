@@ -219,7 +219,7 @@ require([
           // Result
           if(errorMsgs.length !== 0) {
             var msg = 'Error List:\n'+errorMsgs.join('\n');
-            alert(errorMsgs);
+            alert(msg);
 
           } else {
             alert('All selected items have been updated.');
