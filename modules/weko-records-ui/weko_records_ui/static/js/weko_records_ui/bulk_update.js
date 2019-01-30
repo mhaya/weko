@@ -210,8 +210,8 @@ require([
               updateItems(index_url, self_url, meta, index, error);
 
               if(error.isError) {
-                var msg = 'ID: '+pid.toString()+', Title: '+itemsMeta[pid].meta.title_ja+', Error: '+error;
-                errorMsgs.push(error.msg);
+                var msg = 'ID: '+pid.toString()+', Title: '+itemsMeta[pid].meta.title_ja+', Error: '+error+'\n';
+                errorMsgs.push(msg.toString());
               }
             }
           });
