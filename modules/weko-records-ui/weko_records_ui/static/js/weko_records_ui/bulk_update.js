@@ -6,7 +6,12 @@ require([
       addField();
     });
     $('#add-field-link').on('click', function() {
-      addField();
+      newField = $('.field-row-default').first().clone(true)
+      $(newField).attr('class', 'row field-row');
+      $(newField).removeAttr("hidden");
+      $(newField).insertBefore($('#add-field-row'));
+
+//      addField();
     });
 
     // Remove field
