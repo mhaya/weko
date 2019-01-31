@@ -282,17 +282,14 @@ def default_view_method(pid, record, template=None, **kwargs):
     stats = {}
     files = record.files
     for file in files:
-        query = Search(
+        events = Search(
             using=current_search_client,
-            index='stats-file-download',
-            doc_type='file-download-day-aggregation'
+            index='events-stats-file-download-*'
         ).filter(
             'match', file_id=file.file_id
         )
-        results = query.execute()
         stats[file.file_id] = WekoFileStats()
-        if len(results) > 0:
-            stats[file.file_id].downloads = results[0].count
+        stats[file.file_id].downloads = events.count()
 
     return render_template(
         template,
