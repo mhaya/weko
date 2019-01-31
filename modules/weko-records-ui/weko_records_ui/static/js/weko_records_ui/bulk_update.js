@@ -3,15 +3,8 @@ require([
   "bootstrap"
 ], function() {
     $(document).ready( function() {
-      $($('.field-row-default').find('input[name="access_date"]')[0]).val(getDate);
+      $($('.field-row-default').find('input[name="access_date"]')[0]).val(getDate());
       addField();
-
-//      $('input[name="access_date"]').each(function(i, elem) {
-//        $(elem).val('1900-01-01');
-//      });
-
-
-
     });
     $('#add-field-link').on('click', function() {
       addField();
