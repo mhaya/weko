@@ -53,5 +53,7 @@ js_dependecies_schema_form = NpmBundle(
         'invenio-records-js': '~0.0.8',
         'objectpath': '~1.2.1',
         'tv4': '~1.2.7',
-    }
+    },
+    output="gen/index_tree_sf.js"
+
 )
