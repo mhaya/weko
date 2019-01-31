@@ -62,7 +62,7 @@ install_requires = [
     'elasticsearch_dsl<3.0.0,>=2.0.0',
     'invenio-assets>=1.0.0b7',
     'invenio-db>=1.0.0b9',
-    'invenio-records-rest==1.0.0b3',
+    'invenio-records-rest>=1.0.0b3',
     'invenio-search>=1.0.0b4',
 ]
 
