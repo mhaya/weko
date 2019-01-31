@@ -25,7 +25,7 @@
 {%- endblock css %}
 
 {%- block javascript %}
-{% assets "invenio_deposit_dependencies_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+  {% assets "invenio_deposit_dependencies_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {{ super() }}
   {% assets "invenio_deposit_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_index_tree_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
@@ -59,7 +59,7 @@
               <invenio-records-form
                 form-templates-base='../static/template/weko_index_tree/'
                 form-templates='{"default": "default.html", "textarea": "textarea.html"}'
-                template="./form.html">
+                template="node_modules/invenio-records-js/dist/templates/form.html">
               </invenio-records-form>
             </invenio-records>
           </div>
