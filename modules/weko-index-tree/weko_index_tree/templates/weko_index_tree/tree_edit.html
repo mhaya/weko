@@ -50,7 +50,7 @@
           <pre>You can specify your own personal field templates by using the ``form-templates`` attribute.</pre>
           <div ng-app="invenioRecordsDemo">
             <invenio-records
-              extra-params="{}"
+              extra-params='{"headers":{"Content-Type": "application/json"}}'
               record='{}'
               initialization=""
               form="../static/json/form.json"
