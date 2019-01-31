@@ -6,7 +6,8 @@ require([
       addField();
 
       $('input[name="access_date"]').each(function(i, elem) {
-        alert($(elem).val());
+//        alert($(elem).val('1900-01-01'));
+        $(elem).val('1900-01-01');
       });
 
 //      $($('.field-row-default').find('input[name="access_date"]')[0]).value = '2000-01-01';
