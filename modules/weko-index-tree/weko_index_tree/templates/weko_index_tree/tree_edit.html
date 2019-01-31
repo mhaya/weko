@@ -27,6 +27,7 @@
 {%- block javascript %}
   {% assets "invenio_deposit_dependencies_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {{ super() }}
+  {% assets "weko_index_tree_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
 {%- endblock javascript %}
 
 {%- block page_body_tabs %}
