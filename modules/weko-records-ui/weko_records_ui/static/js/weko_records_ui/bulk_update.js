@@ -5,9 +5,7 @@ require([
     $(document).ready(function() {
       addField();
 
-      alert($($('.field-row-default').find('input[name="access_date"]')[0]).prop('value'));
-
-//      $($('.field-row-default').find('input[name="access_date"]')[0]).prop('value') = getDate();
+      $($('.field-row-default').find('input[name="access_date"]')[0]).prop('value', getDate());
     });
     $('#add-field-link').on('click', function() {
       addField();
