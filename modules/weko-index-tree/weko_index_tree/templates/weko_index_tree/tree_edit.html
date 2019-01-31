@@ -52,14 +52,14 @@
             <invenio-records
               extra-params='{"headers":{"Content-Type": "application/json"}}'
               record='{}'
-              initialization=""
+              initialization="{{ config.DEPOSIT_SEARCH_API }}"
               form="../static/json/form.json"
               schema="../static/json/schema.json"
             >
               <invenio-records-form
                 form-templates-base='../static/template/weko_index_tree/'
                 form-templates='{"default": "default.html", "textarea": "textarea.html"}'
-                template="">
+                template="{{ url_for('static', filename=config.DEPOSIT_UI_JSTEMPLATE_FORM) }}">
               </invenio-records-form>
             </invenio-records>
           </div>
