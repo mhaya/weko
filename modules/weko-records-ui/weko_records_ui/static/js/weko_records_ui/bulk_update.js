@@ -2,15 +2,15 @@ require([
   "jquery",
   "bootstrap"
 ], function() {
-    $(document).ready(function() {
+    $(document).ready( function() {
+      $($('.field-row-default').find('input[name="access_date"]')[0]).val(getDate);
       addField();
 
-      $('input[name="access_date"]').each(function(i, elem) {
-//        alert($(elem).val('1900-01-01'));
-        $(elem).val('1900-01-01');
-      });
+//      $('input[name="access_date"]').each(function(i, elem) {
+//        $(elem).val('1900-01-01');
+//      });
 
-//      $($('.field-row-default').find('input[name="access_date"]')[0]).value = '2000-01-01';
+
 
     });
     $('#add-field-link').on('click', function() {
