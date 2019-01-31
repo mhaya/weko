@@ -54,7 +54,5 @@ js_dependecies_schema_form = NpmBundle(
         'objectpath': '~1.2.1',
         'tv4': '~1.2.7',
     },
-    filters='requirejs',
     output="gen/index_tree_sf.js"
-
 )
