@@ -26,7 +26,6 @@
 
 {%- block javascript %}
   {{ super() }}
-  {% assets "weko_index_tree_js_sf" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_index_tree_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
 {%- endblock javascript %}
 
