@@ -4,6 +4,8 @@ require([
 ], function() {
     $(document).ready(function() {
       addField();
+
+      alert(getDate());
     });
     $('#add-field-link').on('click', function() {
       addField();
@@ -265,6 +267,28 @@ require([
       $(newField).attr('class', 'row field-row');
       $(newField).removeAttr("hidden");
       $(newField).insertBefore($('#add-field-row'));
+    }
+
+    // Get date
+    function getDate() {
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
+
+      var toTwoDigits = function (num, digit) {
+        num += '';
+        if (num.length < digit) {
+          num = '0' + num;
+        }
+        return num;
+      }
+
+      var yyyy = toTwoDigits(year, 4);
+      var mm = toTwoDigits(month, 2);
+      var dd = toTwoDigits(day, 2);
+
+      return yyyy + "-" + mm + "-" + dd;
     }
 
 });
