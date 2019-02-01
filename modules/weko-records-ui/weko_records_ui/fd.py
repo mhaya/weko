@@ -24,15 +24,22 @@ import mimetypes
 import unicodedata
 
 from flask import abort, current_app, render_template, request
-#from invenio_files_rest.views import ObjectResource
-#from invenio_files_rest.models import ObjectVersion, FileInstance
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from invenio_records_files.utils import record_file_factory
-from weko_records.api import FilesMetadata, ItemTypes
-from .pdf import  make_combined_pdf
+from weko_records.api import FilesMetadata, ItemTypes, ItemsMetadata
+from weko_records.models import ItemMetadata
+from invenio_pidstore.models import PersistentIdentifier
+from .pdf import *
 from werkzeug.datastructures import Headers
 from werkzeug.urls import url_quote
 
 from .permissions import file_permission_factory
+from invenio_db import db
+from weko_admin.models import PDFCoverPageSettings
+
+from invenio_files_rest.views import ObjectResource
+#from invenio_files_rest.models import ObjectVersion, FileInstance
 
 def weko_view_method(pid, record, template=None, **kwargs):
     r"""Display Weko view.
@@ -162,8 +169,8 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
     if not fileobj:
         abort(404)
 
-    # # check types
-    # obj = fileobj.obj
+    # check types
+    obj = fileobj.obj
     # print(type(fileobj))
     # print(type(obj))
 
@@ -171,21 +178,27 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
     if not file_permission_factory(record, fjson=fileobj).can():
         abort(403)
 
-    # Check permissions
+    # #Check permissions
     # ObjectResource.check_object_permission(obj)
 
-    #### Send file without its pdf cover page ####
-    # if ...  # Write this if statement later
-    # return ObjectResource.send_object(
-    #     obj.bucket, obj,
-    #     expected_chksum=fileobj.get('checksum'),
-    #     logger_data={
-    #         'bucket_id': obj.bucket_id,
-    #         'pid_type': pid.pid_type,
-    #         'pid_value': pid.pid_value,
-    #     },
-    # )
+    """ Send file without its pdf cover page """
+    engine = create_engine('postgresql+psycopg2://invenio:dbpass123@postgresql:5432/invenio')
+    Session = sessionmaker()
+    Session.configure(bind=engine)
+    session = Session()
+    record = session.query(PDFCoverPageSettings).filter(PDFCoverPageSettings.id == 1).first()
 
-    #### Send file with its pdf cover page ####
-    #if ... # Write this if statement later
-    return make_combined_pdf()
+    if record.avail == 'disable': # Write this if statement later
+        return ObjectResource.send_object(
+        obj.bucket, obj,
+        expected_chksum=fileobj.get('checksum'),
+        logger_data={
+            'bucket_id': obj.bucket_id,
+            'pid_type': pid.pid_type,
+            'pid_value': pid.pid_value,
+        },
+        )
+
+
+    """ Send file with its pdf cover page """
+    return make_combined_pdf(pid)

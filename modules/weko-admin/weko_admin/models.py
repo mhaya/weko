@@ -25,9 +25,11 @@ from datetime import datetime
 from flask import current_app, json
 from invenio_db import db
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.dialects import mysql, postgresql
 from sqlalchemy_utils.types import JSONType
 from sqlalchemy.sql import func
+from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy import create_engine
+from sqlalchemy.dialects import postgresql
 
 
 class SessionLifetime(db.Model):
@@ -219,7 +221,67 @@ class SearchManagement(db.Model):
             raise
         return cls
 
+class PDFCoverPageSettings(db.Model):
+    #availability = StringField()
+    __tablename__ = 'pdfcoverpage_settings'
 
+    id = db.Column("ID", db.Integer, primary_key=True, autoincrement=True)
 
+    avail = db.Column("Availability", db.Text, nullable=False, default='disable')
+    """ PDF Cover Page Availability """
 
-__all__ = (['SearchManagement'])
+    header_display_type = db.Column("Header Display Type", db.Text, nullable=True, default='string')
+    """ Header Display('string' or 'image')"""
+
+    header_output_string = db.Column("Header Output String", db.String(100), nullable=True, default='')
+    """ Header Output String"""
+
+    header_output_image = db.Column("Header Output Image", db.String(500), nullable=True, default='')
+    """ Header Output Image"""
+
+    header_display_position = db.Column("Header Display Position", db.Text, nullable=True, default='center')
+    """ Header Display Position """
+
+    created_at = db.Column("Created at", db.DateTime, nullable=False, default=datetime.now)
+    """ Created Date"""
+
+    updated_at = db.Column("Updated at", db.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
+    """ Updated Date """
+
+    def __init__(self, avail, header_display_type, header_output_string, header_output_image, header_display_position):
+        self.avail = avail
+        self.header_display_type = header_display_type
+        self.header_output_string = header_output_string
+        self.header_output_image = header_output_image
+        self.header_display_position = header_display_position
+
+    @classmethod
+    def find(cls, id):
+        """ find record by id"""
+        session = Session()
+        record = session.query(PDFCoverPageSettings).filter(PDFCoverPageSettings.id == id).first()
+        session.close()
+        return record
+
+    @classmethod
+    def update(cls, id, avail, header_display_type, header_output_string, header_output_image, header_display_position):
+
+        settings = PDFCoverPageSettings(avail, header_display_type, header_output_string, header_output_image, header_display_position)
+
+        """ update record by id"""
+        engine = create_engine('postgresql+psycopg2://invenio:dbpass123@postgresql:5432/invenio')
+        Session = sessionmaker()
+        Session.configure(bind = engine)
+        session = Session()
+        record = session.query(PDFCoverPageSettings).filter(PDFCoverPageSettings.id == id).first()
+
+        record.avail = settings.avail
+        record.header_display_type = settings.header_display_type
+        record.header_output_string = settings.header_output_string
+        record.header_output_image = settings.header_output_image
+        record.header_display_position = settings.header_display_position
+        session.commit()
+        session.close()
+        return record
+
+__all__ = (['SearchManagement', 'PDFCoverPageSettings'])

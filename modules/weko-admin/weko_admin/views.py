@@ -24,9 +24,8 @@ import json
 import os
 import sys
 from datetime import timedelta
-
 from flask import Blueprint, abort, current_app, flash, \
-    jsonify, make_response, render_template, request, session
+    jsonify, make_response, render_template, request, session, redirect, url_for
 from flask_babelex import lazy_gettext as _
 from flask_breadcrumbs import register_breadcrumb
 from flask_login import current_user, login_required
@@ -34,12 +33,17 @@ from flask_menu import register_menu
 from invenio_admin.proxies import current_admin
 from weko_records.api import ItemTypes, SiteLicense
 from werkzeug.local import LocalProxy
-
-
-from .models import SessionLifetime, SearchManagement
+import werkzeug
+from werkzeug.utils import secure_filename
+from invenio_db import db
+from sqlalchemy.orm import sessionmaker, session
+from sqlalchemy import create_engine
+from .models import SessionLifetime, SearchManagement, PDFCoverPageSettings
 from .utils import get_response_json, get_search_setting
+import psycopg2
 
 _app = LocalProxy(lambda: current_app.extensions['weko-admin'].app)
+
 
 blueprint = Blueprint(
     'weko_admin',
@@ -214,3 +218,128 @@ def set_search():
         abort(500)
 
 
+@blueprint.route('/admin/pdfcoverpage', methods=['GET', 'POST'])
+
+def set_pdfcoverpage_header():
+    #limit upload file size : 1MB
+    current_app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
+
+    @blueprint.errorhandler(werkzeug.exceptions.RequestEntityTooLarge)
+    def handle_over_max_file_size(error):
+        print("werkzeug.exceptions.RequestEntityTooLarge")
+        return 'result : file size is overed.'
+
+    # Save PDF Cover Page Header settings
+    if request.method == 'POST':
+        engine = create_engine('postgresql+psycopg2://invenio:dbpass123@postgresql:5432/invenio')
+        Session = sessionmaker()
+        Session.configure(bind=engine)
+        session = Session()
+        record = session.query(PDFCoverPageSettings).filter(PDFCoverPageSettings.id == 1).first()
+
+        avail = request.form.get('availability')
+        header_display_type = request.form.get('header-display')
+        header_output_string = request.form.get('header-output-string')
+        header_output_image_file = request.files.get('header-output-image')
+        header_output_image_filename = header_output_image_file.filename
+        header_output_image = record.header_output_image
+        if not header_output_image_filename == '':
+            print(header_output_image_filename)
+            upload_dir = "/code/header-icons/"
+            header_output_image = upload_dir + header_output_image_filename
+            header_output_image_file.save(header_output_image)
+        header_display_position = request.form.get('header-display-position')
+
+        # update PDF cover page settings
+        PDFCoverPageSettings.update(1,
+                                    avail,
+                                    header_display_type,
+                                    header_output_string,
+                                    header_output_image,
+                                    header_display_position
+                                    )
+
+        if request.method == 'POST':
+            engine = create_engine('postgresql+psycopg2://invenio:dbpass123@postgresql:5432/invenio')
+            Session = sessionmaker()
+            Session.configure(bind=engine)
+            session = Session()
+            record = session.query(PDFCoverPageSettings).filter(PDFCoverPageSettings.id == 1).first()
+
+
+        #return  record.avail
+
+        # new_settings = PDFCoverPageSettings(avail, header_display_type, header_output_string, header_output_image, header_display_position)
+        # new_settings.avail = avail
+        # new_settings.header_display_type = header_display_type
+        # new_settings.header_output_string = header_output_string
+        # new_settings.header_output_image = header_output_image
+        # new_settings.header_display_position = header_display_position
+
+        # Session = sessionmaker()
+        # session = Session()
+        # settings = session.query(PDFCoverPageSettings).filter(PDFCoverPageSettings.id==1).first()
+        # settings.avail = new_settings.avail
+        # settings.header_display_type = new_settings.header_display_type
+        # settings.header_output_string = new_settings.header_output_string
+        # settings.header_output_image = new_settings.header_output_image
+        # settings.header_display_position = new_settings.header_display_position
+        # session.commit()
+        # session.close()
+        #
+        """ confirmation """
+        #Session = sessionmaker()
+        # session = Session()
+        # settings = session.query(PDFCoverPageSettings).filter(PDFCoverPageSettings.id == 1).first()
+        # test_value = settings.header_display_position
+        # session.close()
+
+        # return "Update done"
+        """ """
+
+        # if not header_display_position == None:
+        #     settings.header_display_position = header_display_position
+
+        return render_template(
+            current_app.config['WEKO_ADMIN_BlOCK_PDFCOVERPAGE_TEMPLATE'],
+            avail = record.avail,
+            header_display_type = record.header_display_type,
+            header_output_string = record.header_output_string,
+            header_output_image = record.header_output_image,
+            header_display_position = record.header_display_position
+        )
+
+
+        # try:
+        #     return render_template(current_app.config['WEKO_ADMIN_BlOCK_PDFCOVERPAGE_TEMPLATE'], avail = avail)
+        # except:
+        #     return render_template(current_app.config['WEKO_ADMIN_BlOCK_PDFCOVERPAGE_TEMPLATE'])
+
+
+        #return 'This is Testtttttttttttttttttttttttt'
+        #return render_template(current_app.config['WEKO_ADMIN_BlOCK_PDFCOVERPAGE_TEMPLATE'])
+        # form = cgi.FieldStorage()
+        # availability = form.getfirst('availability', 'no_value')
+        # print(availability, 'dsaaaaaaaaaaaaaaaaaaaaaadasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+
+        #avail = CoverPageAvail(availability)
+
+
+        # form = ImageHeaderForm()
+        # if form.validate_on_submit():
+        #     f = form.photo.data
+        #     filename = secure_filename(f.filename)
+        #     f.save(os.path.join(
+        #         blueprint.instance_path, 'photos', filename
+        #     ))
+
+        # return render_template(
+        #     current_app.config['WEKO_ADMIN_BlOCK_PDFCOVERPAGE_TEMPLATE'],
+        #     #     image= f
+        # )
+
+    # try:
+    #     return render_template(
+    #         current_app.config['WEKO_ADMIN_BlOCK_PDFCOVERPAGE_TEMPLATE'])
+    # except:
+    #     abort(500)

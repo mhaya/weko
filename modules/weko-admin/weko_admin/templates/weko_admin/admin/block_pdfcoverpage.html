@@ -18,9 +18,10 @@
 # MA 02111-1307, USA.
 #}
 
-{%- extends admin_base_template %}
+{%- extends config.WEKO_ADMIN_BASE_TEMPLATE %}
+{# {%- extends admin_base_template %} #}
 
-{% block css %}
+{%- block css %}
 {{ super() }}
 <link href="{{ url_for('static', filename='css/weko_admin/quill.snow.css') }}" rel="stylesheet">
 <link href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" rel="stylesheet">
@@ -66,15 +67,21 @@
   .form-group-content input{
     margin-right: 0.5rem;
     vertical-align: -0.2em;
-
   }
 
   .clear{
     clear: left;
   }
 
+  #image{
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+  }
+
 </style>
-{% endblock %}
+
+{%- endblock css %}
 
 {%- block body %}
   <div class="row">
@@ -82,7 +89,8 @@
       <div class="panel-group">
         <div class="panel panel-default">
           <div class="panel-body" id="color_setting">
-            <form action='' method="POST"> <!-- write the correct link later -->
+            <form action="{{ url_for('weko_admin.set_pdfcoverpage_header') }}" method="post" id="form1" enctype="multipart/form-data"> <!-- write the correct link later -->
+              <!--enctype="multipart/form-data"-->
               <div class="row">
               <div class="col-sm-10">
                   <div class="panel panel-info">
@@ -98,8 +106,22 @@
                           <label>ON/OFF</label>
                           </div>
                           <div class="form-group-content">
-                          <p><input type="radio" name="availability" value="enable">enable</p>
-                          <p><input type="radio" name="availability" value="disable">disable</p>
+                            <p>
+                              {% if avail == 'enable' %}
+                              <input type="radio" name="availability" value="enable" checked required />
+                              {% else %}
+                              <input type="radio" name="availability" value="enable" required />
+                              {% endif %}
+                              Enable
+                          </p>
+                            <p>
+                              {% if avail == 'disable' %}
+                              <input type="radio" name="availability" value="disable" checked required />
+                              {% else %}
+                              <input type="radio" name="availability" value="disable" required />
+                              {% endif %}
+                              Disable
+                            </p>
                           </div>
                         </div>
                         <div class="clear"></div>
@@ -124,8 +146,22 @@
                           <label>Header Display Setting</label>
                           </div>
                           <div class="form-group-content horizontal">
-                            <p><input type="radio" name="header-display-setting" value="string-display"> String</p>
-                          <p><input type="radio" name="header-display-setting" value="image-display"> Image</p>
+                            <p>
+                              {% if header_display_type == 'string' %}
+                              <input type="radio" name="header-display" value="string" checked />
+                              {% else %}
+                              <input type="radio" name="header-display" value="string" />
+                              {% endif %}
+                              String
+                            </p>
+                            <p>
+                              {% if header_display_type == 'image' %}
+                              <input type="radio" name="header-display" value="image" checked />
+                              {% else %}
+                              <input type="radio" name="header-display" value="image" />
+                              {% endif %}
+                              Image
+                            </p>
                           </div>
                         </div>
                         <div class="clear"></div>
@@ -133,11 +169,11 @@
 
                         <div class="form-group form-group-item">
                           <div class="form-group-label">
-                          <label>Header Display String Setting</label>
+                          <label>Header Output String Setting</label>
                           </div>
                           <div class="form-group-content">
                             <p>Please enter within 100 half-width characters/50 full-width characters</p>
-                            <p><input type="text" name="header-display-string-setting" placeholder="ex: Weko University"></p>
+                            <p><input type="text" name="header-output-string" placeholder="ex: Weko University" value="{{ header_output_string }}" maxlength="100" /></p>
                           </div>
                         </div>
                         <div class="clear"></div>
@@ -149,9 +185,15 @@
                           </div>
                           <div class="form-group-content">
                             <p>Images of jpg, png, gif can be set.</p>
-                            <p>&lt;Image Inserted Here&gt;</p>
-                            <p><input type="file" name="header-output-image"></p>
-                          </div>
+                            <p>
+                              {% if not header_output_image == '' or header_output_image == None %}
+                              <img src="{{ header_output_image }}" alt="Present Image" id="present-image"  >
+                              {% else %}
+                              <span>No header image set</span>
+                              {% endif %}
+                            </p>
+                            <p><input type="file" name="header-output-image" id="files" /></p>
+                            <p><img id="image" alt=""/></p>
                         </div>
                         <div class="clear"></div>
                         <hr>
@@ -161,20 +203,40 @@
                           <label>Header Display Position Setting</label>
                           </div>
                           <div class="form-group-content">
-                            <p><input type="radio" name="header-display position-setting"> Left justified</p>
-                            <p><input type="radio" name="header-display position-setting"> Center justified</p>
-                            <p><input type="radio" name="header-display position-setting"> Right justified</p>
+                            <p>
+                              {% if header_display_position == 'left' %}
+                              <input type="radio" name="header-display-position" value="left" checked />
+                              {% else %}
+                              <input type="radio" name="header-display-position" value="left" />
+                              {% endif %}
+                              Left justified
+                            </p>
+                            <p>
+                              {% if header_display_position == 'center' %}
+                              <input type="radio" name="header-display-position" value="center" checked />
+                              {% else %}
+                              <input type="radio" name="header-display-position" value="center" />
+                              {% endif %}
+                              Center justified
+                            </p>
+                            <p>
+                              {% if header_display_position == 'right' %}
+                              <input type="radio" name="header-display-position" value="right" checked />
+                              {% else %}
+                              <input type="radio" name="header-display-position" value="right" />
+                              {% endif %}
+                              Right justified</p>
                           </div>
                         </div>
                         <div class="clear"></div>
-
                       </div>
                     </div>
                   </div>
               </div>
             </div>
+            </div>
             <div class="pull-left">
-              <button type="button" id="btn_commit_header" class="btn btn-primary">
+              <button type="submit" name="pdfcoverpage_form" id="btn_commit_header" class="btn btn-primary">
                 <i class="fa fa-gear"></i>{{_(' Update')}}
               </button>
             </div>
@@ -184,4 +246,19 @@
       </div>
     </div>
   </div>
+
+<script type="text/javascript">
+document.getElementById("files").onchange = function () {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        document.getElementById("image").src = e.target.result;
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+};
+</script>
+
 {%- endblock body %}
