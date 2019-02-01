@@ -81,9 +81,9 @@
     <div id="root"></div>
     <script type="text/babel">
       ReactDOM.render(
-        {%- block page_header %}
+        <div>{%- block page_header %}
     {% include config.THEME_HEADER_TEMPLATE %}
-        {%- endblock page_header %},
+        {%- endblock page_header %}</div>,
         document.getElementById('root')
       )
     </script>
