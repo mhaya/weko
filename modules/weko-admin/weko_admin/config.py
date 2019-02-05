@@ -38,9 +38,6 @@ WEKO_ADMIN_SITE_LICENSE_TEMPLATE = 'weko_admin/site_license.html'
 WEKO_ADMIN_BlOCK_STYLE_TEMPLATE = 'weko_admin/block_style.html'
 """Block-style templates."""
 
-# TODO
-WEKO_ADMIN_HARVEST_DETAIL_TEMPLATE = 'weko_admin/details.html'
-
 WEKO_ADMIN_SEARCH_MANAGEMENT_TEMPLATE = 'weko_admin/search_management.html'
 """Site-license templates."""
 
