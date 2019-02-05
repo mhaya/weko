@@ -19,7 +19,8 @@
 # MA 02111-1307, USA.
 
 """ Utilities for making the PDF coverpage and newly combined PDFs. """
-import io, unicodedata
+import io, unicodedata, hashlib
+from datetime import datetime
 from fpdf import FPDF
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from flask import send_file
@@ -227,7 +228,7 @@ def make_combined_pdf(pid, obj_file_uri):
         pdf.multi_cell(footer_w, footer_h, '', 0, 'L', False)
 
     """ Convert PDF cover page data as Bytecode """
-    output = pdf.output('test_fpdf.pdf', dest = 'S').encode('latin-1')
+    output = pdf.output(dest = 'S').encode('latin-1')
     b_output = io.BytesIO(output)
 
     """ Combining cover page and existing pages """
@@ -239,7 +240,8 @@ def make_combined_pdf(pid, obj_file_uri):
     for page_num in range(existing_pages.numPages):
         existing_page = existing_pages.getPage(page_num)
         combined_pages.addPage(existing_page)
-    combined_file_path ='/code/combined-pdfs/combined-file.pdf'  # Modified later
+    combined_filename = record_metadata["item_1538028827221"][0]["filename"] + '_combined_' + datetime.now().strftime('%Y%m%d')
+    combined_file_path = "/code/combined-pdfs/{}.pdf".format(combined_filename)
     combined_file = open(combined_file_path, "wb")
     combined_pages.write(combined_file)
     combined_file.close()
