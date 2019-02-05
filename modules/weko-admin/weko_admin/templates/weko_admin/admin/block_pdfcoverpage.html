@@ -18,8 +18,7 @@
 # MA 02111-1307, USA.
 #}
 
-{%- extends config.WEKO_ADMIN_BASE_TEMPLATE %}
-{# {%- extends admin_base_template %} #}
+{%- extends admin_base_template %}
 
 {%- block css %}
 {{ super() }}
@@ -74,9 +73,11 @@
   }
 
   #image{
-    width: 150px;
     height: 150px;
-    margin: 0 auto;
+  }
+
+  #present-image{
+    height: 150px;
   }
 
 </style>
@@ -89,7 +90,11 @@
       <div class="panel-group">
         <div class="panel panel-default">
           <div class="panel-body" id="color_setting">
-            <form action="{{ url_for('weko_admin.set_pdfcoverpage_header') }}" method="post" id="form1" enctype="multipart/form-data"> <!-- write the correct link later -->
+
+
+
+              <form action="{{ url_for('weko_admin.set_pdfcoverpage_header') }}" method="post" id="form1" enctype="multipart/form-data" >
+            <!-- write the correct link later -->
               <!--enctype="multipart/form-data"-->
               <div class="row">
               <div class="col-sm-10">
@@ -187,7 +192,7 @@
                             <p>Images of jpg, png, gif can be set.</p>
                             <p>
                               {% if not header_output_image == '' or header_output_image == None %}
-                              <img src="{{ header_output_image }}" alt="Present Image" id="present-image"  >
+                              <img src="{{ header_output_image }}" alt="" id="present-image"  >
                               {% else %}
                               <span>No header image set</span>
                               {% endif %}

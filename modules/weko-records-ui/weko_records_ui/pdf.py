@@ -1,38 +1,79 @@
-import io
+# -*- coding: utf-8 -*-
+#
+# This file is part of WEKO3.
+# Copyright (C) 2017 National Institute of Informatics.
+#
+# WEKO3 is free software; you can redistribute it
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# WEKO3 is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WEKO3; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+
+""" Utilities for making the PDF coverpage and newly combined PDFs. """
+import io, unicodedata
 from fpdf import FPDF
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from flask import send_file
 from weko_records.api import ItemsMetadata
 from invenio_pidstore.models import PersistentIdentifier
 from weko_admin.models import PDFCoverPageSettings
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from flask_wtf import FlaskForm
 
-def make_combined_pdf(pid):
+
+""" Function counting full-width character and half-width character distinctly """
+def get_east_asian_width_count(text):
+    count = 0
+    for c in text:
+        if unicodedata.east_asian_width(c) in 'FWA':
+            count += 2
+        else:
+            count += 1
+    return count
+
+""" function making PDF cover page """
+def make_combined_pdf(pid, obj_file_uri):
+    """
+    meke the cover-page-combined PDF file
+    :param pid: PID object
+    :param file_uri: URI of the file object
+    :return: cover-page-combined PDF file object
+    """
 
     pid = pid.pid_value
     pidObject = PersistentIdentifier.get('recid', pid)
     record_metadata = ItemsMetadata.get_record(pidObject.object_uuid)
 
     """ Initialize Instance """
-    pdf = FPDF('P', 'mm', (222.2, 282.9))
+    pdf = FPDF('P', 'mm', 'A4')
     pdf.add_page()
-    pdf.set_margins(20.0, 35.0, 20.0)
+    pdf.set_margins(20.0, 20.0)
     pdf.set_fill_color(100, 149, 237)
+
+    pdf.add_font('IPAexg', '', '/code/modules/weko-records-ui/weko_records_ui/fonts/ipaexg00201/ipaexg.ttf', uni=True)
+    pdf.add_font('IPAexm', '', '/code/modules/weko-records-ui/weko_records_ui/fonts/ipaexm00201/ipaexm.ttf', uni=True)
+
     w1 = 40
-    w2 = 142
-    h = 7
+    w2 = 130
+    footer_w = 90
+    url_oapolicy_h = 7
+    title_h = 8
     header_h = 20
-    meta_h = 10
+    footer_h = 4
+    meta_h = 9
+    max_letters_num = 51
+    cc_logo_xposition = 160
 
     """ Header """
     # Get the header settings
-    engine = create_engine('postgresql+psycopg2://invenio:dbpass123@postgresql:5432/invenio')
-    Session = sessionmaker()
-    Session.configure(bind=engine)
-    session = Session()
-    record = session.query(PDFCoverPageSettings).filter(PDFCoverPageSettings.id == 1).first()
+    record = PDFCoverPageSettings.query.filter(PDFCoverPageSettings.id == 1).first()
     header_display_type = record.header_display_type
     header_output_string = record.header_output_string
     header_output_image = record.header_output_image
@@ -45,30 +86,28 @@ def make_combined_pdf(pid):
         positions['img_position'] = 20
     elif header_display_position == 'center' or header_display_position == None:
         positions['str_position'] = 'C'
-        positions['img_position'] = 95
+        positions['img_position'] = 85
     elif header_display_position == 'right':
         positions['str_position'] = 'R'
-        positions['img_position'] = 175
+        positions['img_position'] = 150
 
     # Show header(string or image)
     if header_display_type == 'string':
-        pdf.set_font('Courier', 'I', 22)
-        #pdf.set_x(60)
-        # pdf.cell(100, 20, header, 1, 1, 'C')
+        pdf.set_font('IPAexm', '', 22)
         pdf.multi_cell(w1+w2, header_h, header_output_string, 0, positions['str_position'], False)
-        # pdf.image()  # If a image is used
     else:
-        pdf.image(header_output_image, x=positions['img_position'], y=None, w=30, h=30, type='')
-        pdf.set_y(50.0)
+        pdf.image(header_output_image, x=positions['img_position'], y=None, w=0, h=30, type='')
+        pdf.set_y(55)
 
     """ Title """
     title = record_metadata['title_en']
-    pdf.set_font('Times', 'B', 20)
-    pdf.multi_cell(w1+w2, h, title, 0, 'L', False)
+    pdf.set_font('IPAexm', '', 20)
+    pdf.multi_cell(w1 + w2, title_h, title, 0, 'L', False)
     pdf.ln(h='15')
 
     """ Metadata """
     pdf.set_font('Arial', '', 14)
+    pdf.set_font('IPAexg', '', 14)
     if record_metadata['lang'] == 'en':
         record_metadata['lang'] = 'English'
     elif record_metadata['lang']  == 'ja':
@@ -101,11 +140,14 @@ def make_combined_pdf(pid):
 
     metadata = '\n'.join(metadata_list)
     metadata_lfnum = int(metadata.count('\n'))
+    for item in metadata_list:
+            metadata_lfnum += int(get_east_asian_width_count(item)) // max_letters_num
 
-    url = ''
-    url_lfnum = int(len(url)) // 51 #+ int(url.count('\n'))# 51 is the max letter number within a line
+    url = '' # will be modified later
+    url_lfnum = int(get_east_asian_width_count(url)) // max_letters_num
 
-    oa_policy = ''
+    oa_policy = '' # will be modified later
+    oa_policy_lfnum = int(get_east_asian_width_count(oa_policy)) // max_letters_num
 
     # Save top coordinate
     top = pdf.y
@@ -118,72 +160,78 @@ def make_combined_pdf(pid):
     pdf.x = offset
     pdf.multi_cell(w2, meta_h, metadata, 1, 'L', False)
     top = pdf.y
-    pdf.multi_cell(w1, h, 'URL' + '\n'*(url_lfnum+1), 1, 'C', True)
+    pdf.multi_cell(w1, url_oapolicy_h, 'URL' + '\n'*(url_lfnum+1), 1, 'C', True)
     pdf.y = top
     pdf.x = offset
-    pdf.multi_cell(w2, h, url, 1, 'L', False)
+    pdf.multi_cell(w2, url_oapolicy_h, url, 1, 'L', False)
     top = pdf.y
-    pdf.multi_cell(w1, h, 'OA Policy', 1, 'C', True)
+    pdf.multi_cell(w1, url_oapolicy_h, 'OA Policy' + '\n'*(oa_policy_lfnum+1), 1, 'C', True)
     pdf.y = top
     pdf.x = offset
-    pdf.multi_cell(w2, h, oa_policy, 1, 'L', False)
+    pdf.multi_cell(w2, url_oapolicy_h, oa_policy, 1, 'L', False)
+    pdf.ln(h=1)
 
     ### Footer ###
-    pdf.set_font('Helvetica', '', 11)
-    pdf.set_x(100)
+    pdf.set_font('Courier', '', 10)
+    pdf.set_x(108)
 
     license =  record_metadata['item_1538028827221'][0].get('licensetype')
     if license == 'license_free':  #自由入力
         txt = record_metadata['item_1538028827221'][0].get('licensefree')
         if txt == None:
             txt = ''
-        pdf.multi_cell(80, h, txt, 0, 'R', False)
-    elif license == 'license_0': #表示
-        txt = 'This work is licensed under a Creative Commons Attribution 2.1 Japan License.'
+        pdf.multi_cell(footer_w, footer_h, txt, 0, 'L', False)
+    elif license == 'license_0': #Attribution
+        txt = 'This work is licensed under a Creative Commons Attribution 4.0 International License.'
         src = "modules/weko-records-ui/weko_records_ui/static/images/creative_commons/by.png"
-        lnk = "http://creativecommons.org/licenses/by/2.1/jp/"
-        pdf.multi_cell(50, h, txt, 0, 1, 'R', False)
-        pdf.image(src, x = 170, y = None, w = 0, h = 0, type = '', link = lnk)
-    elif license == 'license_1': #表示 - 継承
-        txt = 'This work is licensed under a Creative Commons Attribution-ShareAlike 2.1 Japan License.'
+        lnk = "http://creativecommons.org/licenses/by/4.0/"
+        pdf.multi_cell(footer_w, footer_h, txt, 0, 1, 'L', False)
+        pdf.ln(h=2)
+        pdf.image(src, x = cc_logo_xposition, y = None, w = 0, h = 0, type = '', link = lnk)
+    elif license == 'license_1': #Attribution-ShareAlike
+        txt = 'This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.'
         src= "modules/weko-records-ui/weko_records_ui/static/images/creative_commons/by-sa.png"
-        lnk = "http://creativecommons.org/licenses/by-sa/2.1/jp/"
-        pdf.multi_cell(0, h, txt, 0, 1, 'R', False)
-        pdf.image(src, x = 170, y = None, w = 0, h = 0, type = '', link = lnk)
-    elif license == 'license_2': #表示 - 改変禁止
-        txt = 'This work is licensed under a Creative Commons Attribution-NoDerivs 2.1 Japan License.'
+        lnk = "http://creativecommons.org/licenses/by-sa/4.0/"
+        pdf.multi_cell(footer_w, footer_h, txt, 0, 1, 'L', False)
+        pdf.ln(h=2)
+        pdf.image(src, x = cc_logo_xposition, y = None, w = 0, h = 0, type = '', link = lnk)
+    elif license == 'license_2': #Attribution-NoDerivatives
+        txt = 'This work is licensed under a Creative Commons Attribution-NoDerivatives 4.0 International License.'
         src = "modules/weko-records-ui/weko_records_ui/static/images/creative_commons/by-nd.png"
-        lnk = "http://creativecommons.org/licenses/by-nd/2.1/jp/"
-        pdf.multi_cell(0, h, txt, 0, 'R', False)
-        pdf.image(src, x = 170, y = None, w = 0, h = 0, type = '', link = lnk)
-    elif license == 'license_3': #表示 - 非営利
-        txt = 'This work is licensed under a Creative Commons Attribution-NonCommercial 2.1 Japan License.'
+        lnk = "http://creativecommons.org/licenses/by-nd/4.0/"
+        pdf.multi_cell(footer_w, footer_h, txt, 0, 'L', False)
+        pdf.ln(h=2)
+        pdf.image(src, x = cc_logo_xposition, y = None, w = 0, h = 0, type = '', link = lnk)
+    elif license == 'license_3': #Attribution-NonCommercial
+        txt = 'This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.'
         src = "modules/weko-records-ui/weko_records_ui/static/images/creative_commons/by-nc.png"
-        lnk = "http://creativecommons.org/licenses/by-nc/2.1/jp/"
-        pdf.multi_cell(0, h, txt, 0, 'R', False)
-        pdf.image(src, x = 170, y = None, w = 0, h = 0, type = '', link = lnk)
-    elif license == 'license_4': #表示 - 非営利 - 継承
-        txt = 'This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.1 Japan License.'
+        lnk = "http://creativecommons.org/licenses/by-nc/4.0/"
+        pdf.multi_cell(footer_w, footer_h, txt, 0, 'L', False)
+        pdf.ln(h=2)
+        pdf.image(src, x = cc_logo_xposition, y = None, w = 0, h = 0, type = '', link = lnk)
+    elif license == 'license_4': #Attribution-NonCommercial-ShareAlike
+        txt = 'This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.'
         src = "modules/weko-records-ui/weko_records_ui/static/images/creative_commons/by-nc-sa.png"
-        lnk = "http://creativecommons.org/licenses/by-nc-sa/2.1/jp/"
-        pdf.multi_cell(0, h, txt, 0, 'R', False)
-        pdf.image(src, x = 170, y = None, w = 0, h = 0, type = '', link = lnk)
-    elif license == 'license_5': #表示 - 非営利 - 改変禁止
-        txt = 'This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivs 2.1 Japan License.'
+        lnk = "http://creativecommons.org/licenses/by-nc-sa/4.0/"
+        pdf.multi_cell(footer_w, footer_h, txt, 0, 'L', False)
+        pdf.ln(h=2)
+        pdf.image(src, x = cc_logo_xposition, y = None, w = 0, h = 0, type = '', link = lnk)
+    elif license == 'license_5': #Attribution-NonCommercial-NoDerivatives
+        txt = 'This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.'
         src = "modules/weko-records-ui/weko_records_ui/static/images/creative_commons/by-nc-nd.png"
-        lnk = "http://creativecommons.org/licenses/by-nc-nd/2.1/jp/"
-        pdf.multi_cell(100, 5, txt, 0, 'R', False)
-        pdf.image(src, x = 170, y = None, w = 0, h = 0, type = '', link = lnk)
+        lnk = "http://creativecommons.org/licenses/by-nc-nd/4.0/"
+        pdf.multi_cell(footer_w, footer_h, txt, 0, 'L', False)
+        pdf.ln(h=2)
+        pdf.image(src, x = cc_logo_xposition, y = None, w = 0, h = 0, type = '', link = lnk)
     else:
-        pdf.multi_cell(0, h, '', 0, 'R', False)
+        pdf.multi_cell(footer_w, footer_h, '', 0, 'L', False)
 
-    ### Export as PDF ###
+    """ Convert PDF cover page data as Bytecode """
     output = pdf.output('test_fpdf.pdf', dest = 'S').encode('latin-1')
     b_output = io.BytesIO(output)
 
-    ### Combining cover page and existing pages ###
+    """ Combining cover page and existing pages """
     cover_page = PdfFileReader(b_output)
-    obj_file_uri = '/var/tmp/16/b5/bab6-51b6-4429-8967-7211e5b84260/data' #Modified later
     f = open(obj_file_uri, "rb")
     existing_pages = PdfFileReader(f)
     combined_pages = PdfFileWriter()
@@ -196,106 +244,6 @@ def make_combined_pdf(pid):
     combined_pages.write(combined_file)
     combined_file.close()
 
-    ### Download the newly generated combined PDF file ###
-    download_file_name = 'combined-file.pdf' # Modified later
-    return send_file(combined_file_path, as_attachment = False, attachment_filename = download_file_name, mimetype ='application/pdf', cache_timeout = -1)
-
-
-# ## Another Draft ###
-# def make_combined_pdf2(pid):
-#     ###
-#     pid = pid.pid_value
-#     pidObject = PersistentIdentifier.get('recid', pid)
-#     record_metadata = ItemsMetadata.get_record(pidObject.object_uuid)
-#
-#     ### Initialize Instance ###
-#     pdf = FPDF('P', 'mm', (222.2, 282.9))
-#     pdf.add_page()
-#     pdf.set_margins(20.0, 20.0)
-#     pdf.set_fill_color(10, 210, 100)
-#
-#     ### Header ###
-#     header = '<Header Inserted Here>'
-#     pdf.set_font('Courier', 'I', 16)
-#     pdf.set_x(62)
-#     pdf.cell(100, 20, header, 1, 1, 'C')
-#     #pdf.image()  # If a image is used
-#
-#     ### Title ###
-#     title = record_metadata['title_en']
-#     pdf.set_font('Times', 'B', 16)
-#     pdf.multi_cell(0, 20, title, 0, 'C', 'F')
-#
-#     ### Metadata ###
-#     w1 = 58
-#     w2 = 135
-#     h = 10
-#
-#     metadata_list = [record_metadata['lang'], record_metadata['pubdate'], '']
-#     metadata = '\n'.join(metadata_list)
-#     metadata_lfnum = int(metadata.count('\n'))
-#     print(type(metadata_lfnum))
-#     print(metadata_lfnum)
-#
-#     url = '<URL Inserted Here>'
-#
-#     oa_policy = '<OA Policy Inserted Here>'
-#
-#     pdf.set_font('Arial', '', 14)
-#     pdf.cell(w1, h, 'Metadata' + '\n'*metadata_lfnum, 1, 0, 'C', True)
-#     pdf.cell(w2, h, metadata, 1, 1, 'C')
-#     pdf.cell(w1, h, 'URL', 1, 0, 'C', True)
-#     pdf.cell(w2, h, url, 1, 1, 'C')
-#     pdf.cell(w1, h, 'OA Policy', 1, 0, 'C', True)
-#     pdf.cell(w2, h, oa_policy, 1, 1, 'C')
-#
-#
-#     # pdf.cell(w1, h, 'Author', 1, 0, 'C', True)
-#     # pdf.cell(w2, h, '<Author Inserted Here>', 1, 1, 'C')
-#     # pdf.cell(w1, h, 'Affiliation', 1, 0, 'C', True)
-#     # pdf.cell(w2, h, '<Affiliation Inserted Here>', 1, 1, 'C')
-#     # pdf.cell(w1, h, 'Journal / Magazine', 1, 0, 'C', True)
-#     # pdf.cell(w2, h, '<Journal/Magazine>', 1, 1, 'C')
-#     # pdf.cell(w1, h, 'Publisher', 1, 0, 'C', True)
-#     # pdf.cell(w2, h, '<Publisher Inserted Here>', 1, 1, 'C')
-#     # pdf.cell(w1, h, 'Publication Year', 1, 0, 'C', True)
-#     # pdf.cell(w2, h, '<Publication Year Inserted Here>', 1, 1, 'C')
-#     # pdf.cell(w1, h, 'Volume', 1, 0, 'C', True)
-#     # pdf.cell(w2, h, '<Volume Inserted Here>', 1, 1, 'C')
-#     # pdf.cell(w1, h, 'Issue', 1, 0, 'C', True)
-#     # pdf.cell(w2, h, '<Issue Inserted Here>', 1, 1, 'C')
-#     # pdf.cell(w1, h, 'Page Number', 1, 0, 'C', True)
-#     # pdf.cell(w2, h, '<Page Number Inserted Here>', 1, 1, 'C')
-#     # pdf.cell(w1, h, 'URL', 1, 0, 'C', True)
-#     # pdf.cell(w2, h, '<URL Inserted Here>', 1, 1, 'C')
-#     # pdf.cell(w1, h, 'OA Policy', 1, 0, 'C', True)
-#     # pdf.cell(w2, h, '<OA Policy Inserted Here>', 1, 1, 'C')
-#
-#     ### Footer ###
-#     pdf.set_font('Helvetica', '', 11)
-#     pdf.multi_cell(0, 10, '<Footer Inserted Here>', 0, 'R', 'F')
-#
-#     ### Export as PDF ###
-#     output = pdf.output('test_fpdf.pdf', dest = 'S').encode('latin-1')
-#     b_output = io.BytesIO(output)
-#
-#     ### Combining cover page and existing pages ###
-#     cover_page = PdfFileReader(b_output)
-#     obj_file_uri = '/var/tmp/16/b5/bab6-51b6-4429-8967-7211e5b84260/data' #Modified later
-#     f = open(obj_file_uri, "rb")
-#     existing_pages = PdfFileReader(f)
-#     combined_pages = PdfFileWriter()
-#     combined_pages.addPage(cover_page.getPage(0))
-#     for page_num in range(existing_pages.numPages):
-#         existing_page = existing_pages.getPage(page_num)
-#         combined_pages.addPage(existing_page)
-#     combined_file_path ='/code/combined-file.pdf'  # Modified later
-#     combined_file = open(combined_file_path, "wb")
-#     combined_pages.write(combined_file)
-#     combined_file.close()
-#
-#     ### Download the newly generated combined PDF file ###
-#     download_file_name = 'combined-file.pdf' # Modified later
-#     response = send_file(combined_file_path, as_attachment = True, attachment_filename = download_file_name, mimetype ='application/pdf', cache_timeout = -1)
-#     response.headers['Content-Disposition'] = "attachment; filename='PD1-paper.pdf"
-#     return  response
+    """ Download the newly generated combined PDF file """
+    download_file_name = 'CV_' + record_metadata["item_1538028827221"][0]["filename"] # Modified later
+    return send_file(combined_file_path, as_attachment = True, attachment_filename = download_file_name, mimetype ='application/pdf', cache_timeout = -1)

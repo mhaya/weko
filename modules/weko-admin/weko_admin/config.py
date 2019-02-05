@@ -35,7 +35,7 @@ WEKO_ADMIN_LIFETIME_TEMPLATE = 'weko_admin/settings/lifetime.html'
 WEKO_ADMIN_SITE_LICENSE_TEMPLATE = 'weko_admin/site_license.html'
 """Site-license templates."""
 
-WEKO_ADMIN_BlOCK_STYLE_TEMPLATE = 'weko_admin/block_style.html'
+WEKO_ADMIN_BlOCK_STYLE_TEMPLATE = 'weko_admin/admin/block_style.html'
 """Block-style templates."""
 
 WEKO_ADMIN_BlOCK_PDFCOVERPAGE_TEMPLATE = 'weko_admin/admin/block_pdfcoverpage.html'
@@ -64,7 +64,7 @@ WEKO_ADMIN_MANAGEMENT_OPTIONS = {
         {'id': 'itemType_asc', 'contents': 'Item Type(asc)', 'disableFlg':False},
         {'id': 'itemType_desc', 'contents': 'Item Type(desc)', 'disableFlg':False},
         {'id': 'controlnumber_asc', 'contents': 'ID(asc)', 'disableFlg':False},
-        {'id': 'controlnumber_desc', 'contents': 'ID(desc)', 'disableFlg':False},
+        {'id': 'controlnumber_desc', 'contents': 'ID(desc)', 'disableF71296544:Htc0117@obprx.intra.hitachi.co.jp:8080lg':False},
         {'id': 'upd_asc', 'contents': 'Update(asc)', 'disableFlg':False},
         {'id': 'upd_desc', 'contents': 'Update(desc)', 'disableFlg':False},
         {'id': 'createdate_asc', 'contents': 'Create(asc)', 'disableFlg':False},

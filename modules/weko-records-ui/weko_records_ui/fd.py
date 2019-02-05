@@ -20,26 +20,20 @@
 
 """Utilities for download file."""
 
-import mimetypes
-import unicodedata
-
+import mimetypes, unicodedata
 from flask import abort, current_app, render_template, request
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from invenio_records_files.utils import record_file_factory
-from weko_records.api import FilesMetadata, ItemTypes, ItemsMetadata
-from weko_records.models import ItemMetadata
-from invenio_pidstore.models import PersistentIdentifier
-from .pdf import *
+from weko_records.api import FilesMetadata, ItemTypes
+from .pdf import make_combined_pdf
 from werkzeug.datastructures import Headers
 from werkzeug.urls import url_quote
-
+from invenio_files_rest.proxies import current_permission_factory
 from .permissions import file_permission_factory
-from invenio_db import db
 from weko_admin.models import PDFCoverPageSettings
-
+from invenio_files_rest.views import file_downloaded, check_permission
 from invenio_files_rest.views import ObjectResource
-#from invenio_files_rest.models import ObjectVersion, FileInstance
+from invenio_files_rest.models import ObjectVersion, FileInstance
+
 
 def weko_view_method(pid, record, template=None, **kwargs):
     r"""Display Weko view.
@@ -169,10 +163,7 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
     if not fileobj:
         abort(404)
 
-    # check types
     obj = fileobj.obj
-    # print(type(fileobj))
-    # print(type(obj))
 
     # Check file contents permission
     if not file_permission_factory(record, fjson=fileobj).can():
@@ -182,14 +173,30 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
     # ObjectResource.check_object_permission(obj)
 
     """ Send file without its pdf cover page """
-    engine = create_engine('postgresql+psycopg2://invenio:dbpass123@postgresql:5432/invenio')
-    Session = sessionmaker()
-    Session.configure(bind=engine)
-    session = Session()
-    record = session.query(PDFCoverPageSettings).filter(PDFCoverPageSettings.id == 1).first()
+
+    class ObjectResourceWeko(ObjectResource):
+
+        # redefine `send_object` method to implement the no-cache function
+        @staticmethod
+        def send_object(bucket, obj, expected_chksum=None, logger_data=None, restricted=True, as_attachment=False, cache_timeout=-1, mimetype='application/pdf'):
+            if not obj.is_head:
+                check_permission(
+                    current_permission_factory(obj, 'object-read-version'),
+                    hidden=False
+                )
+
+            if expected_chksum and obj.file.checksum != expected_chksum:
+                current_app.logger.warning(
+                    'File checksum mismatch detected.', extra=logger_data)
+
+            file_downloaded.send(current_app._get_current_object(), obj=obj)
+            return obj.send_file(restricted=restricted, as_attachment=as_attachment)
+
+    record = PDFCoverPageSettings.query.filter(PDFCoverPageSettings.id == 1).first()
 
     if record.avail == 'disable': # Write this if statement later
-        return ObjectResource.send_object(
+
+        return ObjectResourceWeko.send_object(
         obj.bucket, obj,
         expected_chksum=fileobj.get('checksum'),
         logger_data={
@@ -197,8 +204,14 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
             'pid_type': pid.pid_type,
             'pid_value': pid.pid_value,
         },
+        cache_timeout=-1,
+        as_attachment=False,
+        mimetype='application/pdf'
         )
 
-
     """ Send file with its pdf cover page """
-    return make_combined_pdf(pid)
+    object_version_record = ObjectVersion.query.filter(ObjectVersion.bucket_id == obj.bucket_id).first()
+    file_instance_record = FileInstance.query.filter(FileInstance.id == object_version_record.file_id).first()
+    obj_file_uri = file_instance_record.uri
+
+    return make_combined_pdf(pid, obj_file_uri)
