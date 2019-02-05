@@ -9,5 +9,9 @@ require([
       $('#btn_edit_stop').on('click', function(){
         window.location.href = '/';
       });
+      $('#harvesting-btn').on('click', function(){
+        alert('harvesting!!!!');
+      });
+
     });
 });
