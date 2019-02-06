@@ -213,11 +213,6 @@ require([
             });
         });
 
-        $('#harvesting-btn').on('click', function(){
-          alert('harvesting!!!!');
-          return false;
-        });
-
 //        //アイテム検索結果 (search_ui/static/templates/itemlist.html)
 //        $('#search_detail_metadata :input:not(:text)').on('click', function () {
 //            $('#search_detail_metadata :input:not(:text)').each(function () {
