@@ -124,7 +124,7 @@ class StyleSettingView(BaseView):
         except BaseException:
             current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
         return self.render(
-            'weko_admin/admin/block_style.html',
+            current_app.config["WEKO_ADMIN_BlOCK_STYLE_TEMPLATE"],
             body_bg=body_bg,
             panel_bg=panel_bg,
             footer_default_bg=footer_default_bg,
@@ -211,7 +211,7 @@ class PdfCoverPageSettingView(BaseView):
     def index(self):
         record = PDFCoverPageSettings.query.filter(PDFCoverPageSettings.id == 1).first()
         return self.render(
-            'weko_admin/admin/block_pdfcoverpage.html',
+            current_app.config["WEKO_ADMIN_PDFCOVERPAGE_TEMPLATE"],
             avail = record.avail,
             header_display_type = record.header_display_type,
             header_output_string = record.header_output_string,

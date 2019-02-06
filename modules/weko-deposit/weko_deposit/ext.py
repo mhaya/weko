@@ -57,17 +57,6 @@ class WekoDeposit(object):
                 app.config['BASE_TEMPLATE'],
             )
 
-
-        ##追加した部分
-        #app.config.setdefault( 'INDEX_IMG', app.config['INDEX_IMG'])
-
-        app.config.update(
-            WEKO_DEPOSIT_TEST_TEMPLATE=getattr(
-                config,
-                'WEKO_DEPOSIT_TEST_TEMPLATE')
-        )
-
-
         for k in dir(config):
             if k.startswith('WEKO_DEPOSIT_'):
                 app.config.setdefault(k, getattr(config, k))

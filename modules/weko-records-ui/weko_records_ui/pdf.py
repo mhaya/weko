@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307, USA.
 
-""" Utilities for making the PDF coverpage and newly combined PDFs. """
+""" Utilities for making the PDF cover page and newly combined PDFs. """
 import io, unicodedata, hashlib
 from datetime import datetime
 from fpdf import FPDF
@@ -29,7 +29,7 @@ from invenio_pidstore.models import PersistentIdentifier
 from weko_admin.models import PDFCoverPageSettings
 
 
-""" Function counting full-width character and half-width character distinctly """
+""" Function counting numbers of full-width character and half-width character differently """
 def get_east_asian_width_count(text):
     count = 0
     for c in text:
@@ -39,7 +39,8 @@ def get_east_asian_width_count(text):
             count += 1
     return count
 
-""" function making PDF cover page """
+
+""" Function making PDF cover page """
 def make_combined_pdf(pid, obj_file_uri):
     """
     meke the cover-page-combined PDF file

@@ -29,7 +29,7 @@ from sqlalchemy_utils.types import JSONType
 from sqlalchemy.sql import func
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy import create_engine
-from sqlalchemy.dialects import postgresql
+from sqlalchemy.dialects import mysql, postgresql
 
 
 class SessionLifetime(db.Model):
