@@ -84,6 +84,14 @@ require([
         $scope.initFilenameList();
       });
 
+      // TODO
+      $scope.getItemMetadata = function(model_id,arrayFlg,form) {
+        alert('Metadata!!!');
+
+
+
+      }
+
       $scope.searchAuthor = function(model_id,arrayFlg,form) {
         // add by ryuu. start 20180410
         $("#btn_id").text(model_id);
