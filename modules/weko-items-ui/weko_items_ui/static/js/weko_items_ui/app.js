@@ -10,6 +10,13 @@ require([
     $('#myModal').modal('toggle');
     $("div.modal-backdrop").remove();
   });
+
+//TODO
+  $("#meta-sach-close").click(function () {
+    $('#meta-sach').modal('toggle');
+    $("div.modal-backdrop").remove();
+  });
+
 });
 
 (function (angular) {
@@ -86,7 +93,7 @@ require([
 
       // TODO
       $scope.getItemMetadata = function(model_id,arrayFlg,form) {
-        alert('Metadata!!!');
+        $('#meta-sach').modal('show');
 
 
 
