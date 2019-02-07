@@ -32,11 +32,6 @@
   {% assets "invenio_deposit_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_items_ui_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_items_authors_search_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
-
-  <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
-  <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
-
 {%- endblock javascript %}
 
 {%- block page_header %}
@@ -175,10 +170,14 @@
 {%- endblock page_body %}
 
 {% block tail %}
-<script type="text/babel">
-  ReactDOM.render(
-    <div><h1>React</h1></div>,
-    document.getElementById('meta-sach-body')
-  )
-</script>
+  <script src="//unpkg.com/react@15/dist/react.min.js"></script>
+  <script src="//unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
+
+  <script type="text/babel">
+    ReactDOM.render(
+      <div><h1>React</h1></div>,
+      document.getElementById('meta-sach-body')
+    )
+  </script>
 {% endblock %}
