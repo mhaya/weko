@@ -99,6 +99,13 @@ require([
 
       }
 
+      $scope.setAuthorInfo = function() {
+        alert('setAuthorInfo!!!');
+
+
+
+      }
+
       $scope.searchAuthor = function(model_id,arrayFlg,form) {
         // add by ryuu. start 20180410
         $("#btn_id").text(model_id);

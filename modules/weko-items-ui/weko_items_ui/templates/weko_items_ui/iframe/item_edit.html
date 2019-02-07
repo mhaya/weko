@@ -35,7 +35,7 @@
       render(){
         return (
           <div class="text-right">
-            <h5>Written by React</h5>
+            <h3>Written by React</h3>
           </div>
         )
       }
@@ -54,13 +54,15 @@
       }
 
       handleSubmit(event) {
-        alert('Get ISBN: ' + this.state.value);
+        <!--alert('Get ISBN: ' + this.state.value);-->
+        document.getElementById("btn_setItemMetadata").click();
         event.preventDefault();
       }
 
       render() {
         return (
           <div>
+            <ModalHeader />
             <form onSubmit={this.handleSubmit}>
               <label>
                 Select ID:
@@ -68,7 +70,6 @@
               </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <input type="submit" value="Get" />
             </form>
-            <ModalHeader />
           </div>
         );
       }
@@ -169,6 +170,9 @@
               <div ng-show="false" type="text" id="weko_id" ></div>
               <button ng-show="false" id="btn_setAuthorInfo" class="btn btn-default" type="button" ng-click="setAuthorInfo()"></button>
               <!--add by ryuu. end 20180410-->
+
+              <button ng-show="false" id="btn_setItemMetadata" class="btn btn-default" type="button" ng-click="setItemMetadata()"></button>
+
               <invenio-records-form
                 form-templates='{{ config.DEPOSIT_FORM_TEMPLATES | tojson }}'
                 form-templates-base="{{ url_for('static', filename=config.DEPOSIT_FORM_TEMPLATES_BASE) }}"
