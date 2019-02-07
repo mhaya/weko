@@ -217,9 +217,9 @@
         }
       }
 
-
-      page_global.table_row_map.schema.properties["isbn"] = {type:"button",title:"ISBN",onClick: "alert('ISBN!!')"};
-      page_global.table_row_map.form.push({key:"isbn",type:"button",title:"ISBN"});
+      // TODO
+//      page_global.table_row_map.schema.properties["isbn"] = {type:"button",title:"ISBN",onClick: "alert('ISBN!!')"};
+      page_global.table_row_map.form.push({type:"button",title:"Automatic Input", style: "btn-default"});
 
       // タイトルなどを追加する
       page_global.table_row_map.schema.properties["title_ja"] = {type:"string",title:"タイトル",format:"text"}
