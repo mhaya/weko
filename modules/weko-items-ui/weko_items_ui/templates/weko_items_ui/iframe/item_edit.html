@@ -32,6 +32,17 @@
   {% assets "invenio_deposit_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_items_ui_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_items_authors_search_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+
+  <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
+  <script type="text/babel">
+    ReactDOM.render(
+      <div><h1>React</h1></div>,
+      document.getElementById('meta-sach-body')
+    )
+  </script>
+
 {%- endblock javascript %}
 
 {%- block page_header %}
@@ -158,7 +169,7 @@
   <div class="modal-dialog modelWidth" role="document">
     <div class="modal-content">
       <div class="modal-body">
-
+        <div id="meta-sach-body"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" id="meta-sach-close" data-dismiss="modal">{{_('Close')}}</button>
@@ -168,16 +179,4 @@
 </div><!-- /.modal -->
 
 {%- endblock page_body %}
-
-
-  <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
-  <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
-  <div id="root"></div>
-  <script type="text/babel">
-    ReactDOM.render(
-      <div><h1>React</h1></div>,
-      document.getElementById('root')
-    )
-  </script>
 
