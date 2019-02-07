@@ -217,6 +217,10 @@
         }
       }
 
+
+      page_global.table_row_map.schema.properties["isbn"] = {type:"button",title:"ISBN",onClick: "alert('ISBN!!')"};
+      page_global.table_row_map.form.push({key:"isbn",type:"button",title:"ISBN"});
+
       // タイトルなどを追加する
       page_global.table_row_map.schema.properties["title_ja"] = {type:"string",title:"タイトル",format:"text"}
       page_global.table_row_map.schema.properties["title_en"] = {type:"string",title:"タイトル(英)",format:"text"}
