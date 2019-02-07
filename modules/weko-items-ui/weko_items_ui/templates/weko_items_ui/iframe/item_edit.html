@@ -31,8 +31,18 @@
   <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
   <script type="text/babel">
+    class MyComponent extends React.Component {
+        render(){
+            return (
+                <div>
+                    <h1>Written by React</h1>
+                    <p>このページはテストページです。</p>
+                </div>
+            )
+        }
+    }
     ReactDOM.render(
-      <div><h1>Written by React</h1></div>,
+      <MyComponent />,
       document.getElementById('meta-sach-body')
     )
   </script>
