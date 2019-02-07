@@ -158,7 +158,7 @@
   <div class="modal-dialog modelWidth" role="document">
     <div class="modal-content">
       <div class="modal-body">
-        <div id="meta-sach-body"></div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" id="meta-sach-close" data-dismiss="modal">{{_('Close')}}</button>
@@ -170,14 +170,14 @@
 {%- endblock page_body %}
 
 {% block tail %}
-  <script src="//unpkg.com/react@15/dist/react.min.js"></script>
-  <script src="//unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
-
+  <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
+  <div id="root"></div>
   <script type="text/babel">
     ReactDOM.render(
       <div><h1>React</h1></div>,
-      document.getElementById('meta-sach-body')
+      document.getElementById('root')
     )
   </script>
 {% endblock %}
