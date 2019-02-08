@@ -95,7 +95,6 @@ require([
       $scope.getItemMetadata = function(model_id,arrayFlg,form) {
         $('#meta-sach').modal('show');
 
-
       }
 
       $scope.setItemMetadata = function() {
@@ -125,6 +124,11 @@ require([
           }
         });
 
+
+      }
+
+      $scope.titleChanged = function() {
+        alert('titleChanged!!');
 
       }
 
