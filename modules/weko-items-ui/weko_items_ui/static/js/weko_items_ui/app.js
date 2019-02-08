@@ -95,6 +95,19 @@ require([
       $scope.getItemMetadata = function(model_id,arrayFlg,form) {
         $('#meta-sach').modal('show');
 
+        $.ajax({
+          method: 'GET',
+          url: '/items/isbn',
+          async: false,
+          success: function(data, status){
+            alert(data.title);
+
+          },
+          error: function(status, error){
+            console.log(error);
+          }
+        });
+
 
 
       }

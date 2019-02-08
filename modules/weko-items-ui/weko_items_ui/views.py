@@ -442,3 +442,12 @@ def index_upload():
     return render_template(
         current_app.config['WEKO_ITEMS_UI_UPLOAD_TEMPLATE']
     )
+
+# TODO
+@blueprint.route('/isbn', methods=['GET'])
+@login_required
+def get_isbn():
+
+    data = {'title': 'Amazon'}
+
+    return jsonify(data)
