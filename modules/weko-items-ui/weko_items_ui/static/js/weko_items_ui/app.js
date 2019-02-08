@@ -108,7 +108,7 @@ require([
           success: function(data, status){
 
             if(confirm('Set to form ?')){
-              alert($rootScope.recordsVM.invenioRecordsModel);
+              alert(JSON.stringify($rootScope.recordsVM.invenioRecordsModel));
 
 
             }
