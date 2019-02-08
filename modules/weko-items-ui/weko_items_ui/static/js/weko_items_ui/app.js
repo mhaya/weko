@@ -127,11 +127,6 @@ require([
 
       }
 
-      $scope.titleChanged = function() {
-        alert('titleChanged!!');
-
-      }
-
       $scope.searchAuthor = function(model_id,arrayFlg,form) {
         // add by ryuu. start 20180410
         $("#btn_id").text(model_id);
@@ -140,6 +135,15 @@ require([
         // add by ryuu. end 20180410
         $('#myModal').modal('show');
       }
+
+      $scope.searchSource = function(model_id,arrayFlg,form) {
+        // add by ryuu. start 20180410
+        alert('searchSource!!');
+
+      }
+
+
+
       // add by ryuu. start 20180410
       $scope.setAuthorInfo = function() {
 
