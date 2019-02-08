@@ -107,10 +107,7 @@ require([
           async: false,
           success: function(data, status){
 
-            if(confirm('Set to form ?')){
-
-//              alert(JSON.stringify($rootScope.recordsVM.invenioRecordsModel));
-
+            if(confirm('Sure you want to input ?')){
               $rootScope.recordsVM.invenioRecordsModel['title_ja'] = 'アマゾン'
               $rootScope.recordsVM.invenioRecordsModel['title_en'] = 'Amazon'
 
@@ -120,8 +117,8 @@ require([
               $rootScope.recordsVM.invenioRecordsModel['item_1549592380617'][0]['subitem_1522300295150'] = 'ja';
               $rootScope.recordsVM.invenioRecordsModel['item_1549592380617'][0]['subitem_1522300316516'] = 'University of Tokyo';
 
-
             }
+            $('#meta-sach').modal('toggle');
 
           },
           error: function(status, error){
