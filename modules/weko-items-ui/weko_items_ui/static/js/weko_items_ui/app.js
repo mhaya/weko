@@ -147,7 +147,7 @@ require([
 //              $rootScope.recordsVM.invenioRecordsModel[modelId][array_index]= authorInfoObj[0];
 
 
-2018/05/28 start
+              // 2018/05/28 start
 　　　　　　　var familyName ="";
               var givenName = "";
               if(authorInfoObj[0].hasOwnProperty('affiliation')){
