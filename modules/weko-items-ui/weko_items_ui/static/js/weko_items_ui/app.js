@@ -108,8 +108,10 @@ require([
           success: function(data, status){
 
             if(confirm('Set to form ?')){
-              $rootScope.recordsVM.invenioRecordsModel['title_ja'] = 'amazon';
-//              alert(JSON.stringify($rootScope.recordsVM.invenioRecordsModel.item_1549512710707[0]));
+
+              alert(JSON.stringify($rootScope.recordsVM.invenioRecordsModel));
+
+//              $rootScope.recordsVM.invenioRecordsModel['title_ja'] = 'amazon';
 
 
             }
@@ -134,7 +136,7 @@ require([
       // add by ryuu. start 20180410
       $scope.setAuthorInfo = function() {
 
-        alert(JSON.stringify($rootScope.recordsVM.invenioRecordsModel));
+
 
          var authorInfo = $('#author_info').text();
          var arrayFlg = $('#array_flg').text();
