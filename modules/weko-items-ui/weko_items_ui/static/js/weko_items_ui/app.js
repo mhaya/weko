@@ -104,19 +104,20 @@ require([
           url: '/items/isbn',
           async: false,
           success: function(data, status){
+            alert(JSON.stringify($rootScope.recordsVM.invenioRecordsModel));
 
-            if(confirm('Are you sure input to the form?')){
-              $rootScope.recordsVM.invenioRecordsModel['title_ja'] = 'アマゾン'
-              $rootScope.recordsVM.invenioRecordsModel['title_en'] = 'Amazon'
-
-              $rootScope.recordsVM.invenioRecordsModel['lang'] = 'en'
-              $rootScope.recordsVM.invenioRecordsModel['pubdate'] = '2018-01-01'
-
-              $rootScope.recordsVM.invenioRecordsModel['item_1549592380617'][0]['subitem_1522300295150'] = 'ja';
-              $rootScope.recordsVM.invenioRecordsModel['item_1549592380617'][0]['subitem_1522300316516'] = 'University of Tokyo';
-
-            }
-            $('#meta-sach').modal('toggle');
+//            if(confirm('Are you sure input to the form?')){
+//              $rootScope.recordsVM.invenioRecordsModel['title_ja'] = 'アマゾン'
+//              $rootScope.recordsVM.invenioRecordsModel['title_en'] = 'Amazon'
+//
+//              $rootScope.recordsVM.invenioRecordsModel['lang'] = 'en'
+//              $rootScope.recordsVM.invenioRecordsModel['pubdate'] = '2018-01-01'
+//
+//              $rootScope.recordsVM.invenioRecordsModel['item_1549592380617'][0]['subitem_1522300295150'] = 'ja';
+//              $rootScope.recordsVM.invenioRecordsModel['item_1549592380617'][0]['subitem_1522300316516'] = 'University of Tokyo';
+//
+//            }
+//            $('#meta-sach').modal('toggle');
 
           },
           error: function(status, error){
