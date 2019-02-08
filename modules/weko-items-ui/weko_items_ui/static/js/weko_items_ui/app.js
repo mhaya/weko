@@ -133,6 +133,9 @@ require([
       }
       // add by ryuu. start 20180410
       $scope.setAuthorInfo = function() {
+
+        alert(JSON.stringify($rootScope.recordsVM.invenioRecordsModel));
+
          var authorInfo = $('#author_info').text();
          var arrayFlg = $('#array_flg').text();
          var modelId = $('#btn_id').text();
@@ -142,7 +145,7 @@ require([
          if(arrayFlg == 'true'){
 //            $rootScope.recordsVM.invenioRecordsModel[modelId].push(authorInfoObj[0]);
 //              $rootScope.recordsVM.invenioRecordsModel[modelId][array_index]= authorInfoObj[0];
-             alert(JSON.stringify($rootScope.recordsVM.invenioRecordsModel));
+
 
 2018/05/28 start
 　　　　　　　var familyName ="";
