@@ -142,7 +142,9 @@ require([
          if(arrayFlg == 'true'){
 //            $rootScope.recordsVM.invenioRecordsModel[modelId].push(authorInfoObj[0]);
 //              $rootScope.recordsVM.invenioRecordsModel[modelId][array_index]= authorInfoObj[0];
-//            2018/05/28 start
+             alert(JSON.stringify($rootScope.recordsVM.invenioRecordsModel));
+
+2018/05/28 start
 　　　　　　　var familyName ="";
               var givenName = "";
               if(authorInfoObj[0].hasOwnProperty('affiliation')){
