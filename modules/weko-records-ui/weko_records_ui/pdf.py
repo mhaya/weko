@@ -19,15 +19,15 @@
 # MA 02111-1307, USA.
 
 """ Utilities for making the PDF cover page and newly combined PDFs. """
-import io, unicodedata, hashlib
+import io, unicodedata, json
 from datetime import datetime
 from fpdf import FPDF
 from PyPDF2 import PdfFileWriter, PdfFileReader
-from flask import send_file
-from weko_records.api import ItemsMetadata
+from flask import send_file, current_app
+from weko_records.api import ItemsMetadata, ItemMetadata, ItemType
 from invenio_pidstore.models import PersistentIdentifier
+from invenio_db import db
 from weko_admin.models import PDFCoverPageSettings
-
 
 """ Function counting numbers of full-width character and half-width character differently """
 def get_east_asian_width_count(text):
@@ -51,7 +51,9 @@ def make_combined_pdf(pid, obj_file_uri):
 
     pid = pid.pid_value
     pidObject = PersistentIdentifier.get('recid', pid)
-    record_metadata = ItemsMetadata.get_record(pidObject.object_uuid)
+    item_metadata = ItemsMetadata.get_record(pidObject.object_uuid)
+    item_type = db.session.query(ItemType).filter(ItemType.id==ItemMetadata.item_type_id).first()
+
 
     """ Initialize Instance """
     pdf = FPDF('P', 'mm', 'A4')
@@ -59,23 +61,29 @@ def make_combined_pdf(pid, obj_file_uri):
     pdf.set_margins(20.0, 20.0)
     pdf.set_fill_color(100, 149, 237)
 
-    pdf.add_font('IPAexg', '', '/code/modules/weko-records-ui/weko_records_ui/fonts/ipaexg00201/ipaexg.ttf', uni=True)
-    pdf.add_font('IPAexm', '', '/code/modules/weko-records-ui/weko_records_ui/fonts/ipaexm00201/ipaexm.ttf', uni=True)
+    pdf.add_font('IPAexg', '', current_app.config["JPAEXG_TTF_FILEPATH"], uni=True)
+    pdf.add_font('IPAexm', '', current_app.config["JPAEXM_TTF_FILEPATH"], uni=True)
 
-    w1 = 40
-    w2 = 130
-    footer_w = 90
-    url_oapolicy_h = 7
-    title_h = 8
-    header_h = 20
-    footer_h = 4
-    meta_h = 9
-    max_letters_num = 51
-    cc_logo_xposition = 160
+    # Parameters such as width and height of rows/columns
+    w1 = 40  # width of the left column
+    w2 = 130  # width of the right column
+    footer_w = 90  # width of the footer cell
+    #url_oapolicy_h = 7  # height of the URL & OA-policy
+    url_oapolicy_h = current_app.config['URL_OA_POLICY_HEIGHT']  # height of the URL & OA-policy
+    # title_h = 8  # height of the title
+    title_h = current_app.config['TITLE_HEIGHT']  # height of the title
+    # header_h = 20  # height of the header cell
+    header_h = current_app.config['HEADER_HEIGHT'] # height of the header cell
+    # footer_h = 4  # height of the footer cell
+    footer_h = current_app.config['FOOTER_HEIGHT'] # height of the footer cell
+    # meta_h = 9  # height of the metadata cell
+    meta_h = current_app.config['METADATA_HEIGHT']  # height of the metadata cell
+    max_letters_num = 51  # number of maximum letters that can be contained in the right column
+    cc_logo_xposition = 160  # x-position where Creative Commons logos are placed
 
     """ Header """
     # Get the header settings
-    record = PDFCoverPageSettings.query.filter(PDFCoverPageSettings.id == 1).first()
+    record = PDFCoverPageSettings.find(1)
     header_display_type = record.header_display_type
     header_output_string = record.header_output_string
     header_output_image = record.header_output_image
@@ -102,42 +110,92 @@ def make_combined_pdf(pid, obj_file_uri):
         pdf.set_y(55)
 
     """ Title """
-    title = record_metadata['title_en']
+    title = item_metadata['title_en']
     pdf.set_font('IPAexm', '', 20)
     pdf.multi_cell(w1 + w2, title_h, title, 0, 'L', False)
     pdf.ln(h='15')
 
     """ Metadata """
+    # publisher_parent_key = None
+    # publisher_child_key = None
+    # schema_prop = item_type.schema["properties"]
+    # for parent_key in schema_prop:
+    #     if "properties" in schema_prop[parent_key]:
+    #         for child_key in schema_prop[parent_key]["properties"]:
+    #             if schema_prop[parent_key]["properties"][child_key].get("title") != '出版者':
+    #                 continue
+    #             else:
+    #                 publisher_parent_key = parent_key
+    #                 publisher_child_key = child_key
+    # print(publisher_parent_key, publisher_child_key)
+
     pdf.set_font('Arial', '', 14)
     pdf.set_font('IPAexg', '', 14)
-    if record_metadata['lang'] == 'en':
-        record_metadata['lang'] = 'English'
-    elif record_metadata['lang']  == 'ja':
-        record_metadata['lang'] = 'Japanese'
 
-    lang = record_metadata.get('lang')
-    publisher = record_metadata['item_1548661157806'].get('subitem_1522300316516')
-    pubdate = record_metadata.get('pubdate')
-    keywords_ja = record_metadata.get('keywords')
-    keywords_en = record_metadata.get('keywords_en')
-    creator_mail = record_metadata['item_1538028816158']['creatorMails'][0].get('creatorMail')
-    creator_name = record_metadata['item_1538028816158']['creatorNames'][0].get('creatorName')
-    affiliation = record_metadata['item_1538028816158']['affiliation'][0].get('affiliationNames')
-    metadata_list_values = [lang, publisher, pubdate, keywords_ja, keywords_en, creator_name, creator_mail, affiliation]
+    if item_metadata['lang'] == 'en':
+        item_metadata['lang'] = 'English'
+    elif item_metadata['lang']  == 'ja':
+        item_metadata['lang'] = 'Japanese'
 
-    for i, item in enumerate(metadata_list_values):
-        if item == None:
-            metadata_list_values[i] = ''
+    try:
+        lang = item_metadata.get('lang')
+    except (KeyError, IndexError):
+        lang = None
+    try:
+        publisher = item_metadata['item_1548661157806'].get('subitem_1522300316516')
+        # publisher = item_metadata[publisher_parent_key].get(publisher_child_key)
+    except (KeyError, IndexError):
+        publisher = None
+    try:
+        pubdate = item_metadata.get('pubdate')
+    except (KeyError, IndexError):
+        pubdate = None
+    try:
+        keywords_ja = item_metadata.get('keywords')
+    except (KeyError, IndexError):
+        keywords_ja = None
+    try:
+        keywords_en = item_metadata.get('keywords_en')
+    except (KeyError, IndexError):
+        keywords_en = None
+    try:
+        creator_mail = item_metadata['item_1538028816158']['creatorMails'][0].get('creatorMail')
+    except (KeyError, IndexError):
+        creator_mail = None
+    try:
+        creator_name = item_metadata['item_1538028816158']['creatorNames'][0].get('creatorName')
+    except (KeyError, IndexError):
+        creator_name = None
+    try:
+        affiliation = item_metadata['item_1538028816158']['affiliation'][0].get('affiliationNames')
+    except (KeyError, IndexError):
+        affiliation = None
+
+    metadata_dict = {
+                     "lang": lang,
+                     "publisher": publisher,
+                     "pubdate": pubdate,
+                     "keywords_ja": keywords_ja,
+                     "keywords_en": keywords_en,
+                     "creator_mail": creator_mail,
+                     "creator_name": creator_name,
+                     "affiliation": affiliation
+                     }
+
+    # Change the values from None to '' for printing
+    for key in metadata_dict:
+        if metadata_dict[key] == None:
+            metadata_dict[key] = ''
 
     metadata_list = [
-        "Language: {}".format(metadata_list_values[0]),
-        "Publisher: {}".format(metadata_list_values[1]),
-        "Date of Publication: {}".format(metadata_list_values[2]),
-        "Keywords(Ja): {}".format(metadata_list_values[3]),
-        "Keywords(En): {}".format(metadata_list_values[4]),
-        "Author: {}".format(metadata_list_values[5]),
-        "E-mail: {}".format(metadata_list_values[6]),
-        "Affiliation: {}".format(metadata_list_values[7])
+        "Language: {}".format(metadata_dict["lang"]),
+        "Publisher: {}".format(metadata_dict["publisher"]),
+        "Date of Publication: {}".format(metadata_dict["pubdate"]),
+        "Keywords(Ja): {}".format(metadata_dict["keywords_ja"]),
+        "Keywords(En): {}".format(metadata_dict["keywords_en"]),
+        "Author: {}".format(metadata_dict["creator_name"]),
+        "E-mail: {}".format(metadata_dict["creator_mail"]),
+        "Affiliation: {}".format(metadata_dict["affiliation"])
     ]
 
     metadata = '\n'.join(metadata_list)
@@ -177,9 +235,9 @@ def make_combined_pdf(pid, obj_file_uri):
     pdf.set_font('Courier', '', 10)
     pdf.set_x(108)
 
-    license =  record_metadata['item_1538028827221'][0].get('licensetype')
+    license =  item_metadata['item_1538028827221'][0].get('licensetype')
     if license == 'license_free':  #自由入力
-        txt = record_metadata['item_1538028827221'][0].get('licensefree')
+        txt = item_metadata['item_1538028827221'][0].get('licensefree')
         if txt == None:
             txt = ''
         pdf.multi_cell(footer_w, footer_h, txt, 0, 'L', False)
@@ -241,12 +299,14 @@ def make_combined_pdf(pid, obj_file_uri):
     for page_num in range(existing_pages.numPages):
         existing_page = existing_pages.getPage(page_num)
         combined_pages.addPage(existing_page)
-    combined_filename = record_metadata["item_1538028827221"][0]["filename"] + '_combined_' + datetime.now().strftime('%Y%m%d')
-    combined_file_path = "/code/combined-pdfs/{}.pdf".format(combined_filename)
-    combined_file = open(combined_file_path, "wb")
-    combined_pages.write(combined_file)
-    combined_file.close()
 
     """ Download the newly generated combined PDF file """
-    download_file_name = 'CV_' + record_metadata["item_1538028827221"][0]["filename"] # Modified later
-    return send_file(combined_file_path, as_attachment = True, attachment_filename = download_file_name, mimetype ='application/pdf', cache_timeout = -1)
+    try:
+        combined_filename = 'CV_' + datetime.now().strftime('%Y%m%d') + '_' + item_metadata["item_1538028827221"][0].get("filename")
+    except (KeyError, IndexError):
+        combined_filename = 'CV_' + title + '.pdf'
+    combined_filepath = "/code/combined-pdfs/{}.pdf".format(combined_filename)
+    combined_file = open(combined_filepath, "wb")
+    combined_pages.write(combined_file)
+    combined_file.close()
+    return send_file(combined_filepath, as_attachment = True, attachment_filename = combined_filename, mimetype ='application/pdf', cache_timeout = -1)

@@ -23,11 +23,10 @@
 import os
 import sys
 import hashlib
-
 from flask import abort, current_app, flash, redirect, request, url_for, jsonify
 from flask_admin import BaseView, expose
 from flask_babelex import gettext as _
-
+from invenio_db import db
 from .permissions import admin_permission_factory
 from .utils import allowed_file
 from .models import PDFCoverPageSettings
@@ -209,15 +208,30 @@ class StyleSettingView(BaseView):
 class PdfCoverPageSettingView(BaseView):
     @expose('/', methods=['GET'])
     def index(self):
-        record = PDFCoverPageSettings.query.filter(PDFCoverPageSettings.id == 1).first()
-        return self.render(
-            current_app.config["WEKO_ADMIN_PDFCOVERPAGE_TEMPLATE"],
-            avail = record.avail,
-            header_display_type = record.header_display_type,
-            header_output_string = record.header_output_string,
-            header_output_image = record.header_output_image,
-            header_display_position = record.header_display_position
-        )
+        db.create_all()
+        record = PDFCoverPageSettings.find(1)
+        try:
+            return self.render(
+                current_app.config["WEKO_ADMIN_PDFCOVERPAGE_TEMPLATE"],
+                avail = record.avail,
+                header_display_type = record.header_display_type,
+                header_output_string = record.header_output_string,
+                header_output_image = record.header_output_image,
+                header_display_position = record.header_display_position
+            )
+        except AttributeError:
+            makeshift = PDFCoverPageSettings(avail='disable', header_display_type=None, header_output_string=None, header_output_image = None, header_display_position = None)
+            db.session.add(makeshift)
+            db.session.commit()
+            record = PDFCoverPageSettings.find(1)
+            return self.render(
+                current_app.config["WEKO_ADMIN_PDFCOVERPAGE_TEMPLATE"],
+                avail = record.avail,
+                header_display_type = record.header_display_type,
+                header_output_string = record.header_output_string,
+                header_output_image = record.header_output_image,
+                header_display_position = record.header_display_position
+            )
 
 style_adminview = {
     'view_class': StyleSettingView,

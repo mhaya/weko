@@ -178,7 +178,7 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
 
         # redefine `send_object` method to implement the no-cache function
         @staticmethod
-        def send_object(bucket, obj, expected_chksum=None, logger_data=None, restricted=True, as_attachment=False, cache_timeout=-1, mimetype='application/pdf'):
+        def send_object(bucket, obj, expected_chksum=None, logger_data=None, restricted=True, as_attachment=False, cache_timeout=-1):
             if not obj.is_head:
                 check_permission(
                     current_permission_factory(obj, 'object-read-version'),
@@ -192,9 +192,9 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
             file_downloaded.send(current_app._get_current_object(), obj=obj)
             return obj.send_file(restricted=restricted, as_attachment=as_attachment)
 
-    record = PDFCoverPageSettings.query.filter(PDFCoverPageSettings.id == 1).first()
+    pdfcoverpage_set_rec = PDFCoverPageSettings.find(1)
 
-    if record.avail == 'disable': # Write this if statement later
+    if pdfcoverpage_set_rec.avail == 'disable': # Write this if statement later
 
         return ObjectResourceWeko.send_object(
         obj.bucket, obj,
@@ -204,14 +204,12 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
             'pid_type': pid.pid_type,
             'pid_value': pid.pid_value,
         },
-        cache_timeout=-1,
         as_attachment=False,
-        mimetype='application/pdf'
+        cache_timeout=-1
         )
 
     """ Send file with its pdf cover page """
-    object_version_record = ObjectVersion.query.filter(ObjectVersion.bucket_id == obj.bucket_id).first()
-    file_instance_record = FileInstance.query.filter(FileInstance.id == object_version_record.file_id).first()
+    object_version_record = ObjectVersion.query.filter_by(bucket_id= obj.bucket_id).first()
+    file_instance_record = FileInstance.query.filter_by(id=object_version_record.file_id).first()
     obj_file_uri = file_instance_record.uri
-
     return make_combined_pdf(pid, obj_file_uri)

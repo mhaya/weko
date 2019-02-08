@@ -46,6 +46,7 @@ WEKO_ADMIN_SEARCH_MANAGEMENT_TEMPLATE = 'weko_admin/search_management.html'
 
 LOGO_ALLOWED_EXTENSIONS = set(['png', 'jpeg', 'jpg'])
 
+
 # Search management json
 
 WEKO_ADMIN_MANAGEMENT_OPTIONS = {

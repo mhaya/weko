@@ -141,3 +141,18 @@ OAISERVER_METADATA_FORMATS = {
         'schema': 'http://www.openarchives.org/OAI/2.0/oai_dc.xsd',
     }
 }
+
+URL_OA_POLICY_HEIGHT = 7  # height of the URL & OA-policy
+# title_h = 8  # height of the title
+TITLE_HEIGHT = 8  # height of the title
+# header_h = 20  # height of the header cell
+HEADER_HEIGHT = 20  # height of the header cell
+# footer_h = 4  # height of the footer cell
+FOOTER_HEIGHT = 4  # height of the footer cell
+# meta_h = 9  # height of the metadata cell
+METADATA_HEIGHT = 9
+
+
+JPAEXG_TTF_FILEPATH = '/code/modules/weko-records-ui/weko_records_ui/fonts/ipaexg00201/ipaexg.ttf'
+
+JPAEXM_TTF_FILEPATH = '/code/modules/weko-records-ui/weko_records_ui/fonts/ipaexm00201/ipaexm.ttf'

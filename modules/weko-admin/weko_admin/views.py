@@ -230,7 +230,7 @@ def set_pdfcoverpage_header():
 
     # Save PDF Cover Page Header settings
     if request.method == 'POST':
-        record = PDFCoverPageSettings.query.filter(PDFCoverPageSettings.id == 1).first()
+        record = PDFCoverPageSettings.find(1)
         avail = request.form.get('availability')
         header_display_type = request.form.get('header-display')
         header_output_string = request.form.get('header-output-string')
