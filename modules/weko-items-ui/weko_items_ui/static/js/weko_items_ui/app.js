@@ -138,7 +138,7 @@ require([
 
       $scope.searchSource = function(model_id,arrayFlg,form) {
         // add by ryuu. start 20180410
-        alert('searchSource!!');
+        alert(form.key[1]);
 
       }
 
