@@ -99,7 +99,6 @@ require([
       }
 
       $scope.setItemMetadata = function() {
-//        alert('setItemMetadata!!!');
 
         $.ajax({
           method: 'GET',
@@ -107,7 +106,7 @@ require([
           async: false,
           success: function(data, status){
 
-            if(confirm('Sure you want to input ?')){
+            if(confirm('Are you sure input to the form?')){
               $rootScope.recordsVM.invenioRecordsModel['title_ja'] = 'アマゾン'
               $rootScope.recordsVM.invenioRecordsModel['title_en'] = 'Amazon'
 
