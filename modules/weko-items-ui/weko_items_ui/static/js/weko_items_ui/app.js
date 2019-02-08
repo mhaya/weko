@@ -95,26 +95,29 @@ require([
       $scope.getItemMetadata = function(model_id,arrayFlg,form) {
         $('#meta-sach').modal('show');
 
+
+      }
+
+      $scope.setItemMetadata = function() {
+//        alert('setItemMetadata!!!');
+
         $.ajax({
           method: 'GET',
           url: '/items/isbn',
           async: false,
           success: function(data, status){
-            alert(data.title);
+
+            if(confirm('Set to form ?')){
+              alert($rootScope.recordsVM.invenioRecordsModel);
+
+
+            }
 
           },
           error: function(status, error){
             console.log(error);
           }
         });
-
-
-
-      }
-
-      $scope.setItemMetadata = function() {
-        alert('setItemMetadata!!!');
-
 
 
       }
