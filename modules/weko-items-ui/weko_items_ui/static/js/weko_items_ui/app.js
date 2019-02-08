@@ -109,9 +109,10 @@ require([
 
             if(confirm('Set to form ?')){
 
-              alert(JSON.stringify($rootScope.recordsVM.invenioRecordsModel));
+//              alert(JSON.stringify($rootScope.recordsVM.invenioRecordsModel));
 
-//              $rootScope.recordsVM.invenioRecordsModel['title_ja'] = 'amazon';
+              $rootScope.recordsVM.invenioRecordsModel['item_1549592380617'][0]['subitem_1522300295150'] = 'ja';
+              $rootScope.recordsVM.invenioRecordsModel['item_1549592380617'][0]['subitem_1522300316516'] = 'University of Tokyo';
 
 
             }
