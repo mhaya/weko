@@ -99,8 +99,8 @@ require([
 
       }
 
-      $scope.setAuthorInfo = function() {
-        alert('setAuthorInfo!!!');
+      $scope.setItemMetadata = function() {
+        alert('setItemMetadata!!!');
 
 
 
