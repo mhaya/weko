@@ -277,10 +277,6 @@ def default_view_method(pid, record, template=None, **kwargs):
     else:
         record["relation"] = {}
 
-    # TODO
-    flash(record)
-
-    
     return render_template(
         template,
         pid=pid,
@@ -335,6 +331,8 @@ def get_items_metadata():
 
         pidObject = PersistentIdentifier.get('recid', pid)
         meta = ItemsMetadata.get_record(pidObject.object_uuid)
+
+        flash(meta)
 
         if meta:
             data[pid] = {}

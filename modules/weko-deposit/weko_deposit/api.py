@@ -364,8 +364,6 @@ class WekoDeposit(Deposit):
 
         super(WekoDeposit, self).commit(*args, **kwargs)
         if self.data and len(self.data):
-# TODO
-            flash(self.jrc)
 
             # save item metadata
             self.save_or_update_item_metadata()
