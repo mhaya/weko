@@ -30,6 +30,7 @@ from invenio_db import db
 from .permissions import admin_permission_factory
 from .utils import allowed_file
 from .models import PDFCoverPageSettings
+from sqlalchemy import exc
 
 
 class StyleSettingView(BaseView):
@@ -232,6 +233,8 @@ class PdfCoverPageSettingView(BaseView):
                 header_output_image = record.header_output_image,
                 header_display_position = record.header_display_position
             )
+        except exc.IntegrityError:
+            pass
 
 style_adminview = {
     'view_class': StyleSettingView,
