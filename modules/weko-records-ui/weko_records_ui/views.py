@@ -332,7 +332,7 @@ def get_items_metadata():
         pidObject = PersistentIdentifier.get('recid', pid)
         meta = ItemsMetadata.get_record(pidObject.object_uuid)
 
-        flash(meta)
+        flash(record)
 
         if meta:
             data[pid] = {}
