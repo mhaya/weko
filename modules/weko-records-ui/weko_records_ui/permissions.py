@@ -128,7 +128,7 @@ def check_user_group_permission(group_id):
     :param group_id: Group_id
     """
 
-    flash(group_id)
+    # flash(group_id)
 
     user_id = current_user.get_id()
     is_ok = False
