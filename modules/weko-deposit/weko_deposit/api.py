@@ -436,6 +436,7 @@ class WekoDeposit(Deposit):
         type.
         """
         if self.is_edit:
+            flash('Edit!!!')
             obj = ItemsMetadata.get_record(self.id)
             obj.update(self.data)
             obj.commit()
