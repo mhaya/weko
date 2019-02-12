@@ -277,6 +277,10 @@ def default_view_method(pid, record, template=None, **kwargs):
     else:
         record["relation"] = {}
 
+    # TODO
+    flash(record)
+
+    
     return render_template(
         template,
         pid=pid,
