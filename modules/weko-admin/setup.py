@@ -98,7 +98,7 @@ setup(
         ],
         'invenio_admin.views': [
             'weko_admin_style = weko_admin.admin:style_adminview',
-            'weko_admin_pdfcoverpage = weko_admin.admin:pdfcoverpage_adminview',
+            #'weko_admin_pdfcoverpage = weko_admin.admin:pdfcoverpage_adminview',
         ],
         'invenio_access.actions': [
             'page_style_access = weko_admin.permissions:action_admin_access',

@@ -54,7 +54,7 @@ web:
     - elasticsearch
     - rabbitmq
   ports:
-    - "5006:5000"
+    - "5062:5000"
 
 postgresql:
   restart: "always"
@@ -64,36 +64,36 @@ postgresql:
     - POSTGRES_DB=invenio
     - POSTGRES_PASSWORD=dbpass123
   ports:
-    - "25406:5432"
+    - "25462:5432"
 
 redis:
   restart: "always"
   image: 1fb7b6c8c0d0
   ports:
-    - "26306:6379"
+    - "26362:6379"
 
 elasticsearch:
   restart: "always"
   image: 706d4b38f6e3
   #dockerfile: ./elasticsearch/Dockerfile
   ports:
-    - "29206:9200"
-    - "29306:9300"
+    - "29262:9200"
+    - "29362:9300"
 
 rabbitmq:
   restart: "always"
   image: 8e186865bff8
   ports:
-    - "24306:4369"
-    - "45606:25672"
+    - "24362:4369"
+    - "45662:25672"
 
 nginx:
   restart: "always"
   image: ff3822e80969
   #build: ./nginx
   ports:
-    - "8006:80"
-    - "4436:443"
+    - "8062:80"
+    - "4462:443"
   volumes_from:
     - static
   links:
@@ -132,5 +132,5 @@ clamav:
   image: 4dee2298a902
   #image: mkodockx/docker-clamav
   ports:
-    - "3306:3310"
+    - "3362:3310"
 
