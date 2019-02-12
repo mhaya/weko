@@ -332,12 +332,13 @@ def get_items_metadata():
         pidObject = PersistentIdentifier.get('recid', pid)
         meta = ItemsMetadata.get_record(pidObject.object_uuid)
 
-        flash(record)
+        action = 'private' if record.get('publish_status', '1') == '1' \
+            else 'publish'
 
         if meta:
             data[pid] = {}
             data[pid]['meta'] = meta
-            data[pid]['index'] = {"index": indexes}
+            data[pid]['index'] = {'index': indexes, 'actions': action}
             data[pid]['contents'] = get_file_data(meta)
 
     return jsonify(data)
