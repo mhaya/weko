@@ -62,8 +62,6 @@ def publish(pid, record, template=None, **kwargs):
         record.update({'publish_status': (status or '0')})
     else:
         record['publish_status'] = (status or '0')
-# TODO
-    flash(record)
 
     record.commit()
     db.session.commit()

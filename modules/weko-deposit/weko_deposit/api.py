@@ -364,6 +364,9 @@ class WekoDeposit(Deposit):
 
         super(WekoDeposit, self).commit(*args, **kwargs)
         if self.data and len(self.data):
+# TODO
+            flash(self.data)
+
             # save item metadata
             self.save_or_update_item_metadata()
 
@@ -437,6 +440,7 @@ class WekoDeposit(Deposit):
             obj.update(self.data)
             obj.commit()
         else:
+            flash('Create!!!')
             ItemsMetadata.create(self.data, id_=self.pid.object_uuid,
                                  item_type_id=self.get('item_type_id'))
 
