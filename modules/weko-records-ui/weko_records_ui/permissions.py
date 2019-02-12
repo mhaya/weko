@@ -22,7 +22,7 @@
 
 from datetime import datetime as dt
 
-from flask import abort, current_app
+from flask import abort, current_app, flash
 from flask_security import current_user
 from invenio_access import Permission, action_factory
 from weko_groups.api import Group, Membership, MembershipState
@@ -109,8 +109,12 @@ def check_file_download_permission(record, fjson):
                         is_can = True
                         break
 
+                flash(is_can)
+
                 is_can = is_can & check_user_group_permission(
                     fjson.get('groups'))
+
+                flash(is_can)
 
             #  can not access
             elif 'open_no' in acsrole:
@@ -126,6 +130,9 @@ def check_user_group_permission(group_id):
 
     :param group_id: Group_id
     """
+
+    flash('check_user_group_permission!!!!')
+
     user_id = current_user.get_id()
     is_ok = False
     if group_id:
