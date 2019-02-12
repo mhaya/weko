@@ -109,12 +109,8 @@ def check_file_download_permission(record, fjson):
                         is_can = True
                         break
 
-                flash(is_can)
-
                 is_can = is_can & check_user_group_permission(
                     fjson.get('groups'))
-
-                flash(is_can)
 
             #  can not access
             elif 'open_no' in acsrole:
@@ -131,13 +127,13 @@ def check_user_group_permission(group_id):
     :param group_id: Group_id
     """
 
-    flash('check_user_group_permission!!!!')
+    flash(group_id)
 
     user_id = current_user.get_id()
     is_ok = False
     if group_id:
         if user_id:
-            query = Group.query.filter_by(id=group_id).join(Membership) \
+            query = Group.query.filter_by(id=int(group_id)).join(Membership) \
                 .filter_by(user_id=user_id, state=MembershipState.ACTIVE)
             if query.count() > 0:
                 is_ok = True
