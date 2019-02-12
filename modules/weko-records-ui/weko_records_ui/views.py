@@ -22,7 +22,7 @@
 
 import six
 from flask import Blueprint, abort, current_app, render_template, \
-    make_response, redirect, request, url_for, jsonify
+    make_response, redirect, request, url_for, jsonify, flash
 from flask_login import current_user, login_required
 from invenio_records_ui.utils import obj_or_import_string
 from invenio_records_ui.signals import record_viewed
@@ -62,6 +62,8 @@ def publish(pid, record, template=None, **kwargs):
         record.update({'publish_status': (status or '0')})
     else:
         record['publish_status'] = (status or '0')
+# TODO
+    flash(record)
 
     record.commit()
     db.session.commit()
