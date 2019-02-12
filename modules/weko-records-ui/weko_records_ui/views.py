@@ -22,7 +22,7 @@
 
 import six
 from flask import Blueprint, abort, current_app, render_template, \
-    make_response, redirect, request, url_for, jsonify, flash
+    make_response, redirect, request, url_for, jsonify
 from flask_login import current_user, login_required
 from invenio_records_ui.utils import obj_or_import_string
 from invenio_records_ui.signals import record_viewed
@@ -276,9 +276,7 @@ def default_view_method(pid, record, template=None, **kwargs):
         record["relation"]=res
     else:
         record["relation"] = {}
-# TODO
-    flash(record)
-    
+
     return render_template(
         template,
         pid=pid,
