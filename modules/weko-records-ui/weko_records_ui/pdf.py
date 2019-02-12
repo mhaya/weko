@@ -127,7 +127,8 @@ def make_combined_pdf(pid, obj_file_uri):
     #             else:
     #                 publisher_parent_key = parent_key
     #                 publisher_child_key = child_key
-    # print(publisher_parent_key, publisher_child_key)
+    #
+    # # print(publisher_parent_key, publisher_child_key)
 
     pdf.set_font('Arial', '', 14)
     pdf.set_font('IPAexg', '', 14)

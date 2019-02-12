@@ -31,6 +31,9 @@ WEKO_PERMISSION_ROLE_USER = ('System Administrator',
 ADMIN_SET_ITEM_TEMPLATE = 'weko_records_ui/admin/item_setting.html'
 # author setting page template
 
+WEKO_ADMIN_PDFCOVERPAGE_TEMPLATE = 'weko_record_ui/admin/pdfcoverpage.html'
+# pdfcoverpage templates
+
 ITEM_SEARCH_FLG = 'name'
 # setting author name search type: name or id
 
@@ -156,3 +159,4 @@ METADATA_HEIGHT = 9
 JPAEXG_TTF_FILEPATH = '/code/modules/weko-records-ui/weko_records_ui/fonts/ipaexg00201/ipaexg.ttf'
 
 JPAEXM_TTF_FILEPATH = '/code/modules/weko-records-ui/weko_records_ui/fonts/ipaexm00201/ipaexm.ttf'
+
