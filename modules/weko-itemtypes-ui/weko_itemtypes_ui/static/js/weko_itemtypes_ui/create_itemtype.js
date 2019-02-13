@@ -885,8 +885,6 @@
       url: '/itemtypes/property/list',
       async: false,
       success: function(data, status){
-
-        alert('PropertyList!!');
         properties_obj = data;
 
         defProps = data.defaults;
