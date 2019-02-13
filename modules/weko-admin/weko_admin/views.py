@@ -21,7 +21,6 @@
 """Views for weko-admin."""
 
 import json
-import os
 import sys
 from datetime import timedelta
 from flask import Blueprint, abort, current_app, flash, \
@@ -33,15 +32,9 @@ from flask_menu import register_menu
 from invenio_admin.proxies import current_admin
 from weko_records.api import ItemTypes, SiteLicense
 from werkzeug.local import LocalProxy
-import werkzeug
-from werkzeug.utils import secure_filename
-from invenio_db import db
-from sqlalchemy.orm import sessionmaker, session
-from sqlalchemy import create_engine
+from sqlalchemy.orm import session
 from .models import SessionLifetime, SearchManagement
-#from .models import PDFCoverPageSettings
 from .utils import get_response_json, get_search_setting
-import psycopg2
 
 _app = LocalProxy(lambda: current_app.extensions['weko-admin'].app)
 
@@ -217,43 +210,3 @@ def set_search():
         )
     except:
         abort(500)
-
-
-# @blueprint.route('/admin/pdfcoverpage', methods=['GET', 'POST'])
-# def set_pdfcoverpage_header():
-#     #limit upload file size : 1MB
-#     current_app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
-#
-#     @blueprint.errorhandler(werkzeug.exceptions.RequestEntityTooLarge)
-#     def handle_over_max_file_size(error):
-#         print("werkzeug.exceptions.RequestEntityTooLarge")
-#         return 'result : file size is overed.'
-#
-#     # Save PDF Cover Page Header settings
-#     if request.method == 'POST':
-#         record = PDFCoverPageSettings.find(1)
-#         avail = request.form.get('availability')
-#         header_display_type = request.form.get('header-display')
-#         header_output_string = request.form.get('header-output-string')
-#         header_output_image_file = request.files.get('header-output-image')
-#         header_output_image_filename = header_output_image_file.filename
-#         header_output_image = record.header_output_image
-#         if not header_output_image_filename == '':
-#             upload_dir = "/code/header-icons/"
-#             header_output_image = upload_dir + header_output_image_filename
-#             header_output_image_file.save(header_output_image)
-#         header_display_position = request.form.get('header-display-position')
-#
-#         # update PDF cover page settings
-#         PDFCoverPageSettings.update(1,
-#                                     avail,
-#                                     header_display_type,
-#                                     header_output_string,
-#                                     header_output_image,
-#                                     header_display_position
-#                                     )
-#
-#         flash(_('PDF cover page settings were updated'), category='success')
-#         return redirect('/admin/pdfcoverpage')
-#
-#     return redirect('/admin/pdfcoverpage')
