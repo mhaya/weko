@@ -170,8 +170,6 @@ msgid "Keyword"
 msgstr "キーワード"
 
 #: weko_itemtypes_ui/templates/weko_itemtypes_ui/create_itemtype.html:225
-msgid "Keyword(English)"
-msgstr "キーワード(英)"
 
 #: weko_itemtypes_ui/templates/weko_itemtypes_ui/create_itemtype.html:252
 msgid "Add Metadata"
