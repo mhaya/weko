@@ -77,7 +77,6 @@ def check_file_download_permission(record, fjson):
         is_can = True
         acsrole = fjson.get('accessrole', '')
 
-        # flash(fjson)
         # Super users
         supers = current_app.config['WEKO_PERMISSION_SUPER_ROLE_USER']
         for role in list(current_user.roles or []):
@@ -127,9 +126,6 @@ def check_user_group_permission(group_id):
 
     :param group_id: Group_id
     """
-
-    # flash(group_id)
-
     user_id = current_user.get_id()
     is_ok = False
     if group_id:
