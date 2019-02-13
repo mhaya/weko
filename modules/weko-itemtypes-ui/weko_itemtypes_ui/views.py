@@ -138,7 +138,8 @@ def get_property_list(property_id=0):
     lists = {}
     for k in props:
         name = k.name
-        if lang and k.form['title_i18n'][lang]:
+        if lang and 'title_i18n' in k.form and \
+            lang in k.form['title_i18n'] and k.form['title_i18n'][lang]:
             name = k.form['title_i18n'][lang]
 
         tmp = {'name': name, 'schema': k.schema, 'form': k.form,
