@@ -28,6 +28,9 @@ from weko_records.api import ItemsMetadata, ItemMetadata, ItemType
 from invenio_pidstore.models import PersistentIdentifier
 from invenio_db import db
 from .models import PDFCoverPageSettings
+from weko_records.serializers.utils import get_mapping, get_metadata_from_map
+from weko_records.api import Mapping
+from weko_records.serializers.feed import WekoFeedGenerator
 
 """ Function counting numbers of full-width character and half-width character differently """
 def get_east_asian_width_count(text):
@@ -51,8 +54,12 @@ def make_combined_pdf(pid, obj_file_uri):
 
     pid = pid.pid_value
     pidObject = PersistentIdentifier.get('recid', pid)
-    item_metadata = ItemsMetadata.get_record(pidObject.object_uuid)
+    item_metadata_json = ItemsMetadata.get_record(pidObject.object_uuid)
+    item_metadata = db.session.query(ItemMetadata).filter_by(json=item_metadata_json).first()
     item_type = db.session.query(ItemType).filter(ItemType.id==ItemMetadata.item_type_id).first()
+    item_type_id = item_type.id
+    type_mapping = Mapping.get_record(item_type_id)
+    item_map = get_mapping(type_mapping, "jpcoar_mapping")
 
 
     """ Initialize Instance """
@@ -110,65 +117,66 @@ def make_combined_pdf(pid, obj_file_uri):
         pdf.set_y(55)
 
     """ Title """
-    title = item_metadata['title_en']
+    title = item_metadata_json['title_en']
     pdf.set_font('IPAexm', '', 20)
     pdf.multi_cell(w1 + w2, title_h, title, 0, 'L', False)
     pdf.ln(h='15')
 
     """ Metadata """
-    # publisher_parent_key = None
-    # publisher_child_key = None
-    # schema_prop = item_type.schema["properties"]
-    # for parent_key in schema_prop:
-    #     if "properties" in schema_prop[parent_key]:
-    #         for child_key in schema_prop[parent_key]["properties"]:
-    #             if schema_prop[parent_key]["properties"][child_key].get("title") != '出版者':
-    #                 continue
-    #             else:
-    #                 publisher_parent_key = parent_key
-    #                 publisher_child_key = child_key
-    #
-    # # print(publisher_parent_key, publisher_child_key)
+    fg = WekoFeedGenerator()
+    fe = fg.add_entry()
+
+    _file = 'file.URI.@value'
+    _file_item_id = None
+    if _file in item_map:
+        _file_item_id = item_map[_file].split('.')[0]
+
+    _creator = 'creator.creatorName.@value'
+    _creator_item_id = None
+    if _creator in item_map:
+        _creator_item_id = item_map[_creator].split('.')[0]
 
     pdf.set_font('Arial', '', 14)
     pdf.set_font('IPAexg', '', 14)
 
-    if item_metadata['lang'] == 'en':
-        item_metadata['lang'] = 'English'
-    elif item_metadata['lang']  == 'ja':
-        item_metadata['lang'] = 'Japanese'
+    if item_metadata_json['lang'] == 'en':
+        item_metadata_json['lang'] = 'English'
+    elif item_metadata_json['lang']  == 'ja':
+        item_metadata_json['lang'] = 'Japanese'
 
     try:
-        lang = item_metadata.get('lang')
+        lang = item_metadata_json.get('lang')
     except (KeyError, IndexError):
         lang = None
     try:
-        publisher = item_metadata['item_1548661157806'].get('subitem_1522300316516')
-        # publisher = item_metadata[publisher_parent_key].get(publisher_child_key)
+        publisher = item_metadata_json[_creator_item_id].get(_creator_item_id)
     except (KeyError, IndexError):
         publisher = None
     try:
-        pubdate = item_metadata.get('pubdate')
+        pubdate = item_metadata_json.get('pubdate')
     except (KeyError, IndexError):
         pubdate = None
     try:
-        keywords_ja = item_metadata.get('keywords')
+        keywords_ja = item_metadata_json.get('keywords')
     except (KeyError, IndexError):
         keywords_ja = None
     try:
-        keywords_en = item_metadata.get('keywords_en')
+        keywords_en = item_metadata_json.get('keywords_en')
     except (KeyError, IndexError):
         keywords_en = None
     try:
-        creator_mail = item_metadata['item_1538028816158']['creatorMails'][0].get('creatorMail')
+        #creator_mail = item_metadata_json['item_1538028816158']['creatorMails'][0].get('creatorMail')
+        creator_mail = item_metadata_json[_creator_item_id]['creatorMails'][0].get('creatorMail')
     except (KeyError, IndexError):
         creator_mail = None
     try:
-        creator_name = item_metadata['item_1538028816158']['creatorNames'][0].get('creatorName')
+        #creator_name = item_metadata_json['item_1538028816158']['creatorNames'][0].get('creatorName')
+        creator_name = item_metadata_json[_creator_item_id]['creatorNames'][0].get('creatorName')
     except (KeyError, IndexError):
         creator_name = None
     try:
-        affiliation = item_metadata['item_1538028816158']['affiliation'][0].get('affiliationNames')
+        #affiliation = item_metadata_json['item_1538028816158']['affiliation'][0].get('affiliationNames')
+        affiliation = item_metadata_json[_creator_item_id]['affiliation'][0].get('affiliationNames')
     except (KeyError, IndexError):
         affiliation = None
 
@@ -236,9 +244,9 @@ def make_combined_pdf(pid, obj_file_uri):
     pdf.set_font('Courier', '', 10)
     pdf.set_x(108)
 
-    license =  item_metadata['item_1538028827221'][0].get('licensetype')
+    license =  item_metadata_json[_file_item_id][0].get('licensetype')
     if license == 'license_free':  #自由入力
-        txt = item_metadata['item_1538028827221'][0].get('licensefree')
+        txt = item_metadata_json[_file_item_id][0].get('licensefree')
         if txt == None:
             txt = ''
         pdf.multi_cell(footer_w, footer_h, txt, 0, 'L', False)
@@ -303,11 +311,15 @@ def make_combined_pdf(pid, obj_file_uri):
 
     """ Download the newly generated combined PDF file """
     try:
-        combined_filename = 'CV_' + datetime.now().strftime('%Y%m%d') + '_' + item_metadata["item_1538028827221"][0].get("filename")
+        #combined_filename = 'CV_' + datetime.now().strftime('%Y%m%d') + '_' + item_metadata_json["item_1538028827221"][0].get("filename")
+        combined_filename = 'CV_' + datetime.now().strftime('%Y%m%d') + '_' + item_metadata_json[_file_item_id][0].get("filename")
+
+
     except (KeyError, IndexError):
         combined_filename = 'CV_' + title + '.pdf'
     combined_filepath = "/code/combined-pdfs/{}.pdf".format(combined_filename)
     combined_file = open(combined_filepath, "wb")
     combined_pages.write(combined_file)
     combined_file.close()
+
     return send_file(combined_filepath, as_attachment = True, attachment_filename = combined_filename, mimetype ='application/pdf', cache_timeout = -1)
