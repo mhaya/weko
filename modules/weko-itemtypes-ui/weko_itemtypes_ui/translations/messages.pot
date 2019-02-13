@@ -165,6 +165,8 @@ msgid "Keyword"
 msgstr ""
 
 #: weko_itemtypes_ui/templates/weko_itemtypes_ui/create_itemtype.html:225
+msgid "Keyword(English)"
+msgstr ""
 
 #: weko_itemtypes_ui/templates/weko_itemtypes_ui/create_itemtype.html:252
 msgid "Add Metadata"
