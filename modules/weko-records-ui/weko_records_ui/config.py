@@ -31,7 +31,7 @@ WEKO_PERMISSION_ROLE_USER = ('System Administrator',
 ADMIN_SET_ITEM_TEMPLATE = 'weko_records_ui/admin/item_setting.html'
 # author setting page template
 
-WEKO_ADMIN_PDFCOVERPAGE_TEMPLATE = 'weko_record_ui/admin/pdfcoverpage.html'
+WEKO_ADMIN_PDFCOVERPAGE_TEMPLATE = 'weko_records_ui/admin/pdfcoverpage.html'
 # pdfcoverpage templates
 
 ITEM_SEARCH_FLG = 'name'

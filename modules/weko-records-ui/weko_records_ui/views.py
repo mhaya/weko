@@ -316,7 +316,7 @@ def set_pdfcoverpage_header():
                                     header_display_position
                                     )
 
-        #flash('PDF cover page settings were updated', category='success')
+        flash('PDF cover page settings have been updated.', category='success')
         return redirect('/admin/pdfcoverpage')
 
     return redirect('/admin/pdfcoverpage')

@@ -203,7 +203,6 @@ class StyleSettingView(BaseView):
             abort(500)
         return checksum1 == checksum2
 
-
 # class PdfCoverPageSettingView(BaseView):
 #     @expose('/', methods=['GET'])
 #     def index(self):

@@ -29,7 +29,7 @@ from werkzeug.datastructures import Headers
 from werkzeug.urls import url_quote
 from invenio_files_rest.proxies import current_permission_factory
 from .permissions import file_permission_factory
-from weko_admin.models import PDFCoverPageSettings
+from .models import PDFCoverPageSettings
 from invenio_files_rest.views import file_downloaded, check_permission
 from invenio_files_rest.views import ObjectResource
 from invenio_files_rest.models import ObjectVersion, FileInstance

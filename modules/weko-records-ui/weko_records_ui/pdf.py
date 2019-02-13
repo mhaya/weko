@@ -27,7 +27,7 @@ from flask import send_file, current_app
 from weko_records.api import ItemsMetadata, ItemMetadata, ItemType
 from invenio_pidstore.models import PersistentIdentifier
 from invenio_db import db
-from weko_admin.models import PDFCoverPageSettings
+from .models import PDFCoverPageSettings
 
 """ Function counting numbers of full-width character and half-width character differently """
 def get_east_asian_width_count(text):

@@ -89,7 +89,7 @@ setup(
         ],
         'invenio_admin.views': [
             'weko_records_ui_setting = weko_records_ui.admin:item_adminview',
-            'weko_admin_pdfcoverpage = weko_admin.admin:pdfcoverpage_adminview',
+            'weko_records_ui_pdfcoverpage = weko_records_ui.admin:pdfcoverpage_adminview',
         ],
         'invenio_i18n.translations': [
             'messages = weko_records_ui',
