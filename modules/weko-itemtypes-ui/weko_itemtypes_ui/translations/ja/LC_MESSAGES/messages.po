@@ -131,6 +131,14 @@ msgstr "複数可"
 msgid "List Display"
 msgstr "一覧表示"
 
+#: weko_itemtypes_ui/templates/weko_itemtypes_ui/create_itemtype.html:114
+#: weko_itemtypes_ui/templates/weko_itemtypes_ui/create_itemtype.html:139
+#: weko_itemtypes_ui/templates/weko_itemtypes_ui/create_itemtype.html:164
+#: weko_itemtypes_ui/templates/weko_itemtypes_ui/create_itemtype.html:189
+#: weko_itemtypes_ui/templates/weko_itemtypes_ui/create_itemtype.html:214
+#: weko_itemtypes_ui/templates/weko_itemtypes_ui/create_itemtype.html:239
+msgid "Specify Newline"
+msgstr "改行指定"
 
 #: weko_itemtypes_ui/templates/weko_itemtypes_ui/create_itemtype.html:117
 #: weko_itemtypes_ui/templates/weko_itemtypes_ui/create_itemtype.html:142

@@ -886,6 +886,7 @@
       async: false,
       success: function(data, status){
 
+        alert('PropertyList!!');
         properties_obj = data;
 
         defProps = data.defaults;
@@ -895,7 +896,7 @@
             select_option = select_option + '<option value="' + defProps[key].value + '" selected>' + defProps[key].name + '</option>';
             isSelected = false;
           } else {
-            select_option = select_option + '<option value="' + defProps[key].value + '">' + "{{_('" + defProps[key].name + "')}}" + '</option>';
+            select_option = select_option + '<option value="' + defProps[key].value + '">' + "{{ _('" + defProps[key].name + "') }}" + '</option>';
           }
         });
 
