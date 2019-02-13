@@ -877,7 +877,9 @@
         }
       });
     }
-
+//TODO
+    getPropUrl = '/itemtypes/property/list?lang=' + '';
+    alert($('#lang-code').val());
     select_option = '';
     // 作成したメタデータ項目タイプの取得
     $.ajax({
@@ -894,7 +896,7 @@
             select_option = select_option + '<option value="' + defProps[key].value + '" selected>' + defProps[key].name + '</option>';
             isSelected = false;
           } else {
-            select_option = select_option + '<option value="' + defProps[key].value + '">' + "{{ _('" + defProps[key].name + "') }}" + '</option>';
+            select_option = select_option + '<option value="' + defProps[key].value + '">' + defProps[key].name + '</option>';
           }
         });
 

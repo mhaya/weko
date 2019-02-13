@@ -135,6 +135,8 @@ def get_property_list(property_id=0):
     props = ItemTypeProps.get_records([])
     lists = {}
     for k in props:
+
+
         tmp = {'name': k.name, 'schema': k.schema, 'form': k.form,
                'forms': k.forms, 'sort': k.sort}
         lists[k.id] = tmp
