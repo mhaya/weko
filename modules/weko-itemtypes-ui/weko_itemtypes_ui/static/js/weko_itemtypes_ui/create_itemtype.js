@@ -815,9 +815,10 @@
 
     // itemtype select input change
     $('#tbody_itemtype').on('change', '.change_input_type', function(){
-      alert('Change!!!');
       var meta_id = $(this).attr('metaid');
       if($(this).val().indexOf('cus_') != -1) {
+        alert('Property!!');
+
         product = properties_obj[$(this).val().substr(4)].schema;
         $('#chk_prev_' + meta_id + '_1').removeClass('disabled');
         $('#chk_' + meta_id + '_1').attr('disabled', false);
