@@ -815,6 +815,7 @@
 
     // itemtype select input change
     $('#tbody_itemtype').on('change', '.change_input_type', function(){
+      alert('Change!!!');
       var meta_id = $(this).attr('metaid');
       if($(this).val().indexOf('cus_') != -1) {
         product = properties_obj[$(this).val().substr(4)].schema;
@@ -877,7 +878,7 @@
         }
       });
     }
-//TODO
+
     getPropUrl = '/itemtypes/property/list?lang=' + $('#lang-code').val();
     select_option = '';
     // 作成したメタデータ項目タイプの取得
