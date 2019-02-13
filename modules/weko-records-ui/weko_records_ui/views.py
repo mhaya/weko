@@ -290,6 +290,7 @@ def default_view_method(pid, record, template=None, **kwargs):
     )
 
 @blueprint.route("/item_management/bulk_update", methods=['GET'])
+@login_required
 def bulk_update():
 
     """Render view."""

@@ -22,6 +22,7 @@
 
 from flask import Blueprint, current_app, render_template, request, \
     redirect, url_for, make_response, jsonify
+from flask_login import login_required
 from xml.etree import ElementTree as ET
 from weko_index_tree.models import Index, IndexStyle
 from weko_index_tree.api import Indexes
@@ -205,6 +206,7 @@ def save_sort():
         return make_response(jsonify(jfy), jfy['status'])
 
 @blueprint.route("/item_management/custom_sort", methods=['GET'])
+@login_required
 def custom_sort():
     """Render view."""
     return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
