@@ -132,12 +132,16 @@ def custom_property(property_id=0):
 @item_type_permission.require(http_exception=403)
 def get_property_list(property_id=0):
     """Renders an primitive property view."""
+    lang = request.values.get('lang')
+
     props = ItemTypeProps.get_records([])
     lists = {}
     for k in props:
+        name = k.name
+        if lang and k.form['title_i18n'][lang]:
+            name = k.form['title_i18n'][lang]
 
-
-        tmp = {'name': k.name, 'schema': k.schema, 'form': k.form,
+        tmp = {'name': name, 'schema': k.schema, 'form': k.form,
                'forms': k.forms, 'sort': k.sort}
         lists[k.id] = tmp
 
