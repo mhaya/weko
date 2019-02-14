@@ -427,9 +427,11 @@ var SchemaObject = React.createClass({
 					format: "text",
 					title: ""
 				};
-			} else if ('checkboxes' === event.target.value || 'radios' === event.target.value || 'select' === event.target.value) {
+			} else if ('radios' === event.target.value || 'select' === event.target.value) {
 				this.state.propertyNames[i].enum = [];
-			} else if ('array' === event.target.value) {
+
+//				TODO
+			} else if ('checkboxes' === event.target.value || 'array' === event.target.value) {
 				this.state.propertyNames[i].type = event.target.value;
 				this.state.propertyNames[i].format = event.target.value;
 				this.state.propertyNames[i].items = {
@@ -511,15 +513,7 @@ var SchemaObject = React.createClass({
 						templateUrl: "/static/templates/weko_deposit/datepicker.html",
 						title: value.title
 					};
-				} else if ('checkboxes' === value.format) {
-//					TODO
-					sub_form = {
-						key: parentkey + itemKey,
-						type: value.format,
-						title: value.title,
-						titleMap: self.refs['subitem' + index].exportTitleMap()
-					};
-				} else if ('radios' === value.format || 'select' === value.format) {
+				} else if ('checkboxes' === value.format || 'radios' === value.format || 'select' === value.format) {
 					sub_form = {
 						key: parentkey + itemKey,
 						type: value.format,
