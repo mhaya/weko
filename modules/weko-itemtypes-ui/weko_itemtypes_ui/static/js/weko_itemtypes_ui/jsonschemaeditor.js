@@ -513,7 +513,7 @@ var SchemaObject = React.createClass({
 				} else if ('checkboxes' === value.format) {
 					sub_form = {
 						key: parentkey + itemKey,
-						type: 'array',
+						type: 'select',
 						title: value.title,
 						titleMap: self.refs['subitem' + index].exportTitleMap()
 					};
