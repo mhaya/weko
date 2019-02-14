@@ -188,8 +188,9 @@ var SchemaCheckboxes = React.createClass({
 		if (this.state.enum.length > 0) {
 			arr = this.state.enum.split('|');
 		}
+//		TODO
 		return {
-			type: "string",
+			type: "array",
 			format: "checkboxes",
 			enum: arr
 		};
@@ -511,6 +512,7 @@ var SchemaObject = React.createClass({
 						title: value.title
 					};
 				} else if ('checkboxes' === value.format) {
+//					TODO
 					sub_form = {
 						key: parentkey + itemKey,
 						type: 'select',
