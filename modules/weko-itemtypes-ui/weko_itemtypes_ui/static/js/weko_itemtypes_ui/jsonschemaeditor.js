@@ -515,7 +515,7 @@ var SchemaObject = React.createClass({
 //					TODO
 					sub_form = {
 						key: parentkey + itemKey,
-						type: 'select',
+						type: value.format,
 						title: value.title,
 						titleMap: self.refs['subitem' + index].exportTitleMap()
 					};
