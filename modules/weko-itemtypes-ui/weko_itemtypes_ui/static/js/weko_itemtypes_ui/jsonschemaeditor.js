@@ -192,7 +192,11 @@ var SchemaCheckboxes = React.createClass({
 		return {
 			type: "array",
 			format: "checkboxes",
-			enum: arr
+			items: {
+			  type: "string",
+			  enum: arr
+			}
+//			enum: arr
 		};
 	},
 	render: function render() {
