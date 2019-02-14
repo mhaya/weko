@@ -190,7 +190,7 @@ var SchemaCheckboxes = React.createClass({
 		}
 //		TODO
 		return {
-			type: "array",
+			type: "string",
 			format: "checkboxes",
 			enum: arr
 		};
@@ -427,11 +427,11 @@ var SchemaObject = React.createClass({
 					format: "text",
 					title: ""
 				};
-			} else if ('radios' === event.target.value || 'select' === event.target.value) {
+			} else if ('checkboxes' === event.target.value || 'radios' === event.target.value || 'select' === event.target.value) {
 				this.state.propertyNames[i].enum = [];
 
 //				TODO
-			} else if ('checkboxes' === event.target.value || 'array' === event.target.value) {
+			} else if ('array' === event.target.value) {
 				this.state.propertyNames[i].type = event.target.value;
 				this.state.propertyNames[i].format = event.target.value;
 				this.state.propertyNames[i].items = {
