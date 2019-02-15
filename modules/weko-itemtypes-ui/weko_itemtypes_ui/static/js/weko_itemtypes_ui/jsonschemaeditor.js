@@ -659,7 +659,7 @@ var SchemaObject = React.createClass({
 									React.createElement(
 										'option',
 										{ value: 'checkboxes' },
-										'Checkbox'
+										'Checkboxes'
 									),
 									React.createElement(
 										'option',
