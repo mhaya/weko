@@ -44,13 +44,15 @@
     <div class="col-sm-12 col-md-12 col-lg-11">
       <div class="panel panel-info">
         <div class="panel-body">
+          <input type="radio" name="item_type" value="normal">Item Type<br>
+          <input type="radio" name="item_type" value="harvesting">Item Type for Harvesting
           <div class="form-inline">
             <div class="input-group">
               <label class="sr-only" for="item-type-lists"></label>
               <select class="form-control" id="item-type-lists">
                 <option  value=""></option>
                 {% for list in lists %}
-                <option  value="{{ list.item_type.0.id }}" {% if list.item_type.0.id == id %}selected{% endif %}>{{ list.name }}({{ list.item_type.0.tag }})</option>
+                <option  value="{{ list.item_type.0.id }}" {% if list.item_type.0.harvesting_type %} class="harvesting_type" {% else %} class="normal_type" {% endif %} {% if list.item_type.0.id == id %}selected{% endif %}>{{ list.name }}({{ list.item_type.0.tag }})</option>
                 {% endfor %}
               </select>
             </div>
