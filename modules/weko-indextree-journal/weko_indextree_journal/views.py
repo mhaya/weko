@@ -13,8 +13,9 @@
 
 from __future__ import absolute_import, print_function
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, current_app
 from flask_babelex import gettext as _
+from weko_records.api import ItemTypes
 
 blueprint = Blueprint(
     'weko_indextree_journal',
@@ -28,6 +29,31 @@ blueprint = Blueprint(
 @blueprint.route("/")
 def index():
     """Render a basic view."""
+    item_type_id = 1
+    lists = ItemTypes.get_latest()
+    if lists is None or len(lists) == 0:
+        return render_template(
+            current_app.config['WEKO_ITEMS_UI_ERROR_TEMPLATE']
+        )
+    item_type = ItemTypes.get_by_id(item_type_id)
+    if item_type is None:
+        return
+    json_schema = '/items/jsonschema/{}'.format(item_type_id)
+    schema_form = '/items/schemaform/{}'.format(item_type_id)
+
+    return render_template(
+        'weko_indextree_journal/index.html',
+        record=None,
+        jsonschema=json_schema,
+        schemaform=schema_form,
+        lists=lists,
+        links=None,
+        id=item_type_id,
+        files=None,
+        pid=None
+    )
+    """
     return render_template(
         "weko_indextree_journal/index.html",
         module_name=_('WEKO-Indextree-Journal'))
+    """

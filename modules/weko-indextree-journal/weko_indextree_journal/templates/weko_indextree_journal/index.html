@@ -13,3 +13,28 @@ TODO: Example template, please remove if you do not need it.
 {{_('Welcome to %(module_name)s', module_name=module_name)}}
 {%- endblock %}
 
+{%- block css %}
+  {% assets "weko_items_ui_indextree_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
+  {% assets "weko_index_tree_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
+  {{ super() }}
+{%- endblock css %}
+
+{%- block javascript %}
+  {% assets "weko_index_tree_view" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+  {{ super() }}
+  {% assets "weko_index_tree_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+{%- endblock javascript %}
+
+{%- block page_body_tabs %}
+  {% from "weko_theme/macros/edit_tabs_selector.html" import tabs_selector %}
+  {{ tabs_selector('edit_tree') }}
+{%- endblock page_body_tabs%}
+
+{%- block page_body_main %}
+<div class="row">
+  <div class="hide" id="get_tree_json">{{ get_tree_json }}</div>
+  <div class="hide" id="upt_tree_json">{{ upt_tree_json }}</div>
+  <div class="hide" id="mod_tree_detail">{{ mod_tree_detail }}</div>
+  <app-root-tree-hensyu></app-root-tree-hensyu>
+</div>
+{%- endblock page_body_main %}

@@ -78,6 +78,11 @@ setup(
         'invenio_i18n.translations': [
             'messages = weko_indextree_journal',
         ],
+        'invenio_assets.bundles': [
+            'weko_indextree_journal_css = weko_indextree_journal.bundles:style',
+            'weko_indextree_journal_view = weko_indextree_journal.bundles:js_treeview',
+            'weko_indextree_journal_js = weko_indextree_journal.bundles:js',
+        ],
         # TODO: Edit these entry points to fit your needs.
         # 'invenio_access.actions': [],
         # 'invenio_admin.actions': [],
