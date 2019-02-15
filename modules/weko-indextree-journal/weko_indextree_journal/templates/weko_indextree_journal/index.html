@@ -15,14 +15,14 @@ TODO: Example template, please remove if you do not need it.
 
 {%- block css %}
   {% assets "weko_items_ui_indextree_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
-  {% assets "weko_index_tree_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
+  {% assets "weko_indextree_journal_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
   {{ super() }}
 {%- endblock css %}
 
 {%- block javascript %}
-  {% assets "weko_index_tree_view" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+  {% assets "weko_indextree_journal_view" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {{ super() }}
-  {% assets "weko_index_tree_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+  {% assets "weko_indextree_journal_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
 {%- endblock javascript %}
 
 {%- block page_body_tabs %}
