@@ -92,6 +92,7 @@
         constructor(props) {
           super(props);
           this.state = {value: ''};
+          this.body = {value: document.getElementById("grid-header").innerHTML};
 
           this.handleChange = this.handleChange.bind(this);
           this.handleSubmit = this.handleSubmit.bind(this);
@@ -102,7 +103,7 @@
         }
 
         handleSubmit(event) {
-          alert(document.getElementById("grid-header").innerHTML);
+          alert({this.body.value});
           event.preventDefault();
         }
 
