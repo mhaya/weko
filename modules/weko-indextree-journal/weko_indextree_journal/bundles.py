@@ -24,20 +24,20 @@ from flask_assets import Bundle
 from invenio_assets import NpmBundle
 
 style = Bundle(
-    'css/weko_index_tree/styles.bundle.css',
+    'css/weko_indextree_journal/styles.bundle.css',
     filters='cleancss',
-    output="gen/index_tree_view.%(version)s.css"
+    output="gen/indextree_journal_view.%(version)s.css"
 )
 
 js_treeview = NpmBundle(
-    'js/weko_index_tree/inline.bundle.js',
-    'js/weko_index_tree/polyfills.bundle.js',
-    'js/weko_index_tree/main.bundle.js',
-    output="gen/index_tree_view.js"
+    'js/weko_indextree_journal/inline.bundle.js',
+    'js/weko_indextree_journal/polyfills.bundle.js',
+    'js/weko_indextree_journal/main.bundle.js',
+    output="gen/indextree_journal_view.js"
 )
 
 js = Bundle(
-    'js/weko_index_tree/app.js',
+    'js/weko_indextree_journal/app.js',
     filters='requirejs',
-    output="gen/index_tree.%(version)s.js"
+    output="gen/indextree_journal.%(version)s.js"
 )
