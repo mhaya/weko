@@ -118,7 +118,7 @@
                 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="submit" value="Get" />
               </form>
-              document.getElementById("grid-header").innerHTML
+              document.getElementById("grid-header")
             </div>
           );
         }
@@ -127,6 +127,32 @@
         <SearchMetaForm />,
         document.getElementById('meta-sach-body')
       )
+      class Footer extends React.Component {
+        constructor(props) {
+          super(props);
+
+          this.handleChange = this.handleChange.bind(this);
+          this.handleSubmit = this.handleSubmit.bind(this);
+        }
+
+        handleChange(event) {
+        }
+
+        handleSubmit(event) {
+        }
+
+        render() {
+          return (
+            {document.getElementById("grid-header").innerHTML}
+          );
+        }
+      }
+      ReactDOM.render(
+        <Footer />,
+        document.getElementById('meta-sach-footer')
+      )
+
+
     </script>
 
     <div id="grid-header">
@@ -148,6 +174,7 @@
 
     <div id="grid-other" style="background-color: #BDBDBD">
       <div id="meta-sach-body"></div>
+      <div id="meta-sach-footer"></div>
     </div>
 
     {%- endblock body_inner %}
