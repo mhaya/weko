@@ -74,18 +74,85 @@
     <![endif]-->
     {%- endblock browserupgrade %}
     {%- block body_inner %}
+
+    <div id="grid-header">
     {%- block page_header %}
-{% include config.THEME_HEADER_TEMPLATE %}
+      {% include config.THEME_HEADER_TEMPLATE %}
     {%- endblock page_header %}
+    </div>
+
+    <div id="grid-body">
     {%- block page_body %}
     {%- endblock page_body %}
+    </div>
+
+    <div id="grid-footer">
     {%- block page_footer %}
-{% include config.THEME_FOOTER_TEMPLATE %}
+      {% include config.THEME_FOOTER_TEMPLATE %}
     {%- endblock page_footer %}
+    </div>
+
+    <div id="grid-other" style="background-color: #BDBDBD">
+      <div id="meta-sach-body"></div>
+
+    </div>
+
     {%- endblock body_inner %}
     {%- block javascript %}
-{% include config.THEME_JAVASCRIPT_TEMPLATE %}
-{% assets "weko_theme_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+      {% include config.THEME_JAVASCRIPT_TEMPLATE %}
+      {% assets "weko_theme_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+
+      <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+      <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
+      <script type="text/babel">
+        class ModalHeader extends React.Component {
+          render(){
+            return (
+              <div class="text-right">
+                <h3>Written by React</h3>
+              </div>
+            )
+          }
+        }
+        class SearchMetaForm extends React.Component {
+          constructor(props) {
+            super(props);
+            this.state = {value: ''};
+
+            this.handleChange = this.handleChange.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
+          }
+
+          handleChange(event) {
+            this.setState({value: event.target.value});
+          }
+
+          handleSubmit(event) {
+            $("#btn_setItemMetadata").click();
+            event.preventDefault();
+          }
+
+          render() {
+            return (
+              <div>
+                <ModalHeader />
+                <form onSubmit={this.handleSubmit}>
+                  <label>
+                    Select ID:
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                  </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input type="submit" value="Get" />
+                </form>
+              </div>
+            );
+          }
+        }
+        ReactDOM.render(
+          <SearchMetaForm />,
+          document.getElementById('meta-sach-body')
+        )
+      </script>
     {%- endblock javascript %}
     {%- block trackingcode %}{% include config.THEME_TRACKINGCODE_TEMPLATE %}
     {%- endblock trackingcode %}
