@@ -565,10 +565,10 @@ var SchemaObject = React.createClass({
 					properties[itemKey] = value;
 
 //			TODO
-				} else if ('radios' === value.format || 'select' === value.format) {
+				} else if ('checkboxes' === value.format || 'radios' === value.format || 'select' === value.format) {
 					properties[itemKey] = self.refs['subitem' + index].export();
 					properties[itemKey].title = value.title;
-				} else if ('checkboxes' === value.format || 'array' === value.format) {
+				} else if ('array' === value.format) {
 					properties[itemKey] = { type: "array", format: "array", items: {}, title: value.title };
 					properties[itemKey].items = self.refs['subitem' + index].export();
 				} else {
