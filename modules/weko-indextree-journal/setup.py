@@ -59,7 +59,7 @@ setup(
     version=version,
     description=__doc__,
     long_description=readme + '\n\n' + history,
-    keywords='invenio TODO',
+    keywords='weko indextree journal',
     license='MIT',
     author='National Institute of Informatics',
     author_email='wekosoftware@nii.ac.jp',
