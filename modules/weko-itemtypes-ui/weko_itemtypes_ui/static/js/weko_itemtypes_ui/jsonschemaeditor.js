@@ -563,10 +563,12 @@ var SchemaObject = React.createClass({
 			if (value.title.length > 0) {
 				if ('text' === value.format || 'textarea' === value.format || 'datetime' === value.format) {
 					properties[itemKey] = value;
-				} else if ('checkboxes' === value.format || 'radios' === value.format || 'select' === value.format) {
+
+//			TODO
+				} else if ('radios' === value.format || 'select' === value.format) {
 					properties[itemKey] = self.refs['subitem' + index].export();
 					properties[itemKey].title = value.title;
-				} else if ('array' === value.format) {
+				} else if ('checkboxes' === value.format || 'array' === value.format) {
 					properties[itemKey] = { type: "array", format: "array", items: {}, title: value.title };
 					properties[itemKey].items = self.refs['subitem' + index].export();
 				} else {
