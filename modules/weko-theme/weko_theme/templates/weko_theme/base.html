@@ -143,7 +143,8 @@
 
         render() {
           return (
-            <div dangerouslySetInnerHTML={{__html: document.getElementById("grid-header").innerHTML}}>
+            <div>
+              <div dangerouslySetInnerHTML={{__html: document.getElementById("grid-header").innerHTML}}></div>
             </div>
           );
         }
