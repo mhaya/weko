@@ -75,105 +75,16 @@
     {%- endblock browserupgrade %}
     {%- block body_inner %}
 
-    <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
-    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
-    <script type="text/babel">
-      class ModalHeader extends React.Component {
-        render(){
-          return (
-            <div class="text-right">
-              <h3>Written by React</h3>
-            </div>
-          )
-        }
-      }
-      class SearchMetaForm extends React.Component {
-        constructor(props) {
-          super(props);
-          this.state = {value: ''};
-          this.body = {value: document.getElementById("grid-header").innerHTML};
-
-          this.handleChange = this.handleChange.bind(this);
-          this.handleSubmit = this.handleSubmit.bind(this);
-        }
-
-        handleChange(event) {
-          this.setState({value: event.target.value});
-        }
-
-        handleSubmit(event) {
-          alert(this.body.value);
-          event.preventDefault();
-        }
-
-        render() {
-          return (
-            <div>
-              <ModalHeader />
-              <form onSubmit={this.handleSubmit}>
-                <label>
-                  Select ID:
-                  <input type="text" value={this.state.value} onChange={this.handleChange} />
-                </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Get" />
-              </form>
-              document.getElementById("grid-header")
-            </div>
-          );
-        }
-      }
-      ReactDOM.render(
-        <SearchMetaForm />,
-        document.getElementById('meta-sach-body')
-      )
-      class Footer extends React.Component {
-        constructor(props) {
-          super(props);
-
-          this.handleChange = this.handleChange.bind(this);
-          this.handleSubmit = this.handleSubmit.bind(this);
-        }
-
-        handleChange(event) {
-        }
-
-        handleSubmit(event) {
-        }
-
-        render() {
-          return (
-            <div>
-              {document.getElementById("grid-header").innerHTML}
-            </div>
-          );
-        }
-      }
-      ReactDOM.render(
-        <Footer />,
-        document.getElementById('meta-sach-footer')
-      )
-
-
-    </script>
-
-    <div id="grid-header">
     {%- block page_header %}
       {% include config.THEME_HEADER_TEMPLATE %}
     {%- endblock page_header %}
-    </div>
 
-    <div id="grid-body">
     {%- block page_body %}
     {%- endblock page_body %}
-    </div>
 
-    <div id="grid-footer">
     {%- block page_footer %}
       {% include config.THEME_FOOTER_TEMPLATE %}
     {%- endblock page_footer %}
-    </div>
 
     {%- endblock body_inner %}
     {%- block javascript %}
