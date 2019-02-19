@@ -15,4 +15,7 @@ WEKO_INDEXTREE_JOURNAL_DEFAULT_VALUE = 'foobar'
 """Default value for the application."""
 
 WEKO_INDEXTREE_JOURNAL_BASE_TEMPLATE = 'weko_indextree_journal/base.html'
-"""Default base template for the demo page."""
+"""Default base template for the indextree journal page."""
+
+WEKO_INDEXTREE_JOURNAL_INDEX_TEMPLATE = 'weko_indextree_journal/index.html'
+"""Index template for the indextree journal page."""

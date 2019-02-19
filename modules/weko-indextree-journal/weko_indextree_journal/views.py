@@ -42,7 +42,8 @@ def index():
     schema_form = '/items/schemaform/{}'.format(item_type_id)
 
     return render_template(
-        "weko_indextree_journal/index.html",
+        # "weko_indextree_journal/index.html",
+        current_app.config['WEKO_INDEXTREE_JOURNAL_INDEX_TEMPLATE'],
         get_tree_json=current_app.config['WEKO_INDEX_TREE_LIST_API'],
         upt_tree_json='',
         mod_tree_detail=current_app.config['WEKO_INDEX_TREE_API'],
