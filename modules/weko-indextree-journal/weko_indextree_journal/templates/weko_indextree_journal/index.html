@@ -9,7 +9,7 @@
 {%- extends config.WEKO_INDEXTREE_JOURNAL_BASE_TEMPLATE %}
 
 {%- block css %}
-  {% assets "weko_items_ui_indextree_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
+  <!--{% assets "weko_items_ui_indextree_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}-->
   {% assets "weko_indextree_journal_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
   {{ super() }}
 {%- endblock css %}
@@ -26,8 +26,6 @@
 {%- endblock page_body_tabs%}
 
 {%- block page_body_main %}
-TODO: Example template, please remove if you do not need it.
-{{_('Welcome to %(module_name)s', module_name=module_name)}}
 <div class="row">
   <div class="hide" id="get_tree_json">{{ get_tree_json }}</div>
   <div class="hide" id="upt_tree_json">{{ upt_tree_json }}</div>
