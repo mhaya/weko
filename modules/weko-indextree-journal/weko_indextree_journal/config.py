@@ -19,3 +19,6 @@ WEKO_INDEXTREE_JOURNAL_BASE_TEMPLATE = 'weko_indextree_journal/base.html'
 
 WEKO_INDEXTREE_JOURNAL_INDEX_TEMPLATE = 'weko_indextree_journal/index.html'
 """Index template for the indextree journal page."""
+
+WEKO_INDEXTREE_JOURNAL_CONTENT_TEMPLATE = 'weko_indextree_journal/journal.html'
+"""Index template for the indextree journal page."""
