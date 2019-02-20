@@ -980,6 +980,7 @@
         Object.assign(src_mapping, data);
       });
     }
+    $('input[type=radio][name=item_type][value=normal]').click()
     if ($("#item-type-lists option:selected").hasClass('normal_type')) {
         $('input[type=radio][name=item_type][value=normal]').click()
     } else if ($("#item-type-lists option:selected").hasClass('harvesting_type')) {
