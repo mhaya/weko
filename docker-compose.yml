@@ -54,7 +54,7 @@ web:
     - elasticsearch
     - rabbitmq
   ports:
-    - "5001:5000"
+    - "5021:5000"
 
 postgresql:
   restart: "always"
