@@ -28,6 +28,7 @@ from flask_babelex import gettext as _
 from werkzeug.local import LocalProxy
 
 from . import config
+from .models import InstitutionName
 
 _app = LocalProxy(lambda: current_app.extensions['weko-admin'].app)
 
@@ -65,6 +66,27 @@ class ItemSettingView(BaseView):
         return abort(400)
 
 
+class InstitutionNameSettingView(BaseView):
+    @expose('/', methods=['GET', 'POST'])
+    def index(self):
+        if request.method == 'POST':
+            rf = request.form.to_dict()
+            InstitutionName.set_institution_name(rf['institution_name'])
+        institution_name = InstitutionName.get_institution_name()
+        return self.render(config.INSTITUTION_NAME_SETTING_TEMPLATE,
+                           institution_name = institution_name)
+
+
+
+institution_adminview = {
+    'view_class': InstitutionNameSettingView,
+    'kwargs': {
+        'category': _('Setting'),
+        'name': _('Others'),
+        'endpoint': 'others'
+    }
+}
+
 item_adminview = {
     'view_class': ItemSettingView,
     'kwargs': {
@@ -77,4 +99,6 @@ item_adminview = {
 __all__ = (
     'item_adminview',
     'ItemSettingView',
+    'institution_adminview',
+    'InstitutionNameSettingView'
 )

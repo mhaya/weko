@@ -89,6 +89,7 @@ setup(
         ],
         'invenio_admin.views': [
             'weko_records_ui_setting = weko_records_ui.admin:item_adminview',
+            'weko_records_ui_institution = weko_records_ui.admin:institution_adminview'
         ],
         'invenio_i18n.translations': [
             'messages = weko_records_ui',
