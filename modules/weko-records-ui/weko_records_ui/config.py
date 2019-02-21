@@ -34,13 +34,13 @@ WEKO_RECORDS_UI_BULK_UPDATE_FIELDS = {
     'fields': [{'id': '1', 'name': 'Access Type'},
                {'id': '2', 'name': 'Licence'}],
 
-    'licences': [{'id': 'license_free', 'name': '©—R“ü—Í'},
-                 {'id': 'license_0', 'name': 'Creative Commons : •\¦'},
-                 {'id': 'license_1', 'name': 'Creative Commons : •\¦ - Œp³'},
-                 {'id': 'license_2', 'name': 'Creative Commons : •\¦ - ‰ü•Ï‹Ö~'},
-                 {'id': 'license_3', 'name': 'Creative Commons : •\¦ - ”ñ‰c—˜'},
-                 {'id': 'license_4', 'name': 'Creative Commons : •\¦ - ”ñ‰c—˜ - Œp³'},
-                 {'id': 'license_5', 'name': 'Creative Commons : •\¦ - ”ñ‰c—˜ - ‰ü•Ï‹Ö~'}]
+    'licences': [{'id': 'license_free', 'name': 'è‡ªç”±å…¥åŠ›'},
+                 {'id': 'license_0', 'name': 'Creative Commons : è¡¨ç¤º'},
+                 {'id': 'license_1', 'name': 'Creative Commons : è¡¨ç¤º - ç¶™æ‰¿'},
+                 {'id': 'license_2', 'name': 'Creative Commons : è¡¨ç¤º - æ”¹å¤‰ç¦æ­¢'},
+                 {'id': 'license_3', 'name': 'Creative Commons : è¡¨ç¤º - éå–¶åˆ©'},
+                 {'id': 'license_4', 'name': 'Creative Commons : è¡¨ç¤º - éå–¶åˆ© - ç¶™æ‰¿'},
+                 {'id': 'license_5', 'name': 'Creative Commons : è¡¨ç¤º - éå–¶åˆ© - æ”¹å¤‰ç¦æ­¢'}]
 }
 
 ADMIN_SET_ITEM_TEMPLATE = 'weko_records_ui/admin/item_setting.html'
