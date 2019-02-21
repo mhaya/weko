@@ -6,8 +6,7 @@
       "tokenizer": {
         "ja_tokenizer": {
           "type": "kuromoji_tokenizer",
-          "mode": "search",
-          "user_dictionary": "weko.dic"
+          "mode": "search"
         },
         "ngram_tokenizer": {
           "type": "nGram",
@@ -17,6 +16,12 @@
             "letter",
             "digit"
           ]
+        }
+      },
+      "char_filter": {
+        "weko_char_filter": {
+          "type": "mapping",
+          "mappings_path": "weko.dic"
         }
       },
       "filter": {
@@ -47,7 +52,8 @@
             "stop",
             "kuromoji_stemmer",
             "lowercase"
-          ]
+          ],
+          "char_filter": ["weko_char_filter"]
         },
         "ngram_analyzer": {
           "type": "custom",
