@@ -2,11 +2,13 @@ require([
   "jquery",
   "bootstrap"
 ], function() {
-    $(document).ready(function() {
+    $(document).ready( function() {
+      $($('.field-row-default').find('input[name="access_date"]')[0]).val(getDate());
       addField();
     });
     $('#add-field-link').on('click', function() {
       addField();
+      return false;
     });
 
     // Remove field
@@ -160,6 +162,7 @@ require([
         url: getUrl,
         async: false,
         success: function(data, status){
+          var errorMsgs = [];
           var redirect_url = "/api/deposits/redirect";
           var items_url = "/api/deposits/items";
 
@@ -188,22 +191,35 @@ require([
                 });
                 itemsMeta[pid].meta[contentKey] = contentsMeta;
               });
+
+              // Data
+              var meta = JSON.stringify(itemsMeta[pid].meta);
+              var index = JSON.stringify(itemsMeta[pid].index);
+
+              // URL
+              var index_url = redirect_url + "/" + pid;
+              var self_url = items_url + "/" + pid;
+
+              var error = {};
+
+              // Update items
+              updateItems(index_url, self_url, meta, index, error);
+
+              if(error.isError) {
+                errorMsgs.push('[ ID: '+pid.toString()+', Title: '+
+                               itemsMeta[pid].meta.title_ja+', Error: '+error.msg+' ]');
+              }
             }
-
-            meta = JSON.stringify(itemsMeta[pid].meta);
-            index = JSON.stringify(itemsMeta[pid].index);
-
-            index_url = redirect_url + "/" + pid;
-            self_url = items_url + "/" + pid;
-            // Update items
-            updateItems(index_url,
-                        self_url,
-                        meta,
-                        index);
-
           });
 
-          alert('All selected items have been updated.');
+          // Result
+          if(errorMsgs.length !== 0) {
+            var msg = 'Error List:\n'+errorMsgs.join('\n');
+            alert(msg);
+
+          } else {
+            alert('All selected items have been updated successfully.');
+          }
         },
         error: function(status, error){
           console.log(error);
@@ -211,7 +227,7 @@ require([
       });
     });
 
-    function updateItems(index_url, self_url, itemData, indexData) {
+    function updateItems(index_url, self_url, itemData, indexData, error) {
       // Post to index select
       $.ajax({
         type: "PUT",
@@ -232,12 +248,14 @@ require([
             success: function(){
             },
             error: function() {
-              alert('Error in item data posting.');
+              error['isError'] = true;
+              error['msg'] = "Error in item data posting.";
             }
           });
         },
         error: function() {
-          alert('Error in index selection.');
+          error['isError'] = true;
+          error['msg'] = "Error in index selection.";
         }
       });
     }
@@ -248,6 +266,28 @@ require([
       $(newField).attr('class', 'row field-row');
       $(newField).removeAttr("hidden");
       $(newField).insertBefore($('#add-field-row'));
+    }
+
+    // Get date
+    function getDate() {
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
+
+      var toTwoDigits = function (num, digit) {
+        num += '';
+        if (num.length < digit) {
+          num = '0' + num;
+        }
+        return num;
+      }
+
+      var yyyy = toTwoDigits(year, 4);
+      var mm = toTwoDigits(month, 2);
+      var dd = toTwoDigits(day, 2);
+
+      return yyyy + "-" + mm + "-" + dd;
     }
 
 });
