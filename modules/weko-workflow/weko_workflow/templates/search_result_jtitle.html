@@ -1,0 +1,133 @@
+<!-- show ONE journal title in the search result -->
+
+{% set journal_info = result['romeoapi']['journals'].get('journal') %}
+
+{% if not result['romeoapi']['publishers'] == None and not result['romeoapi']['publishers']['publisher'] is mapping %}
+    {% set romeo_color = result['romeoapi']['publishers']['publisher'][0].get('romeocolour') %}
+{% elif not result['romeoapi']['publishers'] == None %}
+    {% set romeo_color = result['romeoapi']['publishers']['publisher'].get('romeocolour') %}
+{% endif %}
+
+{# {% if not result['romeoapi']['publishers'] == None %}
+{% set publisher_info = result['romeoapi']['publishers'].get('publisher') %}
+{% else %}
+{% set publisher_info = '' %}
+{% endif %} #}
+
+<style>
+
+    :root{
+        background: beige;
+    }
+
+    .policy{
+        /* background-color: {{ romeo_color }}; */
+        font-size: 20px;
+        font-weight: bolder;
+        vertical-align: middle;
+    }
+
+    .policy-table{
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .square {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        vertical-align: middle;
+        background:{{ romeo_color }};
+    }
+
+</style>
+
+
+<div class="jtitle">
+<h2>{{ journal_info['jtitle'] }}<br>
+    (ISSN: {{ journal_info['issn'] }})
+</h2>
+</div>
+
+<div class="policy-wrapper">
+    {% if result['romeoapi']['publishers'] == None or romeo_color == 'gray' %}
+            <span class="policy">No Infomation Available</span>
+    {% elif romeo_color == 'green' %}
+        <a class="square" style="background: {{ romeo_color }};"></a>
+            <span class="policy">Pre-print: OK / Post-print: OK</span>
+    {% elif romeo_color == 'blue' %}
+        <a class="square" style="background: {{ romeo_color }};"></a>
+            <span class="policy">Pre-print: NO / Post-print: OK</span>
+    {% elif romeo_color == 'yellow' %}
+        <a class="square" style="background: {{ romeo_color }};"></a>
+        <span class="policy">Pre-print: OK / Post-print: NO</span>
+    {% elif romeo_color == 'white' %}
+        <a class="square" style="background: {{ romeo_color }};"></a>
+        <span class="policy">Pre-print: NO / Post-print: NO</span>
+    {% else %}
+        <a class="policy">
+            <span>OA Policy: {{ romeo_color }}</span>
+        </a>
+    {% endif %}
+</div>
+
+<div class="policy-table">
+<table>
+<tr>
+<th bgcolor="#EE0000" width="150"><font color="#FFF">Color</font></th>
+<th bgcolor="#EE0000" width="400"><font color="#FFF">Archiving Policy</font></th>
+</tr>
+<tr>
+<td bgcolor="green"  width="150" align="center" nowrap></td>
+<td bgcolor="lightgray" valign="top" width="400">Can archive pre-print and post-print</td>
+</tr>
+<tr>
+<td bgcolor="blue" width="150" align="center" nowrap></td>
+<td bgcolor="lightgray" valign="top" width="400">Can archive post-print <br>
+(ie final draft post-refereeing)</td>
+</tr>
+<tr>
+<td bgcolor="yellow" width="150" align="center" nowrap></td>
+<td bgcolor="lightgray" valign="top" width="400">Can archive pre-print <br>
+(ie pre-refereeing)</td>
+</tr>
+<tr>
+<td bgcolor="white" width="150" align="center" nowrap></td>
+<td bgcolor="lightgray" valign="top" width="150">Archiving not formally supported</td>
+</tr>
+</table>
+</div>
+
+{# <h3>Publisher Info</h3>
+<ul>
+ <li>{{ publisher_info['name'] }}
+ <span>
+<a href="{{ publisher_info['homeurl'] }}">( {{ publisher_info.get('homeurl') }} )</a>
+ </span>
+ </li>
+
+{% if publisher_info['preprints'].get('prearchiving') == 'can' %}
+ <li> {% print('Preprint: OK') %} </li>
+{% else %}
+<li> {% print('Preprint: NO') %} </li>
+ {% endif %}
+
+ {% if publisher_info['postprints'].get('postarchiving') == 'can' %}
+ <li> {% print('Postprint: OK') %} </li>
+ {% else %}
+ <li> {% print('Postprint: NO') %} </li>
+ {% endif %}
+
+
+{% if publisher_info['pdfversion'].get('pdfarchiving') == 'can' %}
+ <li> {% print('PDF print: OK') %} </li>
+{% else %}
+<li> {% print('PDF print: NO') %}</li>
+{% endif %}
+</ul>
+
+#}
+
+<a href="http://www.sherpa.ac.uk/romeo/search.php?jtitle={{ journal_info['jtitle'] }}">
+    Details in SHERPA/RoMEO website
+</a>

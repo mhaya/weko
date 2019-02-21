@@ -1,0 +1,88 @@
+<!-- show journal titles in the search result -->
+
+<style type="text/css">
+button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    appearance: none;
+    font-size: 16px;
+    color: blue;
+}
+
+button:visited{
+    color: blueviolet;
+}
+
+button:hover{
+    text-decoration: underline;
+}
+
+.result-item{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+</style>
+
+<div>
+    <p>Searched : {{ query }} </p>
+    {% if results['romeoapi']['header'].get('outcome') == 'excessJournals' %}
+        <p>Hits: {{ results['romeoapi']['header']['message'] }}<br>Please search again with additional title keywords if the title you search for is not among the results</p>
+    {% else %}
+        <p>Hits: {{ results['romeoapi']['header']['numhits'] or '0' }}</p>
+    {% endif %}
+</div>
+
+<hr>
+
+{% if results['romeoapi']['header']['numhits'] != '1' %}
+{% for result in results['romeoapi']['journals']['journal'] %}
+
+<div class="result-item">
+    {% set loop_index = loop.index0 + 1 %}
+    {# {% print(loop_index ~ '/' ~ results['romeoapi']['header']['numhits']) %} #}
+        <a>
+            {% if not result['issn'] == None %}
+            <form action="{{ url_for('weko_workflow.get_by_issn', issn=result['issn']) }}" method="post">
+                <input type="hidden" name="issn" value="{{ result['issn'] }}" />
+                <button type="submit">{% print(result['jtitle']) %}</button>
+            </form>
+            {% else %}
+            <form action="{{ url_for('weko_workflow.get_by_jtitle', jtitle=result['jtitle']) }}" method="post">
+                <input type="hidden" name="jtitle" value="{{ result['jtitle'] }}" />
+                <button type="submit">{% print(result['jtitle']) %}</button>
+            </form>
+            {% endif %}
+        </a>
+    <ul>
+        <li>Publisher: {{ result['romeopub'] or 'Unknown' }}</li>
+        <li>ISSN: {{ result['issn'] or 'Unknown'}}</li>
+    </ul>
+</div>
+{% endfor %}
+
+{% else %}
+<div class="result-item">
+            <a>
+                {% if not results['romeoapi']['journals']['journal']['issn'] == None %}
+                <form action="{{ url_for('weko_workflow.get_by_issn', issn=results['romeoapi']['journals']['journal']['issn']) }}" method="post">
+                    <input type="hidden" name="issn" value="{{ results['romeoapi']['journals']['journal']['issn'] }}" />
+                    <button type="submit">{% print(results['romeoapi']['journals']['journal']['jtitle']) %}</button>
+                </form>
+                {% else %}
+                <form action="{{ url_for('weko_workflow.get_by_jtitle', jtitle=results['romeoapi']['journals']['journal']['jtitle']) }}" method="post">
+                    <input type="hidden" name="jtitle" value="{{ results['romeoapi']['journals']['journal']['jtitle'] }}" />
+                    <button type="submit">{% print(results['romeoapi']['journals']['journal']['jtitle']) %}</button>
+                </form>
+                {% endif %}
+            </a>
+        <ul>
+            <li>Publisher: {{ results['romeoapi']['journals']['journal']['romeopub'] or 'Unknown' }}</li>
+            <li>ISSN: {{ results['romeoapi']['journals']['journal']['issn'] or 'Unknown'}}</li>
+        </ul>
+    </div>
+
+{% endif %}

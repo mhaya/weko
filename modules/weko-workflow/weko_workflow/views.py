@@ -23,7 +23,7 @@
 
 from functools import wraps
 from flask import Blueprint, abort, current_app, jsonify, render_template, \
-    request, session, url_for
+    request, session, url_for, redirect
 from flask_babelex import gettext as _
 from flask_login import current_user, login_required
 from invenio_accounts.models import Role, userrole
@@ -36,6 +36,8 @@ from weko_records.api import ItemsMetadata
 
 from .api import Action, Flow, WorkActivity, WorkActivityHistory, WorkFlow, UpdateItem, GetCommunity
 from .models import ActionStatusPolicy, ActivityStatusPolicy
+
+from .romeo import search_romeo_jtitles, search_romeo_issn, search_romeo_jtitle
 
 blueprint = Blueprint(
     'weko_workflow',
@@ -400,3 +402,40 @@ def previous_action(activity_id='0', action_id=0, req=0):
         work_activity.upt_activity_action(
             activity_id=activity_id, action_id=previous_action_id)
     return jsonify(code=0, msg=_('success'))
+
+
+
+""" SHERPA/RoMEO policy feature(temporarily written here) """
+
+@blueprint.route('/oapolicy_search', methods=['GET'])
+def show_search_screen():
+    return render_template('oapolicy_search.html')
+
+@blueprint.route('/search_results', methods=['POST'])
+def get_by_jtitles():
+    if request.method == 'POST':
+        searched_words = request.form['searched_words']
+        return redirect(url_for('weko_workflow.reload_get_by_jtitles', query=searched_words))
+
+@blueprint.route('/search_results/<path:query>')
+def reload_get_by_jtitles(query):
+        multiple_result = search_romeo_jtitles(query)
+        return render_template('search_results.html', query=query, results=multiple_result)
+
+@blueprint.route('/issn_result/<path:issn>', methods=['POST'])
+def get_by_issn(issn):
+    if request.method == 'POST':
+        query = request.form['issn']
+        single_result = search_romeo_issn(query)
+        #print(single_result)
+        #return single_result
+        return render_template('search_result_issn.html', result=single_result)
+
+@blueprint.route('/jtitle_result/<path:jtitle>', methods=['POST'])
+def get_by_jtitle(jtitle):
+    if request.method == 'POST':
+        query = request.form['jtitle']
+        single_result = search_romeo_jtitle(query)
+        #print(single_result)
+        #return single_result
+        return render_template('search_result_jtitle.html', result=single_result)

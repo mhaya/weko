@@ -1,0 +1,133 @@
+
+<link href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" rel="stylesheet">
+
+<style>
+
+    p{
+        text-align: center;
+        margin-top: 200px;
+        font-size: 20px;
+    }
+
+    .search-bar-wrapper{
+        width: 50%;
+        margin: 0 auto;
+        margin-top: 100px;
+    }
+
+    #search-bar{
+        float: left;
+        border: 1px solid #ddd;
+        font-size: 20px;
+        width: 85%;
+        height: 50px;
+        /* border-radius:50px; */
+        padding: 2px 20px;
+        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+        /* border-right: none; */
+        /* height:30px; */
+        /* padding-left:60px;   */
+        /* border: 1px green solid; */
+        }
+
+    #search-button{
+        float: left;
+        width: 15%;
+        height: 50px;
+        padding: 2px 20px;
+        background: limegreen;
+        color: white;
+        font-size: 22px;
+        border: none;
+        /* border: 2px solid #ddd; */
+        border-left: none;
+        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        }
+
+    #search-bar:focus, #search-bar:hover{
+        outline: 0;
+        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+        /* border: 2px solid red;
+        border-right: none; */
+        }
+
+    #search-bar:focus+#search-button, #search-bar:hover+#search-button {
+        outline: 0;
+        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+        border-left: none;
+        }
+
+    #search-button:active{
+        outline: 0;
+    }
+
+    .clear{
+        clear: both;
+    }
+
+    #footnote{
+        /* width: 100%;
+        margin-left: auto; */
+        text-align: right;
+        padding-top: 10px;
+        font-size: 17px;
+    }
+
+    .button-wrapper{
+        width: 200px;
+        margin-left: auto;
+    }
+
+
+
+    /* input{
+        background: url("http://kodyrabatowe.wp.pl/img/ico/search_gr.png") top left no-repeat;
+        height:30px;
+        padding-left:25px;
+        } */
+
+    /* .fa{
+        width: 100px;
+        height: 100px;
+    } */
+
+
+</style>
+
+<p>
+    Search copyright and open access self-archiving policies of academic journals
+</p>
+
+<form target="_blank" action="{{ url_for('weko_workflow.get_by_jtitles') }}" role="search" method="post" id="form">   <!-- target="_blank" -->
+    <div class="search-bar-wrapper">
+        <input id="search-bar" type="search" name="searched_words" placeholder="Enter any journal title" required />
+        <button id="search-button" type="submit">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+        <div class="clear"></div>
+        <div id="footnote">
+            <!--<small>-->
+                <!--Powered by <span><a href="http://www.sherpa.ac.uk/romeo/index.php">SHERPA/RoMEO</a></span>-->
+            <!--</small>-->
+        </div>
+    </div>
+</form>
+
+
+<div class="button-wrapper">
+<a href="#">
+    <button id="workflow-button">
+        Confirm to Next
+    </button>
+</a>
+</div>
+
+<!-- Popup window -->
+<!--<script>-->
+        <!--var submitForm = document.getElementById('form');-->
+        <!--submitForm.onsubmit = function() {-->
+        <!--var w = window.open('about:blank','Popup_Window','toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=800,height=800,left = 312,top = 234');-->
+        <!--this.target = 'Popup_Window';-->
+    <!--};-->
+<!--</script>-->
