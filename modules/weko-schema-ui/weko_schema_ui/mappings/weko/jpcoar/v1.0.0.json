@@ -6,7 +6,8 @@
       "tokenizer": {
         "ja_tokenizer": {
           "type": "kuromoji_tokenizer",
-          "mode": "search"
+          "mode": "search",
+          "user_dictionary": "weko.dic"
         },
         "ngram_tokenizer": {
           "type": "nGram",
