@@ -1,5 +1,5 @@
-import requests, xmltodict, os
-from flask import jsonify
+import requests, xmltodict
+from flask import jsonify, current_app
 
 
 romeo_api_base_url = 'http://www.sherpa.ac.uk/romeo/api29.php'
@@ -24,7 +24,7 @@ def search_romeo_jtitles(query):
 
     response_body = response.text
     dict_result = xmltodict.parse(response_body, encoding='utf-8')
-    return dict_result
+    return dict_result, jsonify(dict_result)
 
 
 def search_romeo_issn(query):
@@ -45,7 +45,7 @@ def search_romeo_issn(query):
 
     response_body = response.text
     dict_result = xmltodict.parse(response_body, encoding='utf-8')
-    return dict_result
+    return dict_result, jsonify(dict_result)
 
 
 def search_romeo_jtitle(query):
@@ -65,4 +65,4 @@ def search_romeo_jtitle(query):
 
     response_body = response.text
     dict_result = xmltodict.parse(response_body, encoding='utf-8')
-    return dict_result
+    return dict_result, jsonify(dict_result)

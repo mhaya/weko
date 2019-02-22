@@ -20,7 +20,7 @@
 
 """Blueprint for weko-workflow."""
 
-
+import json
 from functools import wraps
 from flask import Blueprint, abort, current_app, jsonify, render_template, \
     request, session, url_for, redirect
@@ -419,23 +419,19 @@ def get_by_jtitles():
 
 @blueprint.route('/search_results/<path:query>')
 def reload_get_by_jtitles(query):
-        multiple_result = search_romeo_jtitles(query)
-        return render_template('search_results.html', query=query, results=multiple_result)
+    multiple_result, multiple_result_json = search_romeo_jtitles(query)
+    return render_template('search_results.html', query=query, results=multiple_result)
 
 @blueprint.route('/issn_result/<path:issn>', methods=['POST'])
 def get_by_issn(issn):
     if request.method == 'POST':
         query = request.form['issn']
-        single_result = search_romeo_issn(query)
-        #print(single_result)
-        #return single_result
+        single_result, single_result_json = search_romeo_issn(query)
         return render_template('search_result_issn.html', result=single_result)
 
 @blueprint.route('/jtitle_result/<path:jtitle>', methods=['POST'])
 def get_by_jtitle(jtitle):
     if request.method == 'POST':
         query = request.form['jtitle']
-        single_result = search_romeo_jtitle(query)
-        #print(single_result)
-        #return single_result
+        single_result, single_result_json = search_romeo_jtitle(query)
         return render_template('search_result_jtitle.html', result=single_result)
