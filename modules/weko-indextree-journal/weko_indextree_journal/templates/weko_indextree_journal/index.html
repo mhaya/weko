@@ -18,19 +18,6 @@
   {{ super() }}
   {% assets "weko_indextree_journal_view" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_indextree_journal_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
-  <script>
-    $(document).ready(function() {
-      loadHtml();
-    })
-
-    function loadHtml(index_id) {
-      index_id = index_id || null;
-      $.get('/indextree/journal/right-content/' + index_id, function(data, status){
-        if(data.length <= 0) return;
-        $( "#journalHtml" ).html(data);
-      });
-    }
-  </script>
 {%- endblock javascript %}
 
 {%- block page_body_tabs %}
