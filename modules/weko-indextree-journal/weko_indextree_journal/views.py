@@ -44,6 +44,7 @@ def index():
 
 
 @blueprint.route("/right-content/<string:index_id>", methods=['GET'])
+@login_required
 def get_journal_content(index_id=None):
     """Render a content of journal."""
     item_type_id = 21
