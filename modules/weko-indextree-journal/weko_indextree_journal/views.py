@@ -46,7 +46,7 @@ def index():
 @blueprint.route("/right-content/<string:index_id>", methods=['GET'])
 def get_journal_content(index_id=None):
     """Render a content of journal."""
-    item_type_id = 19 # item tpye's journal = 21
+    item_type_id = 21
     lists = ItemTypes.get_latest()
     if lists is None or len(lists) == 0:
         return render_template(
