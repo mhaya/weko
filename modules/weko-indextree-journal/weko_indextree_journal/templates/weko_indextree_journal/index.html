@@ -20,6 +20,20 @@
   {% assets "weko_indextree_journal_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
 {%- endblock javascript %}
 
+  <script>
+    $(document).ready(function() {
+      loadHtml(1);
+    })
+
+    function loadHtml(index_id) {
+      index_id = index_id || null;
+      $.get('/indextree/journal/right-content/' + index_id, function(data, status){
+        if(data.length <= 0) return;
+        $( "#journalHtml" ).html(data);
+      });
+    }
+  </script>
+
 {%- block page_body_tabs %}
   {% from "weko_theme/macros/edit_tabs_selector.html" import tabs_selector %}
   {{ tabs_selector('edit_tree') }}
