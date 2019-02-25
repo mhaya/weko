@@ -23,13 +23,10 @@
   <script>
     $(document).ready(function() {
       loadHtml(1);
-    })
 
     function loadHtml(index_id) {
-      index_id = index_id || null;
-      $.get('/indextree/journal/right-content/' + index_id, function(data, status){
-        if(data.length <= 0) return;
-        $( "#journalHtml" ).html(data);
+      $('#journalHtml').load("http://18.182.214.241:8017/indextree/journal/right-content/1", function() {
+          alert('OK');
       });
     }
   </script>
