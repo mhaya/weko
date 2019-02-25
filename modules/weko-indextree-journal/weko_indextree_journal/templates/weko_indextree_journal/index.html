@@ -20,17 +20,6 @@
   {% assets "weko_indextree_journal_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
 {%- endblock javascript %}
 
-  <script>
-    $(document).ready(function() {
-      loadHtml(1);
-
-    function loadHtml(index_id) {
-      $('#journalHtml').load("http://18.182.214.241:8017/indextree/journal/right-content/1", function() {
-          alert('OK');
-      });
-    }
-  </script>
-
 {%- block page_body_tabs %}
   {% from "weko_theme/macros/edit_tabs_selector.html" import tabs_selector %}
   {{ tabs_selector('edit_tree') }}
@@ -42,5 +31,19 @@
   <div class="hide" id="upt_tree_json">{{ upt_tree_json }}</div>
   <div class="hide" id="mod_tree_detail">{{ mod_tree_detail }}</div>
   <app-root-tree-hensyu journalDisplayFlg="1"></app-root-tree-hensyu>
+</div>
+<div class="col-sm-12 col-md-12">
+  <div class="col-sm-3 col-md-3">
+  </div>
+
+  <div class="col-sm-9 col-md-9">
+    <div id="journalHtml"></div>
+    <script>
+      $('#journalHtml').load("http://18.182.214.241:8017/indextree/journal/right-content/1", function() {
+          alert('OK');
+      });
+    </script>
+
+  </div>
 </div>
 {%- endblock page_body_main %}
