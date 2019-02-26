@@ -33,6 +33,7 @@ from .models import PDFCoverPageSettings
 from invenio_files_rest.views import file_downloaded, check_permission
 from invenio_files_rest.views import ObjectResource
 from invenio_files_rest.models import ObjectVersion, FileInstance
+from weko_deposit.api import WekoRecord
 
 
 def weko_view_method(pid, record, template=None, **kwargs):
@@ -216,8 +217,9 @@ def file_ui(pid, record, _record_file_factory=None, is_preview=False, **kwargs):
             return obj.send_file(restricted=restricted, as_attachment=as_attachment)
 
     pdfcoverpage_set_rec = PDFCoverPageSettings.find(1)
+    coverpage_state = WekoRecord.get_record_cvs(pid.object_uuid)
 
-    if pdfcoverpage_set_rec.avail == 'disable': # Write this if statement later
+    if pdfcoverpage_set_rec.avail == 'disable' or coverpage_state == False: # Write this if statement later
 
         return ObjectResourceWeko.send_object(
         obj.bucket, obj,
