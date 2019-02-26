@@ -35,9 +35,9 @@ js_treeview = NpmBundle(
     'js/weko_indextree_journal/main.bundle.js',
     output="gen/indextree_journal_view.js"
 )
-"""
+
 js = Bundle(
-    'js/weko_indextree_journal/app.js',
+    # 'js/weko_indextree_journal/app.js',
     filters='requirejs',
     output="gen/indextree_journal.%(version)s.js"
-)"""
+)
