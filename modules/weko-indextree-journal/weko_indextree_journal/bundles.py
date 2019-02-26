@@ -43,6 +43,6 @@ js = Bundle(
 )
 
 journal_js = Bundle(
-    'js/weko_items_ui/journal.js',
+    'js/weko_indextree_journal/journal.js',
     output="gen/journal.%(version)s.js",
 )
