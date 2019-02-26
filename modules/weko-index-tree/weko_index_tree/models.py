@@ -82,9 +82,6 @@ class Index(db.Model, Timestamp):
     display_no = db.Column(db.Integer, nullable=False, default=0)
     """Display number of the index."""
 
-    display_cv = db.Column(db.Integer, nullable=False, default=0)
-    """Display cover page of pdf file."""
-
     harvest_public_state = db.Column(db.Boolean(name='harvest_public_state'),
                                      nullable=False, default=True)
     """Harvest public State of the index."""
@@ -107,6 +104,14 @@ class Index(db.Model, Timestamp):
     recursive_public_state = db.Column(
         db.Boolean(name='recs_public_state'), nullable=True, default=False)
     """Recursive Public State of the index."""
+
+    coverpage_state = db.Column(db.Boolean(name='coverpage_state'), nullable=True,
+                             default=False)
+    """PDF Cover Page State of the index."""
+
+    recursive_coverpage_state = db.Column(
+        db.Boolean(name='recs_coverpage_state'), nullable=True, default=False)
+    """Recursive PDF Cover Page State of the index."""
 
     browsing_role = db.Column(db.Text, nullable=True)
     """Browsing Role of the  ."""
