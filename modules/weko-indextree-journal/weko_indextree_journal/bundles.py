@@ -41,3 +41,8 @@ js = Bundle(
     filters='requirejs',
     output="gen/indextree_journal.%(version)s.js"
 )
+
+journal_js = Bundle(
+    'js/weko_items_ui/journal.js',
+    output="gen/journal.%(version)s.js",
+)

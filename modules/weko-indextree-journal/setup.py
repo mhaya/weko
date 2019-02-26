@@ -82,6 +82,7 @@ setup(
             'weko_indextree_journal_css = weko_indextree_journal.bundles:style',
             'weko_indextree_journal_view = weko_indextree_journal.bundles:js_treeview',
             'weko_indextree_journal_js = weko_indextree_journal.bundles:js',
+            'weko_journal_js = weko_indextree_journal.bundles:journal_js',
         ],
         # TODO: Edit these entry points to fit your needs.
         # 'invenio_access.actions': [],
