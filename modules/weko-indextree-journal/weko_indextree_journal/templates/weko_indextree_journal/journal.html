@@ -32,61 +32,6 @@
   {% assets "weko_indextree_journal_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
 {%- endblock javascript %}
 
-{%- block page_header %}
-{%- endblock page_header %}
-
-{%- block page_footer %}
-{%- endblock page_footer %}
-
-{%- block page_body %}
-  <div role="navigation">
-    <ul class="nav nav-tabs">
-      {%- block edit_tree_tabs %}
-        {% from "weko_theme/macros/edit_tree_tabs_selector.html" import tabs_selector %}
-        {{ tabs_selector('journal_edit') }}
-      {%- endblock edit_tree_tabs%}
-    </ul>
-  </div>
-  <br>
-  <div class="panel panel-default">
-    <div class="panel-heading clearfix">
-      <span class="panel-title">
-        {{_('Journal')}}
-      </span>
-    </div>
-    <div class="panel-body">
-      <div id="weko-records">
-        <invenio-records
-          {%- if pid %}
-            initialization="{{ config.DEPOSIT_RECORDS_EDIT_API.format(pid_value=pid.pid_value) }}"
-            links='{{links|tojson}}'
-          {%- else %}
-            initialization="{{ config.DEPOSIT_SEARCH_API }}"
-          {%- endif %}
-          response-params='{{ config.DEPOSIT_RESPONSE_MESSAGES | tojson }}'
-          extra-params='{"headers":{"Content-Type": "application/json"}}'
-          form="{{ schemaform }}"
-          record='{{ record | tojson }}'
-          schema="{{ jsonschema }}">
-          <invenio-records-loading
-            template="{{ url_for('static', filename='node_modules/invenio-records-js/dist/templates/loading.html') }}">
-          </invenio-records-loading>
-          <invenio-records-alert
-            template="{{ url_for('static', filename='node_modules/invenio-records-js/dist/templates/alert.html') }}">
-          </invenio-records-alert>
-          <invenio-records-form
-            form-templates='{{ config.DEPOSIT_FORM_TEMPLATES | tojson }}'
-            form-templates-base="{{ url_for('static', filename=config.DEPOSIT_FORM_TEMPLATES_BASE) }}"
-            template="{{ url_for('static', filename=config.DEPOSIT_UI_JSTEMPLATE_FORM) }}">
-          </invenio-records-form>
-        </invenio-records>
-      </div>
-    </div>
-    <div class="panel-footer">
-      <button id="index-detail-submit" class="btn btn-info" (click)="">{{_('Save')}}</button>
-    </div>
-  </div>
-{%- endblock page_body %}
   <script>
   (function (angular) {
     // Bootstrap it!
@@ -388,3 +333,58 @@
     });
   })(angular);
   </script>
+{%- block page_header %}
+{%- endblock page_header %}
+
+{%- block page_footer %}
+{%- endblock page_footer %}
+
+{%- block page_body %}
+  <div role="navigation">
+    <ul class="nav nav-tabs">
+      {%- block edit_tree_tabs %}
+        {% from "weko_theme/macros/edit_tree_tabs_selector.html" import tabs_selector %}
+        {{ tabs_selector('journal_edit') }}
+      {%- endblock edit_tree_tabs%}
+    </ul>
+  </div>
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-heading clearfix">
+      <span class="panel-title">
+        {{_('Journal')}}
+      </span>
+    </div>
+    <div class="panel-body">
+      <div id="weko-records">
+        <invenio-records
+          {%- if pid %}
+            initialization="{{ config.DEPOSIT_RECORDS_EDIT_API.format(pid_value=pid.pid_value) }}"
+            links='{{links|tojson}}'
+          {%- else %}
+            initialization="{{ config.DEPOSIT_SEARCH_API }}"
+          {%- endif %}
+          response-params='{{ config.DEPOSIT_RESPONSE_MESSAGES | tojson }}'
+          extra-params='{"headers":{"Content-Type": "application/json"}}'
+          form="{{ schemaform }}"
+          record='{{ record | tojson }}'
+          schema="{{ jsonschema }}">
+          <invenio-records-loading
+            template="{{ url_for('static', filename='node_modules/invenio-records-js/dist/templates/loading.html') }}">
+          </invenio-records-loading>
+          <invenio-records-alert
+            template="{{ url_for('static', filename='node_modules/invenio-records-js/dist/templates/alert.html') }}">
+          </invenio-records-alert>
+          <invenio-records-form
+            form-templates='{{ config.DEPOSIT_FORM_TEMPLATES | tojson }}'
+            form-templates-base="{{ url_for('static', filename=config.DEPOSIT_FORM_TEMPLATES_BASE) }}"
+            template="{{ url_for('static', filename=config.DEPOSIT_UI_JSTEMPLATE_FORM) }}">
+          </invenio-records-form>
+        </invenio-records>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <button id="index-detail-submit" class="btn btn-info" (click)="">{{_('Save')}}</button>
+    </div>
+  </div>
+{%- endblock page_body %}
