@@ -30,9 +30,6 @@
   {{ super() }}
   {% assets "invenio_deposit_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_indextree_journal_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
-{%- endblock javascript %}
-
-  <script>
   (function (angular) {
     // Bootstrap it!
     angular.element(document).ready(function() {
@@ -332,7 +329,8 @@
       );
     });
   })(angular);
-  </script>
+{%- endblock javascript %}
+
 {%- block page_header %}
 {%- endblock page_header %}
 
