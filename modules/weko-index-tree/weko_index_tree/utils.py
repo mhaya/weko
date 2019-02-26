@@ -92,7 +92,7 @@ def get_tree_json(obj, pid=0):
             attr = ['public_state', 'public_date',
                     'browsing_role', 'contribute_role',
                     'browsing_group', 'contribute_group',
-                    'more_check', 'display_no']
+                    'more_check', 'display_no', 'display_cv']
             for lst in plst:
                 lst['children'] = []
                 if isinstance(lst, dict):

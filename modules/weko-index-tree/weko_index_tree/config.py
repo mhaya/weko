@@ -43,6 +43,9 @@ WEKO_INDEX_TREE_STYLE_OPTIONS = {
 WEKO_INDEX_TREE_DEFAULT_DISPLAY_NUMBER = 5
 """Default display number of the index."""
 
+WEKO_INDEX_TREE_DEFAULT_COVER_PAGE_SET = 1
+"""Default display number of the index."""
+
 WEKO_INDEX_TREE_API = "/api/tree/index/"
 
 WEKO_INDEX_TREE_LIST_API = "/api/tree"

@@ -80,6 +80,9 @@ class Indexes(object):
             data["more_check"] = False
             data["display_no"] = current_app.config['WEKO_INDEX_TREE_DEFAULT_DISPLAY_NUMBER']
 
+            data["display_cv"] = current_app.config['WEKO_INDEX_TREE_DEFAULT_COVER_PAGE_SET']
+            current_app.logger.debug(data["display_cv"])
+
             group_list = ''
             groups = Group.query.all()
             for group in groups:
@@ -180,6 +183,8 @@ class Indexes(object):
                             v = None
                     if "have_children" in k:
                         continue
+                    if "display_cv" in k:                                       
+                        current_app.logger.debug(v)  
                     setattr(index, k, v)
                 index.owner_user_id = current_user.get_id()
                 db.session.merge(index)
@@ -441,7 +446,7 @@ class Indexes(object):
                     recursive_t.c.public_state, recursive_t.c.public_date,
                     recursive_t.c.browsing_role, recursive_t.c.contribute_role,
                     recursive_t.c.browsing_group, recursive_t.c.contribute_group,
-                    recursive_t.c.more_check, recursive_t.c.display_no
+                    recursive_t.c.more_check, recursive_t.c.display_no, recursive_t.c.display_cv
                     ]
             obj = db.session.query(*qlst). \
                 order_by(recursive_t.c.lev,
@@ -723,6 +728,7 @@ class Indexes(object):
                 Index.contribute_group,
                 Index.more_check,
                 Index.display_no,
+                Index.display_cv,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.parent == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -744,6 +750,7 @@ class Indexes(object):
                     test_alias.contribute_group,
                     test_alias.more_check,
                     test_alias.display_no,
+                    test_alias.display_cv,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
@@ -762,6 +769,7 @@ class Indexes(object):
                 Index.contribute_group,
                 Index.more_check,
                 Index.display_no,
+                Index.display_cv,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.parent == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -783,6 +791,7 @@ class Indexes(object):
                     test_alias.contribute_group,
                     test_alias.more_check,
                     test_alias.display_no,
+                    test_alias.display_cv,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
@@ -812,6 +821,7 @@ class Indexes(object):
                 Index.contribute_group,
                 Index.more_check,
                 Index.display_no,
+                Index.display_cv,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.id == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -833,6 +843,7 @@ class Indexes(object):
                     test_alias.contribute_group,
                     test_alias.more_check,
                     test_alias.display_no,
+                    test_alias.display_cv,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
@@ -851,6 +862,7 @@ class Indexes(object):
                 Index.contribute_group,
                 Index.more_check,
                 Index.display_no,
+                Index.display_cv,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.id == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -872,6 +884,7 @@ class Indexes(object):
                     test_alias.contribute_group,
                     test_alias.more_check,
                     test_alias.display_no,
+                    test_alias.display_cv,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )

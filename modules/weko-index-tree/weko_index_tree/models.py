@@ -82,6 +82,9 @@ class Index(db.Model, Timestamp):
     display_no = db.Column(db.Integer, nullable=False, default=0)
     """Display number of the index."""
 
+    display_cv = db.Column(db.Integer, nullable=False, default=0)
+    """Display cover page of pdf file."""
+
     harvest_public_state = db.Column(db.Boolean(name='harvest_public_state'),
                                      nullable=False, default=True)
     """Harvest public State of the index."""
