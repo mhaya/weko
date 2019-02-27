@@ -42,6 +42,8 @@ class WekoIndexTree(object):
         :param app: The Flask application.
         """
         self.init_config(app)
+        print('index tree blueprint')
+        print(blueprint.__dict__)
         app.register_blueprint(blueprint)
         app.extensions['weko-index-tree'] = self
 
@@ -75,6 +77,7 @@ class WekoIndexTreeREST(object):
             self.init_app(app)
 
     def init_app(self, app):
+        print('init_app WekoIndexTreeREST')
         """Flask application initialization.
 
         Initialize the REST endpoints.  Connect all signals if
