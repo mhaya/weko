@@ -127,9 +127,6 @@ class Indexes(object):
                     if iobj.recursive_contribute_group:
                         data["contribute_group"] = iobj.contribute_group
                         data["recursive_contribute_group"] = iobj.recursive_contribute_group
-
-                    current_app.logger.debug(iobj.coverpage_state)
-
                 else:
                     return
 
@@ -172,7 +169,6 @@ class Indexes(object):
                 if not index:
                     return
 
-                current_app.logger.debug(data.items)
                 for k, v in data.items():
                     if isinstance(getattr(index, k), int):
                         if isinstance(v, str) and len(v) == 0:
@@ -188,17 +184,11 @@ class Indexes(object):
                         continue
                     setattr(index, k, v)
 
-                with db.session.no_autoflush:
-                    recursive_t = cls.recs_query(pid=index_id)
-                    obj = db.session.query(recursive_t).\
-                    union_all(db.session.query(Index.parent, Index.id,
-                                               literal_column("''", db.Text).label("path"),
-                                               literal_column("''", db.Text).label("name"),
-                                               literal_column("''", db.Text).label("name_en"),
-                                               literal_column("0", db.Integer).label("lev")).
-                              filter(Index.id == index_id)).all()
-                    current_app.logger.debug(obj)
-
+                if getattr(index, "recursive_coverpage_state"):
+                    Index.query.filter_by(parent=index_id).\
+                        update({Index.coverpage_state: getattr(index, "coverpage_state")},
+                        synchronize_session='fetch')
+                    setattr(index, "recursive_coverpage_state", False)
 
                 index.owner_user_id = current_user.get_id()
                 db.session.merge(index)
@@ -411,11 +401,6 @@ class Indexes(object):
     @cached_index_tree_json(timeout=None,)
     def get_index_tree(cls,pid=0):
         """Get index tree json"""
-
-        n = get_tree_json(cls.get_recursive_tree(pid), pid)
-
-        current_app.logger.debug(n.get_settings())
-
         return get_tree_json(cls.get_recursive_tree(pid), pid)
 
     @classmethod
