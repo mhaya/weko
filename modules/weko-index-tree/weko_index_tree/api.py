@@ -172,6 +172,7 @@ class Indexes(object):
                 if not index:
                     return
 
+                current_app.logger.debug(data.items)
                 for k, v in data.items():
                     if isinstance(getattr(index, k), int):
                         if isinstance(v, str) and len(v) == 0:
@@ -183,13 +184,22 @@ class Indexes(object):
                             v = datetime.strptime(v, '%Y%m%d')
                         else:
                             v = None
-                    if "coverpage_state" in k:
-                        current_app.logger.debug(v)  
-                    if "recursive_coverpage_state" in k:
-                        current_app.logger.debug(v)  
                     if "have_children" in k:
                         continue
                     setattr(index, k, v)
+
+                with db.session.no_autoflush:
+                    recursive_t = cls.recs_query(pid=index_id)
+                    obj = db.session.query(recursive_t).\
+                    union_all(db.session.query(Index.parent, Index.id,
+                                               literal_column("''", db.Text).label("path"),
+                                               literal_column("''", db.Text).label("name"),
+                                               literal_column("''", db.Text).label("name_en"),
+                                               literal_column("0", db.Integer).label("lev")).
+                              filter(Index.id == index_id)).all()
+                    current_app.logger.debug(obj)
+
+
                 index.owner_user_id = current_user.get_id()
                 db.session.merge(index)
             db.session.commit()
@@ -401,6 +411,11 @@ class Indexes(object):
     @cached_index_tree_json(timeout=None,)
     def get_index_tree(cls,pid=0):
         """Get index tree json"""
+
+        n = get_tree_json(cls.get_recursive_tree(pid), pid)
+
+        current_app.logger.debug(n.get_settings())
+
         return get_tree_json(cls.get_recursive_tree(pid), pid)
 
     @classmethod
