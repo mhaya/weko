@@ -1009,17 +1009,7 @@ class Indexes(object):
     def get_coverpage_state(cls, path):
         try:
             last_path = path.pop(-1).split('/')
-            qry = db.session.\
-                query(func.every(Index.coverpage_state).
-                      label('cv_state')).filter(Index.id.in_(last_path))
-            for i in range(len(path)):
-                path[i] = path[i].split('/')
-                path[i] = db.session.\
-                    query(func.every(Index.coverpage_state)).\
-                    filter(Index.id.in_(path[i]))
-            smt = qry.union_all(*path).subquery()
-            result = db.session.query(func.bool_or(smt.coverpage_state).label('cv_state')).one()
-            return result.cv_state
+            return Index.query.filter_by(id=last_path.pop()).one().coverpage_state
         except Exception as se:
             current_app.logger.debug(se)
             return False

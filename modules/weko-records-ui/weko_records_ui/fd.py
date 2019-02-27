@@ -218,9 +218,10 @@ def file_ui(pid, record, _record_file_factory=None, is_preview=False, **kwargs):
 
     pdfcoverpage_set_rec = PDFCoverPageSettings.find(1)
 
-    current_app.logger.debug(pid)
+    from weko_deposit.api import WekoRecord
+    coverpage_state = WekoRecord.get_record_cvs(pid.object_uuid)
 
-    if pdfcoverpage_set_rec.avail == 'disable': # Write this if statement later
+    if pdfcoverpage_set_rec.avail == 'disable' or coverpage_state == False: # Write this if statement later
 
         return ObjectResourceWeko.send_object(
         obj.bucket, obj,
