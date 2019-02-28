@@ -27,6 +27,7 @@ from flask_security import current_user
 from invenio_access import Permission, action_factory
 from weko_groups.api import Group, Membership, MembershipState
 from weko_records.api import ItemTypes
+from .models import PDFCoverPageSettings
 
 from .ipaddr import check_site_license_permission
 
@@ -178,3 +179,10 @@ def check_created_id(record):
             elif lst.name == users[3]:
                 is_himself = False
     return is_himself
+
+def check_user_pdf_coverage_state():
+    """Check Created id.
+
+    :return: PDF state in Administration
+    """
+    return PDFCoverPageSettings.find(1)
