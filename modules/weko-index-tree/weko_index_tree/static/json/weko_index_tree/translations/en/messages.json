@@ -142,9 +142,17 @@
      "Cancle": [
         null,
         "Cancle"
-     ],
+    ],
      "Index_Link": [
         null,
         "Index Link"
-     ]
+    ],
+    "CoverPage_Function": [
+        null,
+        "PDF Cover Page"
+    ],
+    "CoverPage_Resc": [
+        null,
+        "Also reflect recursively on child index."
+    ]
 }

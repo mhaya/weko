@@ -139,12 +139,20 @@
         null,
         "親インデックスへ移動"
     ],
-     "Cancle": [
+    "Cancle": [
+    null,
+    "キャンセル"
+    ],
+    "Index_Link": [
+    null,
+    "インデックスリンク"
+    ]
+    "CoverPage_Function": [
         null,
-        "キャンセル"
-     ],
-     "Index_Link": [
+        "PDF Cover Page (JA)"
+    ],
+    "CoverPage_Resc": [
         null,
-        "インデックスリンク"
-     ]
+        "Also reflect recursively on child index. (JA)"
+    ]
 }
