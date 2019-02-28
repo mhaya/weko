@@ -419,10 +419,6 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
     search._extra.update(src)
 
     try:
-        flash('Detail!!!')
-        flash(query_q)
-        
-
         search = search.query(query_q)
     except SyntaxError:
         current_app.logger.debug(
@@ -646,6 +642,8 @@ def opensearch_factory(self, search, query_parser=None):
     :param query_parser:
     :return:
     """
+    flash('Detail!!')
+
     index_id = request.values.get('index_id')
     if index_id:
         return item_path_search_factory(self,
