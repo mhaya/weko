@@ -21,6 +21,12 @@
 """weko records extension."""
 
 from . import config
+from .indexer import indexer_receiver
+# from .utils import serialize_record
+# from weko_records_ui.views import blueprint, record_communities
+
+from invenio_pidrelations.contrib.versioning import versioning_blueprint
+from invenio_indexer.signals import before_record_index
 
 
 class WekoRecords(object):
@@ -40,7 +46,21 @@ class WekoRecords(object):
         :param app: The Flask application.
         """
         self.init_config(app)
+        # Register context processors
+        app.context_processor(record_communities)
+        # Register blueprint
+        app.register_blueprint(blueprint)
+        # Add global record serializer template filter
+        app.add_template_filter(serialize_record, 'serialize_record')
+
+        # Register versioning blueprint
+        app.register_blueprint(versioning_blueprint)
+
+
+        before_record_index.connect(indexer_receiver, sender=app)
         app.extensions['weko-records'] = self
+
+
 
     def init_config(self, app):
         """Initialize configuration.

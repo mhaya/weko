@@ -33,9 +33,10 @@ from .models import PDFCoverPageSettings
 from invenio_files_rest.views import file_downloaded, check_permission
 from invenio_files_rest.views import ObjectResource
 from invenio_files_rest.models import ObjectVersion, FileInstance
+from invenio_stats import *
+from invenio_search.api import RecordsSearch
 
-
-def weko_view_method(pid, record, template=None, **kwargs):
+def weko_view_meth0od(pid, record, template=None, **kwargs):
     r"""Display Weko view.
 
     Sends record_viewed signal and renders template.

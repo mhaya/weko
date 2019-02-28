@@ -26,12 +26,16 @@ from flask import Blueprint, abort, current_app, render_template, \
 
 from invenio_records_ui.utils import obj_or_import_string
 from invenio_records_ui.signals import record_viewed
+from invenio_search import current_search_client
+from elasticsearch_dsl import Search
 from weko_index_tree.models import IndexStyle
 from .permissions import check_created_id
 from weko_search_ui.api import get_search_detail_keyword
 from weko_deposit.api import WekoIndexer
 from .models import PDFCoverPageSettings
 import werkzeug
+
+from weko_records.utils import get_record_stats
 
 blueprint = Blueprint(
     'weko_records_ui',
@@ -268,14 +272,40 @@ def default_view_method(pid, record, template=None, **kwargs):
     width = style.width if style else '3'
     height = style.height if style else None
 
-    detail_condition=get_search_detail_keyword('')
+    # detail_condition=get_search_detail_keyword('')
+    detail_condition = get_search_detail_keyword('')
+
 
     weko_indexer = WekoIndexer()
-    res = weko_indexer.get_item_link_info(pid= record.get("control_number"))
+    # res = weko_indexer.get_item_link_info(pid= record.get("control_number"))
+    res = weko_indexer.get_item_link_info(pid=record.get("control_number"))
     if res is not None:
-        record["relation"]=res
+        # record["relation"]=res
+        record["relation"] = res
     else:
         record["relation"] = {}
+
+        """ Fetch file's statistics"""
+        files = record.files
+        for file in files:
+            events = Search(
+                using=current_search_client,
+                index='events-stats-file-download-*'
+            ).filter(
+                'match', file_id=file.file_id
+            )
+            file.stats.downloads = events.count()
+
+    """ Fetch file's statistics"""
+    files = record.files
+    for file in files:
+        events = Search(
+            using=current_search_client,
+            index='events-stats-file-download-*'
+        ).filter(
+            'match', file_id=file.file_id
+        )
+        file.stats.downloads = events.count()
 
     return render_template(
         template,
@@ -327,3 +357,24 @@ def set_pdfcoverpage_header():
         return redirect('/admin/pdfcoverpage')
 
     return redirect('/admin/pdfcoverpage')
+
+#
+# Stats filters
+#
+
+
+@blueprint.app_template_filter()
+def record_stats(record):
+    """Fetch record statistics from Elasticsearch."""
+    return get_record_stats(record.id, False)
+
+
+@blueprint.app_template_filter()
+def stats_num_format(num):
+    """Format a statistics value."""
+    return '{:,.0f}'.format(num or 0)
+
+# @blueprint.route('/test-stats')
+# def test_stats():
+#     record = ''
+#     render_template('test_stats.html', record=record)

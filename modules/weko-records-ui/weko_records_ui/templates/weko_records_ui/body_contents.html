@@ -19,6 +19,8 @@
 # MA 02111-1307, USA.
 #}
 
+{%- set stats = record|record_stats or {} %}
+
 <div class="panel-group">
 <div class="panel panel-default">
   <div class="panel-heading clearfix">
@@ -96,7 +98,9 @@
                         <img src="{{img}}" alt={{ file.filename }} />
                         <a class="forcewrap"
                            href="{{file_url}}">{{ file.filename }} ({{ file.size|filesizeformat }})</a>
-                        <span>[ 0 downloads ]</span><br>
+                        <!--<span>[ 0 downloads ]</span><br>-->
+                        <!-- {# <span>[ {{file.stats.downloads}} downloads ]</span><br> #} -->
+                        [ {{ stats.version_downloads|stats_num_format }} downloads ]<br>
                         <span>{{file.checksum.split(':')[0]}}</span>
                         <span class="break-word">{{file.checksum.split(':')[1]}}</span>
                       </span>

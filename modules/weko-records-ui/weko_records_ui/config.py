@@ -19,6 +19,12 @@
 # MA 02111-1307, USA.
 
 """Configuration for weko-records-ui."""
+# from __future__ import absolute_import, print_function, unicode_literals
+
+import os
+from datetime import timedelta
+
+from celery.schedules import crontab
 
 from .views import blueprint
 
@@ -179,3 +185,78 @@ JPAEXG_TTF_FILEPATH = blueprint.root_path + "/fonts/ipaexg00201/ipaexg.ttf"
 # Path to the JPAexm font file
 JPAEXM_TTF_FILEPATH = blueprint.root_path + "/fonts/ipaexm00201/ipaexm.ttf"
 
+
+""" STATS """
+STATS_EVENTS = {
+    'file-download': {
+        'signal': 'invenio_files_rest.signals.file_downloaded',
+        'event_builders': [
+            'invenio_stats.contrib.event_builders.file_download_event_builder'
+        ]
+    },
+}
+
+#: Enabled aggregations from 'zenoodo.modules.stats.registrations'
+STATS_AGGREGATIONS = {
+    'record-download-agg': {},
+    'record-download-all-versions-agg': {},
+    # NOTE: Since the "record-view-agg" aggregations is already registered in
+    # "invenio_stasts.contrib.registrations", we have to overwrite the
+    # configuration here
+    'record-view-agg': dict(
+        templates='zenodo.modules.stats.templates.aggregations',
+        aggregator_config=dict(
+            #client=current_stats_search_client,
+            event='record-view',
+            aggregation_field='recid',
+            aggregation_interval='day',
+            batch_size=1,
+            copy_fields=dict(
+                record_id='record_id',
+                recid='recid',
+                conceptrecid='conceptrecid',
+                doi='doi',
+                conceptdoi='conceptdoi',
+                communities=lambda d, _: (list(d.communities)
+                                          if d.communities else None),
+                owners=lambda d, _: (list(d.owners) if d.owners else None),
+                is_parent=lambda *_: False
+            ),
+            metric_aggregation_fields=dict(
+                unique_count=('cardinality', 'unique_session_id',
+                              {'precision_threshold': 1000}),
+            )
+        )
+    ),
+    'record-view-all-versions-agg': {},
+}
+#: Enabled queries from 'zenoodo.modules.stats.registrations'
+STATS_QUERIES = {
+    'record-view': {},
+    'record-view-all-versions': {},
+    'record-download': {},
+    'record-download-all-versions': {},
+}
+
+# Queues
+# ======
+#QUEUES_BROKER_URL = CELERY_BROKER_URL
+
+# Proxy configuration
+#: Number of proxies in front of application.
+WSGI_PROXIES = 0
+
+#: Set the session cookie to be secure - should be set to true in production.
+SESSION_COOKIE_SECURE = False
+
+# Indexer
+# =======
+#: Provide a custom record_to_index function for invenio-indexer
+INDEXER_RECORD_TO_INDEX = "zenodo.modules.indexer.utils.record_to_index"
+INDEXER_SCHEMA_TO_INDEX_MAP = {
+    'records-record-v1.0.0': 'record-v1.0.0',
+    'licenses-license-v1.0.0': 'license-v1.0.0',
+    'grants-grant-v1.0.0': 'grant-v1.0.0',
+    'deposits-records-record-v1.0.0': 'deposit-record-v1.0.0',
+    'funders-funder-v1.0.0': 'funder-v1.0.0',
+}

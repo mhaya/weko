@@ -74,7 +74,7 @@ class PDFCoverPageSettings(db.Model):
 
         settings = PDFCoverPageSettings(avail, header_display_type, header_output_string, header_output_image, header_display_position)
 
-        """ update record by id"""
+        """ Update record by ID"""
         record = db.session.query(cls).filter_by(id=id).first()
 
         record.avail = settings.avail
@@ -85,7 +85,6 @@ class PDFCoverPageSettings(db.Model):
         db.session.commit()
         return record
 
-__all__ = (['PDFCoverPageSettings'])
 
 """Record UI models."""
 
@@ -107,3 +106,8 @@ class InstitutionName(db.Model):
         cfg = cls.query.get(1)
         cfg.institution_name = new_name
         db.session.commit()
+
+
+__all__ = (
+    'PDFCoverPageSettings',
+)
