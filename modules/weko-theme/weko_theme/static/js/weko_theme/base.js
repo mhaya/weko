@@ -21,7 +21,7 @@ require([
           format = data.format;
 
           if (!format) {
-            alert('Load chunk format failed.');
+//            alert('Load chunk format failed.');
             return;
           }
 
