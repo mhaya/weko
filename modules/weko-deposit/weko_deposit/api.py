@@ -645,7 +645,7 @@ class WekoRecord(Record):
         record = cls.get_record(id_=uuid)
         path = []
         path.extend(record.get('path'))
-        coverpage_state = True
+        coverpage_state = False
         if path:
             coverpage_state = Indexes.get_coverpage_state(path)
         return coverpage_state

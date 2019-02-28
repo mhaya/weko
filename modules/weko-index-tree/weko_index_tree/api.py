@@ -35,6 +35,7 @@ from .models import Index
 from .utils import get_tree_json, cached_index_tree_json, reset_tree, get_index_id_list
 from invenio_i18n.ext import current_i18n
 from invenio_indexer.api import RecordIndexer
+from weko_records_ui.models import PDFCoverPageSettings
 
 class Indexes(object):
     """Define API for index tree creation and update."""
@@ -80,6 +81,12 @@ class Indexes(object):
             data["more_check"] = False
             data["display_no"] = current_app.config['WEKO_INDEX_TREE_DEFAULT_DISPLAY_NUMBER']
 
+            pdfcoverpage_set_rec = PDFCoverPageSettings.find(1)
+            data["admin_coverpage"] = pdfcoverpage_set_rec
+
+            data["coverpage_state"] = False
+            data["resc_coverpage_check"] = False
+
             group_list = ''
             groups = Group.query.all()
             for group in groups:
@@ -112,9 +119,6 @@ class Indexes(object):
                         data["public_state"] = iobj.public_state
                         data["public_date"] = iobj.public_date
                         data["recursive_public_state"] = iobj.recursive_public_state
-                    if iobj.coverpage_state:
-                        data["coverpage_state"] = iobj.coverpage_state
-                        data["recursive_coverpage_state"] = iobj.recursive_coverpage_state
                     if iobj.recursive_browsing_role:
                         data["browsing_role"] = iobj.browsing_role
                         data["recursive_browsing_role"] = iobj.recursive_browsing_role
@@ -450,7 +454,8 @@ class Indexes(object):
                     recursive_t.c.public_state, recursive_t.c.public_date,
                     recursive_t.c.browsing_role, recursive_t.c.contribute_role,
                     recursive_t.c.browsing_group, recursive_t.c.contribute_group,
-                    recursive_t.c.more_check, recursive_t.c.display_no, recursive_t.c.coverpage_state
+                    recursive_t.c.more_check, recursive_t.c.display_no, 
+                    recursive_t.c.coverpage_state, recursive_t.c.admin_coverpage
                     ]
             obj = db.session.query(*qlst). \
                 order_by(recursive_t.c.lev,
@@ -734,6 +739,7 @@ class Indexes(object):
                 Index.display_no,
                 Index.coverpage_state,
                 Index.recursive_coverpage_state,
+                Index.admin_coverpage,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.parent == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -757,6 +763,7 @@ class Indexes(object):
                     test_alias.display_no,
                     test_alias.coverpage_state,
                     test_alias.recursive_coverpage_state,
+                    test_alias.admin_coverpage,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
@@ -777,6 +784,7 @@ class Indexes(object):
                 Index.display_no,
                 Index.coverpage_state,
                 Index.recursive_coverpage_state,
+                Index.admin_coverpage,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.parent == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -800,6 +808,7 @@ class Indexes(object):
                     test_alias.display_no,
                     test_alias.coverpage_state,
                     test_alias.recursive_coverpage_state,
+                    test_alias.admin_coverpage,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
@@ -831,6 +840,7 @@ class Indexes(object):
                 Index.display_no,
                 Index.coverpage_state,
                 Index.recursive_coverpage_state,
+                Index.admin_coverpage,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.id == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -854,6 +864,7 @@ class Indexes(object):
                     test_alias.display_no,
                     test_alias.coverpage_state,
                     test_alias.recursive_coverpage_state,
+                    test_alias.admin_coverpage,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
@@ -874,6 +885,7 @@ class Indexes(object):
                 Index.display_no,
                 Index.coverpage_state,
                 Index.recursive_coverpage_state,
+                Index.admin_coverpage,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.id == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -897,6 +909,7 @@ class Indexes(object):
                     test_alias.display_no,
                     test_alias.coverpage_state,
                     test_alias.recursive_coverpage_state,
+                    test_alias.admin_coverpage,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )

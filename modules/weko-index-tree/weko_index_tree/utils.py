@@ -93,7 +93,7 @@ def get_tree_json(obj, pid=0):
                     'browsing_role', 'contribute_role',
                     'browsing_group', 'contribute_group',
                     'more_check', 'display_no',
-                    'coverpage_state', 'recursive_coverpage_state']
+                    'coverpage_state', 'resc_coverpage_check', 'admin_coverpage']
             for lst in plst:
                 lst['children'] = []
                 if isinstance(lst, dict):
