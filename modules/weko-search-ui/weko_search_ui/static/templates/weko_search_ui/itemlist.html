@@ -21,6 +21,7 @@
           </a>
         </li>
         <li>
+          <a href="#" id="showModal">Change Log</a>
           <a ng-click="showSource=!showSource">
             {{ showSource ? 'Hide source' : 'Show source' }}
           </a>
@@ -36,6 +37,38 @@
     </div>
     <div ng-hide="!showSource">
       <pre class="pre-scrollable">{{ record | json }}</pre>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">WEKO</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>{{ _('Version') }}</th>
+                <th>{{ _('Date modified') }}</th>
+                <th>{{ _('Object file name') }}</th>
+                <th>{{ _('File size') }}</th>
+                <th>{{ _('File hash value') }}</th>
+                <th>{{ _('Registered user name') }}</th>
+                <th>{{ _('Public Private') }}</th>
+              </tr>
+            </thead>
+            <tbody id="bodyModal">
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>

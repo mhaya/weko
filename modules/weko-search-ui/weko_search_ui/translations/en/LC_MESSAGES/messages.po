@@ -24,3 +24,31 @@ msgstr "Search"
 
 msgid "DetailSearch"
 msgstr "DetailSearch"
+
+#: weko_search_ui/static/templates/weko_search_ui/itemlist.html:59
+msgid "Version"
+msgstr "Version"
+
+#: weko_search_ui/static/templates/weko_search_ui/itemlist.html:60
+msgid "Date modified"
+msgstr "Date modified"
+
+#: weko_search_ui/static/templates/weko_search_ui/itemlist.html:61
+msgid "Object file name"
+msgstr "Object file name"
+
+#: weko_search_ui/static/templates/weko_search_ui/itemlist.html:62
+msgid "File size"
+msgstr "File size"
+
+#: weko_search_ui/static/templates/weko_search_ui/itemlist.html:63
+msgid "File hash value"
+msgstr "File hash value"
+
+#: weko_search_ui/static/templates/weko_search_ui/itemlist.html:64
+msgid "Registered user name"
+msgstr "Registered user name"
+
+#: weko_search_ui/static/templates/weko_search_ui/itemlist.html:65
+msgid "Public Private"
+msgstr "Public Private"

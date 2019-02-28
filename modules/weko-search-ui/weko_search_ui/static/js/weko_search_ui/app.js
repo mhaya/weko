@@ -42,6 +42,12 @@
         });
         return str;
       }
+
+      $('#showModal').click(function () {
+        $('#basicExampleModal').modal({
+          show: true
+        });
+      });
     });
 });
 
@@ -115,5 +121,4 @@ angular.module('invenioSearch')
   .controller('searchResCtrl', searchResCtrl);
 
 // add by ryuu. at 20181129 end
-
 
