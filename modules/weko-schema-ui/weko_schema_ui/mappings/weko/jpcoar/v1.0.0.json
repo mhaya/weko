@@ -21,7 +21,7 @@
       "char_filter": {
         "weko_char_filter": {
           "type": "mapping",
-          "mappings_path": "kui.dic"
+          "mappings_path": "weko.dic"
         }
       },
       "analyzer": {
@@ -34,13 +34,11 @@
             "stop",
             "kuromoji_stemmer",
             "lowercase"
-          ],
-          "char_filter": ["weko_char_filter"]
+          ]
         },
         "ngram_analyzer": {
           "type": "custom",
           "char_filter": [
-            "html_strip",
             "weko_char_filter"
           ],
           "tokenizer": "ngram_tokenizer",
