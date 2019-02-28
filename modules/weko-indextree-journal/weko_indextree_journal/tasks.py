@@ -41,8 +41,7 @@ from .utils import obj_or_import_string
 logger = get_task_logger(__name__)
 
 @shared_task(ignore_result=True)
-def export_data(frequency=None, batch_interval=None,
-                files_query=None
+def export_data(frequency=None, batch_interval=None
                 ):
     """Schedule a batch of files for checksum verification.
 
@@ -65,12 +64,22 @@ def export_data(frequency=None, batch_interval=None,
 
     """
     current_app.logger.debug('Task is running.')
-    print("Hello World!!! Bao Phung is here")
     frequency = timedelta(**frequency) if frequency else timedelta(days=30)
     if batch_interval:
         batch_interval = timedelta(**batch_interval)
     else:
-        celery_schedule = current_celery.conf.get('CELERY_BEAT_SCHEDULE', {})
+        celery_schedule = current_celery.conf.get('CELERY_INDEXTREE_JOURNAL_SCHEDULE', {})
+        batch_interval = batch_interval
+    if not batch_interval or not isinstance(batch_interval, timedelta):
+        raise Exception(u'No "batch_interval" could be decided')
+    print("Hello World!!! Bao Phung is here")
+
+    """
+    frequency = timedelta(**frequency) if frequency else timedelta(days=30)
+    if batch_interval:
+        batch_interval = timedelta(**batch_interval)
+    else:
+        celery_schedule = current_celery.conf.get('CELERY_INDEXTREE_JOURNAL_SCHEDULE', {})
         batch_interval = batch_interval or next(
             (v['schedule'] for v in celery_schedule.values()
              if v.get('task') == schedule_checksum_verification.name), None)
@@ -83,3 +92,4 @@ def export_data(frequency=None, batch_interval=None,
     files = obj_or_import_string(
         files_query, default=default_checksum_verification_files_query)()
     files = files.order_by(sa.func.coalesce(FileInstance.last_check_at, date.min))
+    """
