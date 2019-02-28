@@ -34,7 +34,8 @@
             "stop",
             "kuromoji_stemmer",
             "lowercase"
-          ]
+          ],
+          "char_filter": ["weko_char_filter"]
         },
         "ngram_analyzer": {
           "type": "custom",
