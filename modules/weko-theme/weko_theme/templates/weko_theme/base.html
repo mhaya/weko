@@ -219,20 +219,19 @@
       {% include config.THEME_HEADER_TEMPLATE %}
     {%- endblock page_header %}
 
-    <div class="row" class="col-md-12">
+    <div class="row" class="col-md-12" hidden>
       <div id="grid-info" class="col-md-12"></div>
     </div>
     <div class="row" class="col-md-12">
-      <div id="grid-body-left" class="col-md-3">
+      <div id="grid-body-left" class="col-md-3" hidden>
       </div>
       <div id="grid-body" class="col-md-6">
       {%- block page_body %}
       {%- endblock page_body %}
       </div>
-      <div id="grid-body-right" class="col-md-3">
+      <div id="grid-body-right" class="col-md-3" hidden>
       </div>
 
-      <div id="grid-layout" ></div>
     </div>
     {%- block page_footer %}
       {% include config.THEME_FOOTER_TEMPLATE %}
