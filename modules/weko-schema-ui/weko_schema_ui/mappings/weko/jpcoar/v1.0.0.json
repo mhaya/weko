@@ -39,8 +39,8 @@
         "ngram_analyzer": {
           "type": "custom",
           "char_filter": [
-            "html_strip",
-            "weko_char_filter"
+            "weko_char_filter",
+            "html_strip"
           ],
           "tokenizer": "ngram_tokenizer",
           "filter": [
