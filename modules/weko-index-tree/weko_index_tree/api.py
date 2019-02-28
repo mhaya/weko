@@ -35,7 +35,6 @@ from .models import Index
 from .utils import get_tree_json, cached_index_tree_json, reset_tree, get_index_id_list
 from invenio_i18n.ext import current_i18n
 from invenio_indexer.api import RecordIndexer
-from weko_records_ui.permissions import check_user_pdf_coverage_state
 
 class Indexes(object):
     """Define API for index tree creation and update."""
@@ -81,8 +80,7 @@ class Indexes(object):
             data["more_check"] = False
             data["display_no"] = current_app.config['WEKO_INDEX_TREE_DEFAULT_DISPLAY_NUMBER']
 
-            data["admin_coverpage"] = check_user_pdf_coverage_state()
-
+            data["admin_coverpage"] = False
             data["coverpage_state"] = False
             data["resc_coverpage_check"] = False
 
@@ -184,7 +182,7 @@ class Indexes(object):
                         else:
                             v = None
                     if "admin_coverpage" in k:
-                        v = check_user_pdf_coverage_state()
+                        v = False
                     if "have_children" in k:
                         continue
                     setattr(index, k, v)
