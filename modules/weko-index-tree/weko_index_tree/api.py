@@ -187,11 +187,11 @@ class Indexes(object):
                         continue
                     setattr(index, k, v)
 
-                if getattr(index, "recursive_coverpage_state"):
+                if getattr(index, "resc_coverpage_check"):
                     Index.query.filter_by(parent=index_id).\
                         update({Index.coverpage_state: getattr(index, "coverpage_state")},
                         synchronize_session='fetch')
-                    setattr(index, "recursive_coverpage_state", False)
+                    setattr(index, "resc_coverpage_check", False)
 
                 index.owner_user_id = current_user.get_id()
                 db.session.merge(index)
@@ -454,7 +454,7 @@ class Indexes(object):
                     recursive_t.c.browsing_role, recursive_t.c.contribute_role,
                     recursive_t.c.browsing_group, recursive_t.c.contribute_group,
                     recursive_t.c.more_check, recursive_t.c.display_no, 
-                    recursive_t.c.coverpage_state, recursive_t.c.admin_coverpage
+                    recursive_t.c.coverpage_state, recursive_t.c.resc_coverpage_check, recursive_t.c.admin_coverpage
                     ]
             obj = db.session.query(*qlst). \
                 order_by(recursive_t.c.lev,
@@ -737,7 +737,7 @@ class Indexes(object):
                 Index.more_check,
                 Index.display_no,
                 Index.coverpage_state,
-                Index.recursive_coverpage_state,
+                Index.resc_coverpage_check,
                 Index.admin_coverpage,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.parent == pid). \
@@ -761,7 +761,7 @@ class Indexes(object):
                     test_alias.more_check,
                     test_alias.display_no,
                     test_alias.coverpage_state,
-                    test_alias.recursive_coverpage_state,
+                    test_alias.resc_coverpage_check,
                     test_alias.admin_coverpage,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
@@ -782,7 +782,7 @@ class Indexes(object):
                 Index.more_check,
                 Index.display_no,
                 Index.coverpage_state,
-                Index.recursive_coverpage_state,
+                Index.resc_coverpage_check,
                 Index.admin_coverpage,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.parent == pid). \
@@ -806,7 +806,7 @@ class Indexes(object):
                     test_alias.more_check,
                     test_alias.display_no,
                     test_alias.coverpage_state,
-                    test_alias.recursive_coverpage_state,
+                    test_alias.resc_coverpage_check,
                     test_alias.admin_coverpage,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
@@ -838,7 +838,7 @@ class Indexes(object):
                 Index.more_check,
                 Index.display_no,
                 Index.coverpage_state,
-                Index.recursive_coverpage_state,
+                Index.resc_coverpage_check,
                 Index.admin_coverpage,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.id == pid). \
@@ -862,7 +862,7 @@ class Indexes(object):
                     test_alias.more_check,
                     test_alias.display_no,
                     test_alias.coverpage_state,
-                    test_alias.recursive_coverpage_state,
+                    test_alias.resc_coverpage_check,
                     test_alias.admin_coverpage,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
@@ -883,7 +883,7 @@ class Indexes(object):
                 Index.more_check,
                 Index.display_no,
                 Index.coverpage_state,
-                Index.recursive_coverpage_state,
+                Index.resc_coverpage_check,
                 Index.admin_coverpage,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.id == pid). \
@@ -907,7 +907,7 @@ class Indexes(object):
                     test_alias.more_check,
                     test_alias.display_no,
                     test_alias.coverpage_state,
-                    test_alias.recursive_coverpage_state,
+                    test_alias.resc_coverpage_check,
                     test_alias.admin_coverpage,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
