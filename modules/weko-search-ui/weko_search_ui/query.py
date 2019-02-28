@@ -419,6 +419,10 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
     search._extra.update(src)
 
     try:
+        flash('Detail!!!')
+        flash(query_q)
+        
+
         search = search.query(query_q)
     except SyntaxError:
         current_app.logger.debug(
