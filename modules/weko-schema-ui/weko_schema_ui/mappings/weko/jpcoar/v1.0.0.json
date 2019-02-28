@@ -18,29 +18,11 @@
           ]
         }
       },
-      "filter": {
-        "katakana_readingform": {
-          "type": "kuromoji_readingform",
-          "use_romaji": false
-        }
-      },
       "analyzer": {
         "ja_analyzer": {
           "tokenizer": "ja_tokenizer",
           "filter": [
             "kuromoji_baseform",
-            "kuromoji_part_of_speech",
-            "cjk_width",
-            "stop",
-            "kuromoji_stemmer",
-            "lowercase"
-          ]
-        },
-        "yomigana_analyzer": {
-          "type": "custom",
-          "tokenizer": "ja_tokenizer",
-          "filter": [
-            "katakana_readingform",
             "kuromoji_part_of_speech",
             "cjk_width",
             "stop",
@@ -82,7 +64,7 @@
     "item": {
       "_all": {
         "enabled": true,
-        "analyzer": "yomigana_analyzer"
+        "analyzer": "ngram_analyzer"
       },
       "properties": {
         "path": {
@@ -775,7 +757,7 @@
           "fields": {
             "ja": {
               "type": "string",
-              "analyzer": "yomigana_analyzer"
+              "analyzer": "ja_analyzer"
             }
           }
         },
