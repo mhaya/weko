@@ -34,8 +34,7 @@
             "stop",
             "kuromoji_stemmer",
             "lowercase"
-          ],
-          "char_filter": ["weko_char_filter"]
+          ]
         },
         "ngram_analyzer": {
           "type": "custom",
@@ -765,7 +764,7 @@
           "fields": {
             "ja": {
               "type": "string",
-              "analyzer": "yomigana_analyzer"
+              "analyzer": "ja_analyzer"
             }
           }
         },
