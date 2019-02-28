@@ -39,7 +39,7 @@ require([
           }
         },
         error: function(jqXHR, status) {
-          alert('Load chunk format failed.');
+//          alert('Load chunk format failed.');
         }
       });
 
