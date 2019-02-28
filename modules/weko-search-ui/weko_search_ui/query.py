@@ -642,7 +642,7 @@ def opensearch_factory(self, search, query_parser=None):
     :param query_parser:
     :return:
     """
-    flash('Detail!!')
+    current_app.logger.debug("Detail!!!!!")
 
     index_id = request.values.get('index_id')
     if index_id:
