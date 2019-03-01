@@ -21,7 +21,7 @@
           </a>
         </li>
         <li>
-          <a href="#" id="showModal">Change Log</a>
+          <a href="#" class="showModal" ng-click="showChangeLog(record)">Change Log</a>
           <a ng-click="showSource=!showSource">
             {{ showSource ? 'Hide source' : 'Show source' }}
           </a>
@@ -43,9 +43,9 @@
 
 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" style="width: 95% !important;" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="background-color: #f5f5f5 !important;">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">WEKO</h4>
@@ -55,13 +55,13 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th>{{ _('Version') }}</th>
-                <th>{{ _('Date modified') }}</th>
-                <th>{{ _('Object file name') }}</th>
-                <th>{{ _('File size') }}</th>
-                <th>{{ _('File hash value') }}</th>
-                <th>{{ _('Registered user name') }}</th>
-                <th>{{ _('Public Private') }}</th>
+                <th>Version</th>
+                <th>Date modified</th>
+                <th>Object file name</th>
+                <th>File size</th>
+                <th>File hash value</th>
+                <th>Registered user name</th>
+                <th>Public Private</th>
               </tr>
             </thead>
             <tbody id="bodyModal">

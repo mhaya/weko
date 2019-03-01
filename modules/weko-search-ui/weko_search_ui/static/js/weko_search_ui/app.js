@@ -42,12 +42,6 @@
         });
         return str;
       }
-
-      $('#showModal').click(function () {
-        $('#basicExampleModal').modal({
-          show: true
-        });
-      });
     });
 });
 
@@ -108,6 +102,148 @@ function searchResCtrl($scope, $rootScope, $http, $location) {
         $rootScope.display_flg = true;
         $("#tab_display").addClass("active")
      }
+
+    $scope.showChangeLog = function(record) {
+      // call api for itself to catch field deposit
+      const id = record['id'];
+      $http({
+        method: 'GET',
+        url: `/api/records/${id}`,
+      }).then(function successCallback(response) {
+        // Success
+        const deposit = response['data']['metadata']['_buckets']['deposit'];
+        // Call service to catch version by deposit with api /api/files/
+        $http({
+          method: 'GET',
+          url: `/api/files/${deposit}`,
+        }).then(function successCallback(response) {
+          $('#bodyModal').append(createRow(response['data']));
+          $('#basicExampleModal').modal({
+            show: true
+          });
+          $('#basicExampleModal').on('hidden.bs.modal', function (e) {
+            // Event will be trigger when modal absolute hidded
+            $('#bodyModal').children().remove();
+          });
+        }, function errorCallback(response) {
+          console.log('Error when trigger api /api/files');
+        });
+      }, function errorCallback(response) {
+        // Error
+        console.log('Error when trigger api /api/records');
+      });
+    }
+
+    function createRow(response) {
+      let results = '';
+      const contents = response.contents;
+      for (let index = 0; index < contents.length; index++) {
+        const ele = contents[index];
+
+        // const isPublic = ele.pubPri === 'Public' ? 1 : 0;
+        const nameRadio = `radio${index}`;
+        let radio = `
+          <div class="radio">
+            <div class="row">
+              <div class="col-md-6">
+                <label><input type="radio" name="${nameRadio}">Public</label>
+              </div>
+              <div class="col-md-6">
+                <label><input type="radio" name="${nameRadio}">Private</label>
+              </div>
+            </div>
+          </div>
+        `;
+        // if (!isPublic) {
+        //   radio = `
+        //     <div class="radio">
+        //       <div class="row">
+        //         <div class="col-md-6">
+        //             <label><input type="radio" name="${nameRadio}">Public</label>
+        //         </div>
+        //         <div class="col-md-6">
+        //           <label><input type="radio" name="${nameRadio}" checked>Private</label>
+        //         </div>
+        //       </div>
+        //     </div>
+        //   `;
+        // }
+
+        let version = ele.version_id;
+        if (index === 0) {
+          version = 'Current';
+        }
+
+        results += `
+          <tr>
+            <td>
+              <div class="row">
+                <div class="col-md-12 margin_top_10">
+                  <p>${version}</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-md-12 margin_top_10">
+                  <p>${formatDate(new Date(ele.updated))}</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-md-12 margin_top_10">
+                  <a href="${ele.links.self}">${ele.key}</a>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-md-12 margin_top_10">
+                  <p>${ele.size}</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-md-12 margin_top_10">
+                  <p>${ele.size}</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-md-12 margin_top_10">
+                  <p>${ele.key}</p>
+                </div>
+              </div>
+            </td>
+            <td>${radio}</td>
+          </tr>
+        `;
+
+      }
+      return results;
+    }
+
+    function formatDate(date) {
+      let month = '' + (date.getMonth() + 1);
+      let day = '' + date.getDate();
+      let year = date.getFullYear();
+
+      let hour = '' + date.getHours();
+      let minute = '' + date.getMinutes();
+      let second = '' + date.getSeconds();
+
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+      if (hour.length < 2) hour = '0' + hour;
+      if (minute.length < 2) minute = '0' + minute;
+      if (second.length < 2) second = '0' + second;
+
+      return `${[year, month, day].join('-')} ${[hour, minute, second].join(':')}`;
+    }
+
      $rootScope.confirmFunc=function(){
         if(!$rootScope.disable_flg){
           return confirm("Is the input contents discarded ?") ;
@@ -121,4 +257,3 @@ angular.module('invenioSearch')
   .controller('searchResCtrl', searchResCtrl);
 
 // add by ryuu. at 20181129 end
-
