@@ -34,6 +34,9 @@ class SearchSerializer(JSONSerializer):
     """
 
     def transform_search_hit(self, pid, record_hit, links_factory=None):
+
+        flash(record_hit)
+
         sort_meta_data_by_options(record_hit)
         return super(SearchSerializer, self).\
             transform_search_hit(pid, record_hit, links_factory)
