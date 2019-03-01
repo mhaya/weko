@@ -149,7 +149,7 @@ class Journals(object):
                 slf = cls.get_journal(journal_id)
                 if not slf:
                     return
-                    
+
                 db.session.delete(slf)
                 db.session.commit()
                 return dct
@@ -190,3 +190,9 @@ class Journals(object):
             return []
 
         return dict(obj)
+
+    @classmethod
+    def export_data_index_tree_journal(cls):
+        # first update target pid when index tree id was deleted
+        from .tasks import export_data
+        export_data.delay()
