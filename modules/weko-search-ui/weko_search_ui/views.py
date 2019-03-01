@@ -21,7 +21,7 @@
 """Blueprint for weko-search-ui."""
 
 from flask import Blueprint, current_app, render_template, request, \
-    redirect, url_for, make_response, jsonify
+    redirect, url_for, make_response, jsonify, flash
 from xml.etree import ElementTree as ET
 from weko_index_tree.models import Index, IndexStyle
 from weko_index_tree.api import Indexes
@@ -51,6 +51,9 @@ blueprint_api = Blueprint(
 
 @blueprint.route("/search/index")
 def search():
+
+    flash('Search/index !!!')
+
     """ Index Search page ui."""
     search_type = request.args.get('search_type', '0')
     getArgs= request.args

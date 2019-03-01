@@ -103,6 +103,8 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
     :returns: Tuple with search instance and URL arguments.
     """
 
+    flash('default_search_factory !!!')
+
     def _get_search_qs_query(qs=None):
         """
         qs of search bar keywords for detail simple search.
