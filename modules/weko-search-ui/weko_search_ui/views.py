@@ -52,8 +52,6 @@ blueprint_api = Blueprint(
 @blueprint.route("/search/index")
 def search():
 
-    flash('Search/index !!!')
-
     """ Index Search page ui."""
     search_type = request.args.get('search_type', '0')
     getArgs= request.args
@@ -75,6 +73,9 @@ def search():
     disply_setting =dict(size=display_number)
 
     detail_condition = get_search_detail_keyword('')
+
+
+    flash(detail_condition)
 
     height = style.height if style else None
 
