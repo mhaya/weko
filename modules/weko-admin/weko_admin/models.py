@@ -217,7 +217,4 @@ class SearchManagement(db.Model):
             raise
         return cls
 
-__all__ = ([
-    'SearchManagement',
-]
-)
+__all__ = (['SearchManagement'])
