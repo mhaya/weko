@@ -461,6 +461,8 @@ def item_path_search_factory(self, search, index_id=None):
     :returns: Tuple with search instance and URL arguments.
     """
 
+    flash('item_path_search_factory !!!')
+
     def _get_index_earch_query():
 
         query_q = {
