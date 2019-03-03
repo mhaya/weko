@@ -189,9 +189,7 @@ class Indexes(object):
                     setattr(index, k, v)
 
                 if getattr(index, "resc_coverpage_check"):
-                    Index.query.filter_by(parent=index_id).\
-                        update({Index.coverpage_state: getattr(index, "coverpage_state")},
-                        synchronize_session='fetch')
+                    cls.set_coverpage_state_resc(index_id, getattr(index, "coverpage_state"))
                     setattr(index, "resc_coverpage_check", False)
 
                 index.owner_user_id = current_user.get_id()
@@ -1026,3 +1024,16 @@ class Indexes(object):
         except Exception as se:
             current_app.logger.debug(se)
             return False
+
+    @classmethod
+    def set_coverpage_state_resc(cls, index_id, state):
+        """
+        :param index_id: search index id
+        :param state: coverpage state of search index id
+
+        """
+        Index.query.filter_by(parent=index_id).\
+            update({Index.coverpage_state: state},
+            synchronize_session='fetch')
+        for index in Index.query.filter_by(parent=index_id).all():
+            cls.set_coverpage_state_resc(index.id, state)

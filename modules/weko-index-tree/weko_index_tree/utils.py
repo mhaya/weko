@@ -29,7 +29,7 @@ from invenio_cache import current_cache
 from invenio_i18n.ext import current_i18n
 from weko_groups.models import Group
 from invenio_db import db
-
+from .models import Index
 
 def is_index_tree_updated():
     """Return True if index tree has been updated."""
@@ -286,5 +286,10 @@ def reduce_index_by_more(tree, more_ids=[]):
                 reduce_index_by_more(tree=children, more_ids=more_ids)
 
 def get_admin_coverpage_setting():
-    record = db.engine.execute('SELECT * FROM pdfcoverpage_set')
-    return record.first()['Availability'] == 'enable'
+    avail = False
+    try:
+        record = db.engine.execute('SELECT * FROM pdfcoverpage_set')
+        avail = record.first()['Availability'] == 'enable'
+    except Exception as ex:
+        current_app.logger.debug(ex)
+    return avail == 'enable'
