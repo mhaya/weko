@@ -32,7 +32,8 @@ from sqlalchemy.sql.expression import func, literal_column
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from weko_groups.api import Group
 from .models import Index
-from .utils import get_tree_json, cached_index_tree_json, reset_tree, get_index_id_list
+from .utils import get_tree_json, cached_index_tree_json, reset_tree, \
+    get_index_id_list, get_admin_coverpage_setting
 from invenio_i18n.ext import current_i18n
 from invenio_indexer.api import RecordIndexer
 
@@ -80,7 +81,7 @@ class Indexes(object):
             data["more_check"] = False
             data["display_no"] = current_app.config['WEKO_INDEX_TREE_DEFAULT_DISPLAY_NUMBER']
 
-            data["admin_coverpage"] = False
+            data["admin_coverpage"] = get_admin_coverpage_setting()
             data["coverpage_state"] = False
             data["resc_coverpage_check"] = False
 
@@ -182,7 +183,7 @@ class Indexes(object):
                         else:
                             v = None
                     if "admin_coverpage" in k:
-                        v = False
+                        v = get_admin_coverpage_setting()
                     if "have_children" in k:
                         continue
                     setattr(index, k, v)
