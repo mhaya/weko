@@ -113,8 +113,8 @@ class Index(db.Model, Timestamp):
                              default=False)
     """PDF Cover Page State of the index."""
 
-    resc_coverpage_check = db.Column(
-        db.Boolean(name='resc_coverpage_check'), nullable=True, default=False)
+    recursive_coverpage_check = db.Column(
+        db.Boolean(name='recursive_coverpage_check'), nullable=True, default=False)
     """Recursive PDF Cover Page State of the index."""
 
     browsing_role = db.Column(db.Text, nullable=True)

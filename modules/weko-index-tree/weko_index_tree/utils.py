@@ -289,7 +289,7 @@ def get_admin_coverpage_setting():
     avail = False
     try:
         record = db.engine.execute('SELECT * FROM pdfcoverpage_set')
-        avail = record.first()['Availability'] == 'enable'
+        avail = record.first()['Availability']
     except Exception as ex:
         current_app.logger.debug(ex)
     return avail == 'enable'

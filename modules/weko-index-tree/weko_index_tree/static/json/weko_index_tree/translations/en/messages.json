@@ -151,7 +151,7 @@
         null,
         "PDF Cover Page"
     ],
-    "CoverPage_Resc": [
+    "Set_CoverPage_Recursively": [
         null,
         "Also reflect recursively on child index."
     ]
