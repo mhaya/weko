@@ -26,7 +26,6 @@
 import copy
 
 from invenio_records_rest.config import RECORDS_REST_ENDPOINTS
-from invenio_search import RecordsSearch
 
 WEKO_BUCKET_QUOTA_SIZE = 50 * 1024 * 1024 * 1024  # 50 GB
 """Maximum quota per bucket."""
