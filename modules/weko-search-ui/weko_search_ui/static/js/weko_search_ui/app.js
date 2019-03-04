@@ -146,7 +146,7 @@ function searchResCtrl($scope, $rootScope, $http, $location) {
           <div class="radio">
             <div class="row">
               <div class="col-md-6">
-                <label><input type="radio" name="${nameRadio}">Public</label>
+                <label><input type="radio" name="${nameRadio}" checked>Public</label>
               </div>
               <div class="col-md-6">
                 <label><input type="radio" name="${nameRadio}">Private</label>
@@ -214,7 +214,7 @@ function searchResCtrl($scope, $rootScope, $http, $location) {
             <td>
               <div class="row">
                 <div class="col-md-12 margin_top_10">
-                  <p>${ele.key}</p>
+                  <p></p>
                 </div>
               </div>
             </td>
