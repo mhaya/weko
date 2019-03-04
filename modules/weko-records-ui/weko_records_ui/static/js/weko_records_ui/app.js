@@ -56,7 +56,7 @@ angular.module('myApp', ['ui.bootstrap'])
             const nameRadio = `radio${index}`;
             let radio = `
             <div class="radio">
-                <label style="mergin-left: 5px"><input type="radio" name="${nameRadio}" checked>Public</label> <label style="mergin-left: 5px"><input type="radio" name="${nameRadio}">Private</label>
+                <label style="margin-left: 5px"><input type="radio" name="${nameRadio}" checked>Public</label> <label style="margin-left: 5px"><input type="radio" name="${nameRadio}">Private</label>
             </div>
             `;
             // if (!isPublic) {
@@ -87,7 +87,7 @@ angular.module('myApp', ['ui.bootstrap'])
                 size = Number((size/1024).toFixed(2));
             }
 
-            size = `${size} (${unit})`;
+            size = `${size}\t(${unit})`;
 
             results += `
             <tr>
@@ -156,7 +156,7 @@ angular.module('myApp', ['ui.bootstrap'])
         if (minute.length < 2) minute = '0' + minute;
         if (second.length < 2) second = '0' + second;
 
-        return `${[year, month, day].join('-')} ${[hour, minute, second].join(':')}`;
+        return `${[year, month, day].join('-')}\t${[hour, minute, second].join(':')}`;
     }
     }
  ).controller('ConfirmController',
