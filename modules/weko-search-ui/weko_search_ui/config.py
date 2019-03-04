@@ -23,7 +23,6 @@
 import copy
 
 from invenio_records_rest.config import RECORDS_REST_ENDPOINTS
-from invenio_records_rest.facets import terms_filter
 from invenio_search import RecordsSearch
 
 WEKO_SEARCH_UI_SEARCH_INDEX_API = '/api/index/'
