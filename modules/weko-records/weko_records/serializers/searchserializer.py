@@ -28,6 +28,7 @@ from weko_records.utils import sort_meta_data_by_options
 #     check_roles, check_groups
 # from weko_index_tree.api import Indexes
 
+
 class SearchSerializer(JSONSerializer):
     """
     extend JSONSerializer to modify search result
