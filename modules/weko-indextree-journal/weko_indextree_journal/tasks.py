@@ -25,11 +25,14 @@ from celery.utils.log import get_task_logger
 from flask import current_app
 from invenio_records.models import RecordMetadata
 from invenio_db import db
-from .ext import WekoIndextreeJournal
+#from .ext import WekoIndextreeJournal
 from sqlalchemy.exc import SQLAlchemyError
 from elasticsearch.exceptions import TransportError
+from .api import WekoDeposit
+
 
 logger = get_task_logger(__name__)
+
 
 @shared_task(ignore_result=True)
 def export_data():

@@ -1,10 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2019 National Institute of Informatics.
+# This file is part of WEKO3.
+# Copyright (C) 2017 National Institute of Informatics.
 #
-# WEKO-Indextree-Journal is free software; you can redistribute it and/or
-# modify it under the terms of the MIT License; see LICENSE file for more
-# details.
+# WEKO3 is free software; you can redistribute it
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# WEKO3 is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WEKO3; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
 
 """Module of weko-indextree-journal."""
 
@@ -59,8 +71,8 @@ setup(
     version=version,
     description=__doc__,
     long_description=readme + '\n\n' + history,
-    keywords='invenio TODO',
-    license='MIT',
+    keywords='weko indextree journal',
+    license='GPLv2',
     author='National Institute of Informatics',
     author_email='wekosoftware@nii.ac.jp',
     url='https://github.com/RCOSDP/weko-indextree-journal',
@@ -74,6 +86,9 @@ setup(
         ],
         'invenio_base.api_apps': [
             'weko_indextree_journal_rest = weko_indextree_journal:WekoIndextreeJournalREST',
+        ],
+        'invenio_config.module': [
+            'weko_indextree_journal = weko_indextree_journal.config',
         ],
         'invenio_base.blueprints': [
             'weko_indextree_journal = weko_indextree_journal.views:blueprint',

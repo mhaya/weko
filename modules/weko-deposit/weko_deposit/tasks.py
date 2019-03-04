@@ -90,12 +90,3 @@ def update_items_by_id(p_path, target):
             exception('Failed to update items for index update. err:{0}'.
                       format(e))
         update_items_by_id.retry(countdown=5, exc=e, max_retries=1)
-
-
-@shared_task(ignore_result=True)
-def export_data():
-    """
-    Export data of weko-indextree-journal
-    :param:
-    """
-    print("__________________________________EXPORT DATA______________________________")
