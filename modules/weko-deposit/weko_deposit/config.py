@@ -20,6 +20,9 @@
 
 """Configuration for weko-deposit."""
 
+# WEKO_DEPOSIT_BASE_TEMPLATE = 'weko_deposit/base.html'
+# """Default base template for the demo page."""
+
 import copy
 
 WEKO_BUCKET_QUOTA_SIZE = 50 * 1024 * 1024 * 1024  # 50 GB
