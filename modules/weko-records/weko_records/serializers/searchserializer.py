@@ -22,11 +22,11 @@
 from invenio_records_rest.serializers.json import JSONSerializer
 from weko_records.utils import sort_meta_data_by_options
 
-from flask import json, flash
-
-from weko_index_tree.utils import get_user_roles, get_user_groups, \
-    check_roles, check_groups
-from weko_index_tree.api import Indexes
+# from flask import json, flash
+#
+# from weko_index_tree.utils import get_user_roles, get_user_groups, \
+#     check_roles, check_groups
+# from weko_index_tree.api import Indexes
 
 class SearchSerializer(JSONSerializer):
     """
