@@ -75,7 +75,7 @@ setup(
     license='GPLv2',
     author='National Institute of Informatics',
     author_email='wekosoftware@nii.ac.jp',
-    url='https://github.com/RCOSDP/weko-indextree-journal',
+    url='https://github.com/wekosoftware/weko-indextree-journal',
     packages=packages,
     zip_safe=False,
     include_package_data=True,
@@ -130,7 +130,7 @@ setup(
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
