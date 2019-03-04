@@ -24,7 +24,141 @@ angular.module('myApp', ['ui.bootstrap'])
      );
     });
    };
-  }
+
+    $scope.showChangeLog = function(record) {
+        // call api for itself to catch field deposit
+        const deposit = record['_buckets']['deposit'];
+        // Call service to catch version by deposit with api /api/files/
+        $http({
+            method: 'GET',
+            url: `/api/files/${deposit}?versions`,
+        }).then(function successCallback(response) {
+            $('#bodyModal').append(createRow(response['data']));
+            $('#basicExampleModal').modal({
+                show: true
+            });
+            $('#basicExampleModal').on('hidden.bs.modal', function (e) {
+                // Event will be trigger when modal absolute hidded
+                $('#bodyModal').children().remove();
+            });
+        }, function errorCallback(response) {
+            console.log('Error when trigger api /api/files');
+        });
+    }
+
+    function createRow(response) {
+        let results = '';
+        const contents = response.contents;
+        for (let index = 0; index < contents.length; index++) {
+            const ele = contents[index];
+
+            // const isPublic = ele.pubPri === 'Public' ? 1 : 0;
+            const nameRadio = `radio${index}`;
+            let radio = `
+            <div class="radio">
+                <label style="mergin-left: 5px"><input type="radio" name="${nameRadio}" checked>Public</label> <label style="mergin-left: 5px"><input type="radio" name="${nameRadio}">Private</label>
+            </div>
+            `;
+            // if (!isPublic) {
+            //   radio = `
+            //     <div class="radio">
+            //       <div class="row">
+            //         <div>
+            //             <label><input type="radio" name="${nameRadio}">Public</label>
+            //         </div>
+            //         <div>
+            //           <label><input type="radio" name="${nameRadio}" checked>Private</label>
+            //         </div>
+            //       </div>
+            //     </div>
+            //   `;
+            // }
+
+            let version = ele.version_id;
+            if (index === 0) {
+            version = 'Current';
+            }
+
+            let size = ele.size;
+            let unit = 'bytes';
+
+            if (size > 1024) {
+                unit = 'KB';
+                size = Number((size/1024).toFixed(2));
+            }
+
+            size = `${size} (${unit})`;
+
+            results += `
+            <tr>
+                <td>
+                <div class="row">
+                    <div class="col-md-12 margin_top_10">
+                    <p>${version}</p>
+                    </div>
+                </div>
+                </td>
+                <td>
+                <div class="row">
+                    <div class="col-md-12 margin_top_10">
+                    <p>${formatDate(new Date(ele.updated))}</p>
+                    </div>
+                </div>
+                </td>
+                <td>
+                <div class="row">
+                    <div class="col-md-12 margin_top_10">
+                    <a href="${ele.links.self}">${ele.key}</a>
+                    </div>
+                </div>
+                </td>
+                <td>
+                <div class="row">
+                    <div class="col-md-12 margin_top_10">
+                    <p>${size}</p>
+                    </div>
+                </div>
+                </td>
+                <td>
+                <div class="row">
+                    <div class="col-md-12 margin_top_10">
+                    <p>${size}</p>
+                    </div>
+                </div>
+                </td>
+                <td>
+                <div class="row">
+                    <div class="col-md-12 margin_top_10">
+                    <p></p>
+                    </div>
+                </div>
+                </td>
+                <td>${radio}</td>
+            </tr>
+            `;
+
+        }
+        return results;
+    }
+
+    function formatDate(date) {
+        let month = '' + (date.getMonth() + 1);
+        let day = '' + date.getDate();
+        let year = date.getFullYear();
+
+        let hour = '' + date.getHours();
+        let minute = '' + date.getMinutes();
+        let second = '' + date.getSeconds();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+        if (hour.length < 2) hour = '0' + hour;
+        if (minute.length < 2) minute = '0' + minute;
+        if (second.length < 2) second = '0' + second;
+
+        return `${[year, month, day].join('-')} ${[hour, minute, second].join(':')}`;
+    }
+    }
  ).controller('ConfirmController',
   function($scope, $modalInstance, msg) {
    $scope.message = msg;

@@ -61,6 +61,7 @@
           <div class="col-sm-9 col-md-9 col-left">
             {%- block record_author %}
               {%- set files = record.files -%}
+              {%- set record = record -%}
               {%- set ignore_meta = ('_buckets', '_deposit', '_oai', 'path', 'filemeta', 'item_title', 'item_type_id') -%}
               {%- if files -%}
               <table class="table table-bordered table-striped">
@@ -90,7 +91,7 @@
                     {%- endif -%}
                   </td>
                 </tr>
-                <tr >
+                <tr>
                   <td>
                       <span class="filename">
                         <img src="{{img}}" alt={{ file.filename }} />
@@ -99,6 +100,9 @@
                         <span>[ 0 downloads ]</span><br>
                         <span>{{file.checksum.split(':')[0]}}</span>
                         <span class="break-word">{{file.checksum.split(':')[1]}}</span>
+                        <div ng-app="myApp" ng-controller="ItemController">
+                          <a href="#" style="float: right" class="showModal" ng-click="showChangeLog({{record}})">Change Log</a>
+                        </div>
                       </span>
                   </td>
                 </tr>
@@ -327,4 +331,36 @@
     </div>
   </div>
 </div>
+</div>
+
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" style="width: 95% !important;" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #f5f5f5 !important;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">WEKO</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <table class="table table-bordered">
+            <thead>
+              <tr style="background-color: #f5f5f5 !important;">
+                <th>Version</th>
+                <th>Date Modified</th>
+                <th>Object File Name</th>
+                <th>File Size</th>
+                <th>File Hash Value</th>
+                <th>Registered User Name</th>
+                <th>Public/Private</th>
+              </tr>
+            </thead>
+            <tbody id="bodyModal">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
