@@ -94,15 +94,21 @@
                 <tr>
                   <td>
                       <span class="filename">
-                        <img src="{{img}}" alt={{ file.filename }} />
-                        <a class="forcewrap"
-                           href="{{file_url}}">{{ file.filename }} ({{ file.size|filesizeformat }})</a>
-                        <span>[ 0 downloads ]</span><br>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <img src="{{img}}" alt={{ file.filename }} />
+                            <a class="forcewrap"
+                              href="{{file_url}}">{{ file.filename }} ({{ file.size|filesizeformat }})</a>
+                            <span>[ 0 downloads ]</span>
+                          </div>
+                          <div class="col-md-6">
+                            <div ng-app="myApp" ng-controller="ItemController">
+                              <a href="#" style="float: right" class="showModal" ng-click="showChangeLog({{record}})">Change Log</a>
+                            </div>
+                          </div>
+                        </div>
                         <span>{{file.checksum.split(':')[0]}}</span>
                         <span class="break-word">{{file.checksum.split(':')[1]}}</span>
-                        <div ng-app="myApp" ng-controller="ItemController">
-                          <a href="#" style="float: right" class="showModal" ng-click="showChangeLog({{record}})">Change Log</a>
-                        </div>
                       </span>
                   </td>
                 </tr>
