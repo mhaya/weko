@@ -28,4 +28,4 @@ _signals = Namespace()
 
 
 #: Sent when a new item created.
-item_created = _signals.signal('item_created')
+itemIndex_created = _signals.signal('itemIndex_created')
