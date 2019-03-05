@@ -102,7 +102,7 @@
                         <span>{{file.checksum.split(':')[0]}}</span>
                         <span class="break-word">{{file.checksum.split(':')[1]}}</span>
                         {%- if 'Display' == config['CHANGE_LOG_DISPLAY_FLAG'] -%}
-                          <a style="float: right" class="showModal" ng-click="showChangeLog('{{deposit}}')">Change Log</a>
+                          <a style="float: right" class="showModal" ng-click="showChangeLog('{{deposit}}')">{{_('Change Log')}}</a>
                         {%- endif -%}
                       </span>
                   </td>
@@ -239,7 +239,7 @@
                         {%- set deposit = record['_buckets']['deposit'] -%}
                         {%- if 'Display' == config['CHANGE_LOG_DISPLAY_FLAG'] -%}
                           {%- if lst['attribute_value_mlt'] -%}
-                            <a style="float: right" class="showModal" ng-click="showChangeLog('{{deposit}}')">Change Log</a>
+                            <a style="float: right" class="showModal" ng-click="showChangeLog('{{deposit}}')">{{_('Change Log')}}</a>
                           {%- endif -%}
                         {%- endif -%}
                       {% endif %}
@@ -355,13 +355,13 @@
           <table class="table table-bordered">
             <thead>
               <tr style="background-color: #f5f5f5 !important;">
-                <th>Version</th>
-                <th>Date Modified</th>
-                <th>Object File Name</th>
-                <th>File Size</th>
-                <th>File Hash Value</th>
-                <th>Registered User Name</th>
-                <th>Public/Private</th>
+                <th>{_('Version')}}</th>
+                <th>{_('Date Modified')}}</th>
+                <th>{_('Object File Name')}}</th>
+                <th>{_('File Size')}}</th>
+                <th>{_('File Hash Value')}}</th>
+                <th>{_('Registered User Name')}}</th>
+                <th>{_('Public/Private')}}</th>
               </tr>
             </thead>
             <tbody id="bodyModal">

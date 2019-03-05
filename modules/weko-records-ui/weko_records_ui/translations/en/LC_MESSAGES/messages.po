@@ -107,3 +107,26 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
+msgid "Change Log"
+msgstr "Change Log"
+
+msgid "Version"
+msgstr "Versionジョン"
+
+msgid "Date Modified"
+msgstr "Date Modified"
+
+msgid "Object File Name"
+msgstr "Object File Nameファイル名"
+
+msgid "File Size"
+msgstr "File Sizeル容量"
+
+msgid "File Hash Value"
+msgstr "File Hash Valueシュ値"
+
+msgid "Registered User Name"
+msgstr "Registered User Name"
+
+msgid "Public/Private"
+msgstr "Public/Private"
