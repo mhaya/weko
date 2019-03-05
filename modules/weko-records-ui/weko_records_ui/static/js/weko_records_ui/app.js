@@ -25,9 +25,8 @@ angular.module('myApp', ['ui.bootstrap'])
     });
    };
 
-    $scope.showChangeLog = function(record) {
+    $scope.showChangeLog = function(deposit) {
         // call api for itself to catch field deposit
-        const deposit = record['_buckets']['deposit'];
         // Call service to catch version by deposit with api /api/files/
         $http({
             method: 'GET',
