@@ -108,6 +108,12 @@ setup(
             'weko_indextree_journal_view = weko_indextree_journal.bundles:js_treeview',
             'weko_indextree_journal_js = weko_indextree_journal.bundles:js',
         ],
+        'invenio_pidstore.fetchers': [
+            'weko_indextree_journal_fetcher = weko_indextree_journal.pidstore:weko_indextree_journal_fetcher',
+        ],
+        'invenio_pidstore.minters': [
+            'weko_indextree_journal_minter = weko_indextree_journal.pidstore:weko_indextree_journal_minter',
+        ],
         'invenio_celery.tasks': [
             'weko_indextree_journal = weko_indextree_journal.tasks',
         ],
