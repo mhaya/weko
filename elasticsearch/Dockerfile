@@ -24,5 +24,6 @@ WORKDIR /usr/share/elasticsearch
 RUN mkdir -p backups && \
     chown -R elasticsearch:elasticsearch ./backups
 COPY scripts/provision-elasticsearch.sh /tmp/
+COPY modules/weko-schema-ui/weko_schema_ui/mappings/weko/dic/character/kui.txt /usr/share/elasticsearch/config
 # Install Elasticsarch plugins:
 RUN /tmp/provision-elasticsearch.sh
