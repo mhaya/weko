@@ -21,6 +21,7 @@
 """Flask extension for weko-workflow."""
 
 from weko_deposit.signals import item_created
+from weko_indextree_journal.signals import itemIndex_created
 
 from . import config
 from .sessions import upt_activity_item
@@ -45,6 +46,7 @@ class WekoWorkflow(object):
         """
         self.init_config(app)
         item_created.connect(upt_activity_item, app)
+        itemIndex_created.connect(upt_activity_item, app)
         app.register_blueprint(blueprint)
         app.extensions['weko-workflow'] = self
 
