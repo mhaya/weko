@@ -82,15 +82,7 @@ angular.module('myApp', ['ui.bootstrap'])
                 version = 'Current';
             }
 
-            let size = ele.size;
-            let unit = 'bytes';
-
-            if (size > 1024) {
-                unit = 'KB';
-                size = Number((size/1024).toFixed(2));
-            }
-
-            size = `${size}\t(${unit})`;
+            let size = formatBytes(ele.size, 2);
 
             results += `
             <tr>
@@ -161,7 +153,13 @@ angular.module('myApp', ['ui.bootstrap'])
 
         return `${[year, month, day].join('-')}\t${[hour, minute, second].join(':')}`;
     }
+
+    function formatBytes(a,b) {
+        if (0 == a) return "0 Bytes";
+        var c = 1024,d=b||2, e = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"], f = Math.floor(Math.log(a)/Math.log(c));
+        return parseFloat((a/Math.pow(c,f)).toFixed(d)) + " (" + e[f] + ")";
     }
+  }
  ).controller('ConfirmController',
   function($scope, $modalInstance, msg) {
    $scope.message = msg;
