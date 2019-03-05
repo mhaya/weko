@@ -194,5 +194,6 @@ class Journals(object):
     @classmethod
     def export_data_index_tree_journal(cls):
         # first update target pid when index tree id was deleted
-        from .tasks import export_data
-        export_data.delay()
+        #from .tasks import export_data
+        #export_data.delay()
+        print("Export data index tree journal")

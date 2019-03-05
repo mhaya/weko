@@ -38,4 +38,5 @@ def export_data():
     Export data of weko-indextree-journal
     :param:
     """
-    print("__________________________________EXPORT DATA______________________________")
+    from .api import Journals
+    Journals.export_data_index_tree_journal()
