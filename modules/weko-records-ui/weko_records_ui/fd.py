@@ -28,9 +28,8 @@ from .pdf import make_combined_pdf
 from werkzeug.datastructures import Headers
 from werkzeug.urls import url_quote
 from invenio_files_rest.proxies import current_permission_factory
-from .permissions import file_permission_factory
+from .permissions import file_permission_factory, check_original_pdf_download_permission
 from .models import PDFCoverPageSettings
-from .utils import can_download_original_pdf
 from invenio_files_rest.views import file_downloaded, check_permission
 from invenio_files_rest.views import ObjectResource
 from invenio_files_rest.models import ObjectVersion, FileInstance
@@ -203,16 +202,16 @@ def file_ui(pid, record, _record_file_factory=None, is_preview=False, **kwargs):
 
         is_original = request.args.get('original') or False
         is_pdf = 'pdf' in fileobj.mimetype
-        print('-------------pdfcoverpage_set_rec.avail: ', pdfcoverpage_set_rec.avail)
+        can_download_original_pdf = check_original_pdf_download_permission(record)
         print('-------------is_original: ', is_original)
         print('-------------is_pdf: ', is_pdf)
-        print('-------------can_download_original_pdf: ', can_download_original_pdf())
+        print('-------------can_download_original_pdf: ', can_download_original_pdf)
 
         # if not pdf or cover page disabled: Download directly
         # if pdf and cover page enabled and has original in query param: check permission (user roles)
         if is_pdf is False \
             or pdfcoverpage_set_rec is None or pdfcoverpage_set_rec.avail == 'disable' \
-            or (is_original and can_download_original_pdf()):
+            or (is_original and can_download_original_pdf):
             return ObjectResourceWeko.send_object(
                 obj.bucket, obj,
                 expected_chksum=fileobj.get('checksum'),
