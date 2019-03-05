@@ -34,6 +34,7 @@ from invenio_files_rest.views import file_downloaded, check_permission
 from invenio_files_rest.views import ObjectResource
 from invenio_files_rest.models import ObjectVersion, FileInstance
 from invenio_stats import *
+from invenio_files_rest.signals import file_downloaded
 from invenio_search.api import RecordsSearch
 
 def weko_view_meth0od(pid, record, template=None, **kwargs):

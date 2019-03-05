@@ -35,7 +35,7 @@ from weko_deposit.api import WekoIndexer
 from .models import PDFCoverPageSettings
 import werkzeug
 
-from weko_records.utils import get_record_stats
+from invenio_stats.utils import get_record_stats
 
 blueprint = Blueprint(
     'weko_records_ui',

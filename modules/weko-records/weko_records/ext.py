@@ -20,13 +20,25 @@
 
 """weko records extension."""
 
+# from . import config
+# # from .indexer import indexer_receiver
+# # # from .utils import serialize_record
+## from weko_records_ui.views import blueprint, record_communities
+#
+# from invenio_pidrelations.contrib.versioning import versioning_blueprint
+# from invenio_indexer.signals import before_record_index
+
+"""Jinja utilities for Invenio."""
+
+from __future__ import absolute_import, print_function
+
+from invenio_indexer.signals import before_record_index
+from invenio_pidrelations.contrib.versioning import versioning_blueprint
+
 from . import config
 from .indexer import indexer_receiver
-# from .utils import serialize_record
-# from weko_records_ui.views import blueprint, record_communities
-
-from invenio_pidrelations.contrib.versioning import versioning_blueprint
-from invenio_indexer.signals import before_record_index
+from .utils import serialize_record
+# from .views import blueprint, record_communities
 
 
 class WekoRecords(object):
@@ -59,7 +71,6 @@ class WekoRecords(object):
 
         before_record_index.connect(indexer_receiver, sender=app)
         app.extensions['weko-records'] = self
-
 
 
     def init_config(self, app):

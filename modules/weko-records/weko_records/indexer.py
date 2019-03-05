@@ -32,7 +32,7 @@ from invenio_pidrelations.serializers.utils import serialize_relations
 from invenio_pidstore.models import PersistentIdentifier
 
 from weko_records.serializers.pidrelations import serialize_related_identifiers
-from .utils import build_record_stats
+from invenio_stats.utils import build_record_stats
 
 
 def indexer_receiver(sender, json=None, record=None, index=None,
