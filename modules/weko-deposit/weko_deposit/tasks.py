@@ -38,6 +38,7 @@ def delete_items_by_id(p_path):
     Delete item Index on ES and update item json column to None
     :param p_path:
     """
+    print("Hello Deposit Celery task")
     current_app.logger.debug('index delete task is running.')
     current_app.logger.debug('----------------------Export data of weko-indextree-journal-------------------------')
     try:
@@ -60,6 +61,7 @@ def delete_items_by_id(p_path):
 
 @shared_task(ignore_result=True)
 def update_items_by_id(p_path, target):
+    print("Hello Deposit Celery task")
     current_app.logger.debug('index update task is running.')
     current_app.logger.debug('----------------------Export data of weko-indextree-journal-------------------------')
     try:

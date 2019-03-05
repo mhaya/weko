@@ -32,7 +32,8 @@ from elasticsearch.exceptions import TransportError
 logger = get_task_logger(__name__)
 
 
-@shared_task(ignore_result=True)
+#@shared_task(ignore_result=True)
+@shared_task
 def export_data():
     """
     Export data of weko-indextree-journal
@@ -40,4 +41,5 @@ def export_data():
     """
     #from .api import Journals
     #Journals.export_data_index_tree_journal()
+    print("Hello Celery task")
     current_app.logger.debug('----------------------Export data of weko-indextree-journal-------------------------')
