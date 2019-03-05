@@ -279,9 +279,9 @@ class ChunkDesignView(BaseView):
                     designed = widgets.get('designed', [])
 
                     if chunks:
-                        ChunkDesign.update('weko', designed=designed, html='')
+                        ChunkDesign.update('weko', designed=designed, html='', version=0)
                     else:
-                        ChunkDesign.create('weko', designed=designed, html='')
+                        ChunkDesign.create('weko', designed=designed, html='', version=0)
 
             return self.render(current_app.config['WEKO_ADMIN_CHUNK_DESIGN_TEMPLATE'])
 
@@ -303,8 +303,9 @@ class ChunkDesignView(BaseView):
     def get_chunk_html(self):
         chunk = ChunkDesign.get('weko')
         html = chunk.html if chunk else ''
+        version = chunk.version if chunk else 0
 
-        data = {'html': html}
+        data = {'html': html, 'version': version}
 
         return jsonify(data)
 
@@ -321,13 +322,14 @@ class ChunkDesignView(BaseView):
             chunks = ChunkDesign.get('weko')
             designed = chunks.designed if chunks else []
             html = chunks.html if chunks else []
+            version = chunks.version + 1 if chunks else 0
 
             if wysiwyg_html:
                 html = wysiwyg_html
 
             if 'info' == temp:
                 if chunks:
-                    ChunkDesign.update('weko', designed=designed, html=html)
+                    ChunkDesign.update('weko', designed=designed, html=html, version=version)
 
         except Exception:
             current_app.logger.error('Unexpected error: ', sys.exc_info()[0])

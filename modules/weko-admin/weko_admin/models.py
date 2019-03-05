@@ -297,6 +297,8 @@ class ChunkDesign(db.Model):
     html = db.Column(db.Text, nullable=False, default='')
     """Chunk Contents."""
 
+    version = db.Column(db.Integer, nullable=False)
+
     @classmethod
     def create(cls, community_id, **data):
         try:
@@ -330,7 +332,7 @@ class ChunkDesign(db.Model):
                     return
 
                 for k, v in data.items():
-                    if "designed" in k or "html" in k:
+                    if "designed" in k or "html" in k or "version" in k:
                         setattr(chunk, k, v)
                 db.session.merge(chunk)
             db.session.commit()
