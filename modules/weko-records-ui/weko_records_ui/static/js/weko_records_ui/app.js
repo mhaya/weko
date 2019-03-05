@@ -79,7 +79,7 @@ angular.module('myApp', ['ui.bootstrap'])
 
             let version = contents.length - index;
             if (index === 0) {
-            version = 'Current';
+                version = 'Current';
             }
 
             let size = ele.size;
