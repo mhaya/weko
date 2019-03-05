@@ -28,6 +28,7 @@ angular.module('myApp', ['ui.bootstrap'])
     $scope.showChangeLog = function(deposit) {
         // call api for itself to catch field deposit
         // Call service to catch version by deposit with api /api/files/
+        $('#bodyModal').children().remove();
         $http({
             method: 'GET',
             url: `/api/files/${deposit}?versions`,
@@ -35,10 +36,6 @@ angular.module('myApp', ['ui.bootstrap'])
             $('#bodyModal').append(createRow(response['data']));
             $('#basicExampleModal').modal({
                 show: true
-            });
-            $('#basicExampleModal').on('hidden.bs.modal', function (e) {
-                // Event will be trigger when modal absolute hidded
-                $('#bodyModal').children().remove();
             });
         }, function errorCallback(response) {
             console.log('Error when trigger api /api/files');
