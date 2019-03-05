@@ -39,6 +39,7 @@ def delete_items_by_id(p_path):
     :param p_path:
     """
     current_app.logger.debug('index delete task is running.')
+    current_app.logger.debug('----------------------Export data of weko-indextree-journal-------------------------')
     try:
         result = db.session.query(RecordMetadata). \
             filter(RecordMetadata.json.op('->>')('path').contains(p_path)).yield_per(1000)
@@ -60,6 +61,7 @@ def delete_items_by_id(p_path):
 @shared_task(ignore_result=True)
 def update_items_by_id(p_path, target):
     current_app.logger.debug('index update task is running.')
+    current_app.logger.debug('----------------------Export data of weko-indextree-journal-------------------------')
     try:
         result = db.session.query(RecordMetadata). \
             filter(RecordMetadata.json.op('->>')('path').contains(p_path)).yield_per(1000)

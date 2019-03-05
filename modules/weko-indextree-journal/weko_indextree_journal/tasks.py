@@ -40,4 +40,4 @@ def export_data():
     """
     #from .api import Journals
     #Journals.export_data_index_tree_journal()
-    print("----------------------Export data of weko-indextree-journal-------------------------")
+    current_app.logger.debug('----------------------Export data of weko-indextree-journal-------------------------')
