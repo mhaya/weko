@@ -49,6 +49,9 @@ angular.module('myApp', ['ui.bootstrap'])
     function createRow(response) {
         let results = '';
         const contents = response.contents;
+        response.contents.sort(function(first, second) {
+            return second.updated - first.updated;
+        });
         for (let index = 0; index < contents.length; index++) {
             const ele = contents[index];
 
@@ -74,7 +77,7 @@ angular.module('myApp', ['ui.bootstrap'])
             //   `;
             // }
 
-            let version = ele.version_id;
+            let version = contents.length - index;
             if (index === 0) {
             version = 'Current';
             }
@@ -122,7 +125,7 @@ angular.module('myApp', ['ui.bootstrap'])
                 <td>
                 <div class="row">
                     <div class="col-md-12 margin_top_10">
-                    <p>${size}</p>
+                    <p>${ele.checksum}</p>
                     </div>
                 </div>
                 </td>
