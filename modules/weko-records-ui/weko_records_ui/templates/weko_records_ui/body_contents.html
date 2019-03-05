@@ -101,7 +101,9 @@
                         <span>[ 0 downloads ]</span>
                         <span>{{file.checksum.split(':')[0]}}</span>
                         <span class="break-word">{{file.checksum.split(':')[1]}}</span>
-                        <a style="float: right" class="showModal" ng-click="showChangeLog('{{deposit}}')">Change Log</a>
+                        {%- if 'Display' == config['CHANGE_LOG_DISPLAY_FLAG'] -%}
+                          <a style="float: right" class="showModal" ng-click="showChangeLog('{{deposit}}')">Change Log</a>
+                        {%- endif -%}
                       </span>
                   </td>
                 </tr>
@@ -235,9 +237,11 @@
                           {% endfor %}
                         {% endfor %}
                         {%- set deposit = record['_buckets']['deposit'] -%}
-                        <!-- {%- if lst['attribute_value_mlt'] -%} -->
-                          <a style="float: right" class="showModal" ng-click="showChangeLog('{{deposit}}')">Change Log</a>
-                        <!-- {%- endif -%} -->
+                        {%- if 'Display' == config['CHANGE_LOG_DISPLAY_FLAG'] -%}
+                          {%- if lst['attribute_value_mlt'] -%}
+                            <a style="float: right" class="showModal" ng-click="showChangeLog('{{deposit}}')">Change Log</a>
+                          {%- endif -%}
+                        {%- endif -%}
                       {% endif %}
                     </td>
                   </tr>

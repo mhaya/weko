@@ -50,6 +50,9 @@ ITEM_SEARCH_FLG = 'name'
 EMAIL_DISPLAY_FLG = True
 # setting the email of author if display
 
+CHANGE_LOG_DISPLAY_FLAG = 'Display'
+# setting the change log to be displayed. Possible values are "Display" / "Hide"
+
 RECORDS_UI_ENDPOINTS = dict(
     recid=dict(
         pid_type='recid',
