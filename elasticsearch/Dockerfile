@@ -23,7 +23,7 @@ FROM elasticsearch:2
 WORKDIR /usr/share/elasticsearch
 RUN mkdir -p backups && \
     chown -R elasticsearch:elasticsearch ./backups
-
 COPY scripts/provision-elasticsearch.sh /tmp/
+COPY elasticsearch/dic/character/kui.txt /usr/share/elasticsearch/config
 # Install Elasticsarch plugins:
 RUN /tmp/provision-elasticsearch.sh
