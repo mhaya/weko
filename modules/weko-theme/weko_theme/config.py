@@ -19,8 +19,9 @@
 # MA 02111-1307, USA.
 
 """Configuration for weko-theme."""
-
+# TODO
 BASE_PAGE_TEMPLATE = 'weko_theme/page.html'
+GRID_BASE_PAGE_TEMPLATE = 'weko_theme/grid_page.html'
 """Base template for user facing pages."""
 
 BASE_EDIT_TEMPLATE = 'weko_theme/edit.html'
@@ -43,7 +44,9 @@ THEME_HEADER_WYSIWYG_TEMPLATE = 'weko_theme/header_wysiwyg.html'
 THEME_HEADER_LOGIN_TEMPLATE = 'weko_theme/header_login.html'
 """Header login template, included in :data:`THEME_HEADER_TEMPLATE`."""
 
+# TODO
 THEME_BODY_TEMPLATE = 'weko_theme/body.html'
+THEME_GRID_BODY_TEMPLATE = 'weko_theme/grid_body.html'
 """Body template which is normally included in :data:`BASE_TEMPLATE`."""
 
 THEME_LOGO = 'images/weko-logo.png'

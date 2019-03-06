@@ -1,0 +1,259 @@
+{#
+# This file is part of WEKO3.
+# Copyright (C) 2017 National Institute of Informatics.
+#
+# WEKO3 is free software; you can redistribute it
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# WEKO3 is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WEKO3; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+#}
+<!DOCTYPE html>
+<html {% if html_css_classes %} class="{{ html_css_classes|join(' ') }}"{% endif %} lang="{{ current_i18n.locale.language|safe }}" dir="{{ current_i18n.locale.text_direction }}">
+  <head>
+    {%- block head %}
+    {%- block head_meta %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {%- if description %}<meta name="description" content="{{ description }}" />{% endif %}
+    {%- if keywords %}<meta name="keywords" content="{{ keywords }}" />{% endif %}
+    {%- if config.get('THEME_GOOGLE_SITE_VERIFICATION', None) %}
+      {%- for google_id in config.THEME_GOOGLE_SITE_VERIFICATION %}
+    <meta name="google-site-verification" content="{{google_id}}"/>
+      {%- endfor %}
+    {%- endif %}
+    {%- endblock head_meta %}
+    {%- block head_title %}
+    {%- set title = _(title) or _(config.THEME_SITENAME) or _('Weko3') %}
+    <title>{{title}}</title>
+    {%- endblock head_title %}
+    {%- block head_links %}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}"/>
+    {%- if keywords %}<link rel="canonical" href="{{ canonical_url }}"/>{% endif %}
+    {%- block head_links_langs %}
+      {%- if alternate_urls %}
+        {%- for alt_ln, alternate_url in alternate_urls.items() %}
+    <link rel="alternate" hreflang="{{ alt_ln }}" href="{{ alternate_url }}"/>
+        {%- endfor %}
+      {%- endif %}
+    {%- endblock head_links_langs %}
+    {%- block head_apple_icons %}
+    {%- for size in [144, 114, 72, 57] %}
+      {%- set icon_name = 'apple-touch-icon-%d-precomposed.png' | format(size) %}
+    <link rel="apple-touch-icon-precomposed" sizes="{{ size }}x{{ size }}" href="{{ url_for('static', filename=icon_name) }}"/>
+    {%- endfor %}
+    {%- endblock head_apple_icons %}
+    {%- endblock head_links %}
+    {%- block header %}{% endblock header %}
+    {%- block css %}
+    {% assets "weko_theme_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
+    {% assets "weko_theme_css_bootstrap" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    {%- endblock css %}
+    {%- endblock head %}
+  </head>
+  <body {% if body_css_classes %} class="{{ body_css_classes|join(' ') }}"{% endif %}{% if g.ln %} lang="{{ g.ln.split('_', 1)[0]|safe }}"{% if rtl_direction %} {{ rtl_direction|safe }}{% endif %}{% endif %} itemscope itemtype="http://schema.org/WebPage" data-spy="scroll" data-target=".scrollspy-target">
+    {%- block body %}
+    {%- block browserupgrade %}
+    <!--[if lt IE 8]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    {%- endblock browserupgrade %}
+    {%- block body_inner %}
+    <link href="{{ url_for('static', filename='css/weko_admin/quill.snow.css') }}" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react-grid-layout/0.16.6/css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react-grid-layout/0.16.6/css/styles.min.css" />
+    <style type="text/css">
+        #grid-info {
+            background: #D8D8D8;
+        }
+        #grid-info .react-grid-item {
+            background: #00ff00;
+            text-align: center;
+        }
+        #grid-body-left {
+            background: #D8D8D8;
+        }
+        #grid-body-right {
+            background: #D8D8D8;
+        }
+        #grid-body-left .react-grid-item {
+            background: #b0c4de;
+            text-align: center;
+        }
+        #grid-body-right .react-grid-item {
+            background: #ffff00;
+            text-align: center;
+        }
+
+    </style>
+
+    <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-grid-layout/0.16.6/react-grid-layout.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
+    <script type="text/babel">
+      // Left
+      class WekoGridLeft extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {};
+        }
+        componentDidMount() {
+          const self = this;
+          fetch('/admin/chunk-design/design')
+              .then(response => response.json())
+              .then(data => this.setState({ layout: JSON.parse(data.layout) }));
+        }
+
+        render(){
+          var layout = document.getElementById('grid-layout').innerText
+          return (
+            <div>
+            { this.state.layout &&
+            <ReactGridLayout className="layout" layout={this.state.layout} cols={12} rowHeight={30} width={1200}>
+              <div key="a" class="grid-left"><h3>Left_a</h3></div>
+              <div key="b" class="grid-left"><h3>Left_b</h3></div>
+              <div key="c" class="grid-left"><h3>Left_c</h3></div>
+              <div key="d" class="grid-left"><h3>Left_d</h3></div>
+              <div key="e" class="grid-left"><h3>Left_e</h3></div>
+            </ReactGridLayout>
+            }
+            </div>
+          )
+        }
+      }
+      ReactDOM.render(
+        <WekoGridLeft />,
+        document.getElementById('grid-body-left')
+      )
+
+      // Right
+      class WekoGridRight extends React.Component {
+        render(){
+          var layout = [
+            {i: 'a', x: 0, y: 0, w: 3, h: 2},
+            {i: 'b', x: 0, y: 3, w: 3, h: 2},
+            {i: 'c', x: 0, y: 6, w: 3, h: 2},
+            {i: 'd', x: 0, y: 9, w: 3, h: 2},
+            {i: 'e', x: 0, y: 12, w: 3, h: 2}
+          ];
+          return (
+            <ReactGridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
+              <div key="a" class="grid-right"><h3>Right_a</h3></div>
+              <div key="b" class="grid-right"><h3>Right_b</h3></div>
+              <div key="c" class="grid-right"><h3>Right_c</h3></div>
+              <div key="d" class="grid-right"><h3>Right_d</h3></div>
+              <div key="e" class="grid-right"><h3>Right_e</h3><a id="link" href="#">Link</a></div>
+            </ReactGridLayout>
+          )
+        }
+      }
+      ReactDOM.render(
+        <WekoGridRight />,
+        document.getElementById('grid-body-right')
+      )
+
+      // Info
+      class WekoGridInfo extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {'localVer': '0'};
+          this.createMarkup = this.createMarkup.bind(this);
+        }
+        componentDidMount() {
+          if(this.state.version) {
+            this.setState({ localVer: this.state.version });
+          }
+          fetch('/admin/chunk-design/html')
+              .then(response => response.json())
+              .then(data => this.setState({ html: data.html, version: data.version }));
+
+        }
+        createMarkup(script) {
+          return {__html: script};
+        }
+        render(){
+          var layout = [
+            {i: 'a', x: 1, y: 0, w: 11, h: 1}
+          ];
+          const styles = {
+            height: "100vh"
+          }
+          return (
+            <div>
+              { this.state.html && this.state.version && this.state.localVer !== this.state.version &&
+              <ReactGridLayout className="layout" layout={layout} cols={12} width={2000} autoSize="true" margin={[0,0]}>
+                <div key="a" class="grid-info">
+                  <div dangerouslySetInnerHTML={this.createMarkup(this.state.html)}></div>
+                </div>
+              </ReactGridLayout>
+              }
+            </div>
+          )
+        }
+      }
+      ReactDOM.render(
+        <WekoGridInfo />,
+        document.getElementById('grid-info')
+      )
+
+    </script>
+    {%- block page_header %}
+      {% include config.THEME_HEADER_TEMPLATE %}
+    {%- endblock page_header %}
+
+    <div class="row" class="col-md-12">
+      <div id="grid-info" class="col-md-12"></div>
+    </div>
+    <div class="row" class="col-md-12">
+      <div id="grid-body-left" class="col-md-3">
+      </div>
+      <div id="grid-body" class="col-md-6">
+      {%- block page_body %}
+      {%- endblock page_body %}
+      </div>
+      <div id="grid-body-right" class="col-md-3">
+      </div>
+
+      <div id="grid-layout" ></div>
+    </div>
+
+    <div class="row" class="col-md-12">
+      {%- block page_footer %}
+        {% include config.THEME_FOOTER_TEMPLATE %}
+      {%- endblock page_footer %}
+    </div>
+    <div class="row" class="col-md-12">
+      <div id="author-body" ></div>
+    </div>
+
+
+    {%- endblock body_inner %}
+    {%- block javascript %}
+{% include config.THEME_JAVASCRIPT_TEMPLATE %}
+{% assets "weko_theme_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+    {%- endblock javascript %}
+    {%- block trackingcode %}{% include config.THEME_TRACKINGCODE_TEMPLATE %}
+    {%- endblock trackingcode %}
+    {%- endblock body %}
+  </body>
+</html>

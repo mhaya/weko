@@ -1,0 +1,52 @@
+{#
+# This file is part of WEKO3.
+# Copyright (C) 2017 National Institute of Informatics.
+#
+# WEKO3 is free software; you can redistribute it
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# WEKO3 is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WEKO3; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+#}
+
+{%- extends "weko_theme/base.html" %}
+
+{%- block page_body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          {%- block body_title %}
+            <div class="pull-right">
+            {%- block body_title_right %}
+            {%- endblock body_title_right %}
+            </div>
+            {%- block body_title_left %}
+              {%-if not community_id %}
+              <h5><strong><p class="text-uppercase">{{ _(config.THEME_SITENAME) }}</p></strong></h5>
+              {%- else%}
+              <h5><strong><p class="">{{community.title}}</p></strong></h5>
+              {%- endif%}
+            {%- endblock body_title_left %}
+          {%- endblock body_title %}
+        </div>
+        <div class="panel-body">
+          {%- block body_center %}
+            {#% include "weko_theme/body_center.html" %#}
+          {%- endblock body_center %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endblock page_body %}
