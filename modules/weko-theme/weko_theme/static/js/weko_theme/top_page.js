@@ -3,8 +3,21 @@ require([
   "bootstrap"
 ], function () {
     $(document).ready(function() {
+
       $('#author-tab').on('click', function(){
-        alert("Author!!");
+        $.ajax({
+          url: '/authors',
+          method: 'GET',
+          async: true,
+          success: function(data, status) {
+            alert(data);
+  
+          },
+          error: function(jqXHR, status) {
+            alert('Load chunk format failed.');
+          }
+        });
+
       });
 
     });
