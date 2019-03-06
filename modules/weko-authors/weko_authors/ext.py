@@ -48,10 +48,10 @@ class WekoAuthors(object):
         :param app: The Flask application.
         """
         # Use theme's base template if theme is installed
-        if 'BASE_PAGE_TEMPLATE' in app.config:
+        if 'GRID_BASE_PAGE_TEMPLATE' in app.config:
             app.config.setdefault(
                 'WEKO_AUTHORS_BASE_TEMPLATE',
-                app.config['BASE_PAGE_TEMPLATE'],
+                app.config['GRID_BASE_PAGE_TEMPLATE'],
             )
         for k in dir(config):
             if k.startswith('WEKO_AUTHORS_'):

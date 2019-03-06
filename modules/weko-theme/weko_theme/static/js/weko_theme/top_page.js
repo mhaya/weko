@@ -11,10 +11,22 @@ require([
           async: true,
           success: function(data, status) {
             $('#grid-body').html(data);
-
           },
           error: function(jqXHR, status) {
-            alert('Load chunk format failed.');
+          }
+        });
+
+      });
+
+      $('#author-tab').on('click', function(){
+        $.ajax({
+          url: '/authors',
+          method: 'GET',
+          async: true,
+          success: function(data, status) {
+            $('#grid-body').html(data);
+          },
+          error: function(jqXHR, status) {
           }
         });
 
