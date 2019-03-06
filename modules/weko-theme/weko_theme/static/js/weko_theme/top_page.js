@@ -10,7 +10,7 @@ require([
           method: 'GET',
           async: true,
           success: function(data, status) {
-            alert(data);
+            $('#grid-body-right').html(data);
   
           },
           error: function(jqXHR, status) {
