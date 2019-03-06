@@ -61,9 +61,12 @@ def index():
         community_id =comm.id
     else:
         activities = activity.get_activity_list()
+
+    system = True if 'from' in getargs else None
     return render_template(
         'weko_workflow/activity_list.html',
-        activities=activities, community_id=community_id, **ctx
+        activities=activities, community_id=community_id,
+        system=system, **ctx
     )
 
 @blueprint.route('/iframe/success', methods=['GET'])

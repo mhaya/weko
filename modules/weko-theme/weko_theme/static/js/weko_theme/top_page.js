@@ -6,7 +6,7 @@ require([
 
       $('#workflow-tab').on('click', function(){
         $.ajax({
-          url: '/workflow/',
+          url: '/workflow/?from=system',
           method: 'GET',
           async: true,
           success: function(data, status) {

@@ -18,7 +18,12 @@
 # MA 02111-1307, USA.
 #}
 
-{%- extends config.WEKO_WORKFLOW_BASE_TEMPLATE %}
+{%-if system%}
+  {%- extends config.WEKO_WORKFLOW_BASE_TEMPLATE %}
+{%-else%}
+  {%- extends config.BASE_PAGE_TEMPLATE %}
+{%- endif%}
+
 {%- from "invenio_communities/macros.html" import community_header, community_footer %}
 
 {%- block css %}
