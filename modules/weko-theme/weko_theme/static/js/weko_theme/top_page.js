@@ -6,11 +6,11 @@ require([
 
       $('#workflow-tab').on('click', function(){
         $.ajax({
-          url: '/workflow',
+          url: '/workflow/',
           method: 'GET',
           async: true,
           success: function(data, status) {
-            $('#author-body').html(data);
+            $('#grid-body').html(data);
 
           },
           error: function(jqXHR, status) {
