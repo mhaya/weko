@@ -111,19 +111,19 @@ msgid "Change Log"
 msgstr "Change Log"
 
 msgid "Version"
-msgstr "Versionジョン"
+msgstr "Version"
 
 msgid "Date Modified"
 msgstr "Date Modified"
 
 msgid "Object File Name"
-msgstr "Object File Nameファイル名"
+msgstr "Object File Name"
 
 msgid "File Size"
-msgstr "File Sizeル容量"
+msgstr "File Size"
 
 msgid "File Hash Value"
-msgstr "File Hash Valueシュ値"
+msgstr "File Hash Value"
 
 msgid "Registered User Name"
 msgstr "Registered User Name"
