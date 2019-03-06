@@ -6,7 +6,7 @@ require([
 
       $('#author-tab').on('click', function(){
         $.ajax({
-          url: '/authors',
+          url: '/workflow',
           method: 'GET',
           async: true,
           success: function(data, status) {
