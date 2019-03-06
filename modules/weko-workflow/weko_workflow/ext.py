@@ -54,10 +54,10 @@ class WekoWorkflow(object):
         :param app: The Flask application.
         """
         # Use theme's base template if theme is installed
-        if 'BASE_EDIT_TEMPLATE' in app.config:
+        if 'GRID_BASE_PAGE_TEMPLATE' in app.config:
             app.config.setdefault(
                 'WEKO_WORKFLOW_BASE_TEMPLATE',
-                app.config['BASE_PAGE_TEMPLATE'],
+                app.config['GRID_BASE_PAGE_TEMPLATE'],
             )
         for k in dir(config):
             if k.startswith('WEKO_WORKFLOW_'):
