@@ -29,11 +29,3 @@
     <li role="presentation" {% if tab_value=='community' %}class="active"{% endif %}><a href="{{url_for('invenio_communities.community_list')}}">{{ _('Communities') }}</a></li>
     {%-endif%}
 {% endmacro %}
-<script>
-  $(document).ready(function() {
-
-    $('#author-tab').on('click', function(){
-      alert("Author!!");
-    });
-  })
-</script>

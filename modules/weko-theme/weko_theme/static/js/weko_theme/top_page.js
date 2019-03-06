@@ -2,7 +2,10 @@ require([
   "jquery",
   "bootstrap"
 ], function () {
-    $('body').on('load', function (event, data) {
+    $(document).ready(function() {
+      $('#author-tab').on('click', function(){
+        alert("Author!!");
+      });
 
     });
     //urlからパラメタ―の値を取得
