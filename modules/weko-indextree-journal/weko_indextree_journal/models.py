@@ -58,7 +58,7 @@ class Journal(db.Model, Timestamp):
         single_parent=True)
     """ID of Index to whom this journal belongs."""
 
-    publication_title = db.Column(db.Text, nullable=False, default='')
+    publication_title = db.Column(db.Text, nullable=True, default='')
     """Title of the journal."""
 
     print_identifier = db.Column(db.Text, nullable=True, default='')
@@ -126,11 +126,23 @@ class Journal(db.Model, Timestamp):
     """Number of last issue available online of the journal."""
     """ varchar(255) """
 
+    title_url = db.Column(db.Text, nullable=True, default='')
+    """ varchar(2048)
+        WEKO index search result page display URL
+        [Top Page URL] /? Action = repository_opensearch & index_id = [title_id]
+    """
+    
+    first_author = db.Column(db.Text, nullable=True, default='')
+    """ first_author """
+
+    title_id = db.Column(db.BigInteger, nullable=True, default=0)
+    """ Output the index ID of WEKO. """
+    
     embargo_info = db.Column(db.Text, nullable=True, default='')
     """Embargo information of the journal."""
     """ varchar(255) """
 
-    coverage_depth = db.Column(db.Text, nullable=False, default='')
+    coverage_depth = db.Column(db.Text, nullable=True, default='')
     """Coverage depth of the journal."""
     """ 
         varchar(255)
@@ -138,7 +150,7 @@ class Journal(db.Model, Timestamp):
         　Abstract、Fulltext、Selected Articles
     """
 
-    notes = db.Column(db.Text, nullable=True, default='')
+    coverage_notes = db.Column(db.Text, nullable=True, default='')
     """Coverage notes of the journal."""
     """ varchar(255) """
 
@@ -146,11 +158,26 @@ class Journal(db.Model, Timestamp):
     """The Publisher name of the journal."""
     """ varchar(255) """
 
-    publication_type = db.Column(db.Text, nullable=False, default='')
+    publication_type = db.Column(db.Text, nullable=True, default='')
     """Publication type of the journal."""
     """ varchar(255)
         Select the following item: "Serial"
     """
+
+    date_monograph_published_print = db.Column(db.Text, nullable=True, default='')
+    """" date_monograph_published_print """
+
+    date_monograph_published_online = db.Column(db.Text, nullable=True, default='')
+    """" date_monograph_published_online """
+
+    monograph_volume = db.Column(db.Text, nullable=True, default='')
+    """" monograph_volume """
+
+    monograph_edition = db.Column(db.Text, nullable=True, default='')
+    """" monograph_edition """
+
+    first_editor = db.Column(db.Text, nullable=True, default='')
+    """" first_editor """
 
     parent_publication_title_id = db.Column(db.BigInteger, nullable=True, default=0)
     """Parent publication identifier of the journal."""
@@ -168,7 +195,7 @@ class Journal(db.Model, Timestamp):
             It's the index ID of index containing journal information
     """
 
-    access_type = db.Column(db.Text, nullable=False, default='')
+    access_type = db.Column(db.Text, nullable=True, default='')
     """Access type of the journal."""
     """
         varchar(1)
@@ -179,7 +206,7 @@ class Journal(db.Model, Timestamp):
         　・P：Paid（有料）
     """
 
-    language = db.Column(db.Text, nullable=False, default='')
+    language = db.Column(db.Text, nullable=True, default='')
     """Language of the journal."""
     """
         varchar(7)
@@ -226,6 +253,14 @@ class Journal(db.Model, Timestamp):
     """ varchar(6)
         Allow the following input:「^J[0-9]{5}$」
     """
+
+    deleted = db.Column(db.Text, nullable=True, default='')
+    """Always output with empty string (character string length = 0)"""
+
+    is_output = db.Column(db.Boolean(name='is_output'),
+        nullable=True,
+        default=lambda: False
+    )
 
     owner_user_id = db.Column(db.Integer, nullable=True, default=0)
     """Owner user id of the journal."""

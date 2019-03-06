@@ -1,52 +1,15 @@
 # -*- coding: utf-8 -*-
 #
-# This file is part of WEKO3.
-# Copyright (C) 2017 National Institute of Informatics.
+# Copyright (C) 2019 National Institute of Informatics.
 #
-# WEKO3 is free software; you can redistribute it
-# and/or modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# WEKO3 is distributed in the hope that it will be
-# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with WEKO3; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
-
-"""Configuration for weko-indextree-journal."""
+# WEKO-Indextree-Journal is free software; you can redistribute it and/or
+# modify it under the terms of the MIT License; see LICENSE file for more
+# details.
 
 """Module of weko-indextree-journal."""
 
-import copy
-
-from invenio_records_rest.config import RECORDS_REST_ENDPOINTS
-from invenio_records_rest.facets import terms_filter
-from invenio_search import RecordsSearch
-
-
-WEKO_BUCKET_QUOTA_SIZE = 50 * 1024 * 1024 * 1024  # 50 GB
-"""Maximum quota per bucket."""
-
-WEKO_MAX_FILE_SIZE = WEKO_BUCKET_QUOTA_SIZE
-WEKO_MAX_FILE_SIZE_FOR_ES = 1 * 1024 * 1024  # 1MB
-"""Maximum file size accepted."""
-
-WEKO_MIMETYPE_WHITELIST_FOR_ES = [
-    'text/plain',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    'application/vnd.ms-excel',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    'application/vnd.ms-powerpoint',
-    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-    'application/pdf',
-]
-
+# TODO: This is an example file. Remove it if your package does not use any
+# extra configuration variables.
 WEKO_INDEXTREE_JOURNAL_BASE_TEMPLATE = 'weko_indextree_journal/base.html'
 """Default base template for the indextree journal page."""
 
@@ -64,7 +27,6 @@ _IID = 'iid(tid,record_class="weko_indextree_journal.api:Journals")'
 
 WEKO_INDEXTREE_JOURNAL_REST_ENDPOINTS = dict(
     tid=dict(
-        pid_type='tid',
         record_class='weko_indextree_journal.api:Journals',
         indextree_journal_route='/indextree/journal/<int:journal_id>',
         journal_route='/indextree/journal',
@@ -84,7 +46,3 @@ WEKO_INDEXTREE_JOURNAL_REST_ENDPOINTS = dict(
 
 WEKO_INDEXTREE_JOURNAL_UPDATED = True
 """For index tree cache."""
-
-RECORDS_REST_DEFAULT_CREATE_PERMISSION_FACTORY = None
-RECORDS_REST_DEFAULT_UPDATE_PERMISSION_FACTORY = None
-RECORDS_REST_DEFAULT_DELETE_PERMISSION_FACTORY = None

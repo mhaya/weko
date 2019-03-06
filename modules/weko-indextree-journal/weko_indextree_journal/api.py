@@ -78,7 +78,7 @@ class Journals(object):
             data["num_last_issue_online"] = journals.get('num_last_issue_online')
             data["embargo_info"] = journals.get('embargo_info')
             data["coverage_depth"] = journals.get('coverage_depth')
-            data["notes"] = journals.get('notes')
+            data["coverage_notes"] = journals.get('coverage_notes')
             data["publisher_name"] = journals.get('publisher_name')
             data["publication_type"] = journals.get('publication_type')
             data["parent_publication_title_id"] = journals.get('parent_publication_title_id')
@@ -92,6 +92,7 @@ class Journals(object):
             data["ndl_bibid"] = journals.get('ndl_bibid')
             data["jstage_code"] = journals.get('jstage_code')
             data["ichushi_code"] = journals.get('ichushi_code')
+            data["is_output"] = journals.get('is_output')
 
             # get current user logged id.
             data["owner_user_id"] = current_user.get_id()
@@ -149,7 +150,7 @@ class Journals(object):
                 slf = cls.get_journal(journal_id)
                 if not slf:
                     return
-
+                    
                 db.session.delete(slf)
                 db.session.commit()
                 return dct
@@ -187,13 +188,20 @@ class Journals(object):
                     filter_by(index_id=index_id).one_or_none()
 
         if obj is None:
-            return []
+            return {}
 
         return dict(obj)
 
     @classmethod
-    def export_data_index_tree_journal(cls):
-        # first update target pid when index tree id was deleted
-        #from .tasks import export_data
-        #export_data.delay()
-        print("Export data index tree journal")
+    def get_all_journals(cls):
+        """
+        Get all journals in journal table.
+
+        :return: List of journal object.
+        """
+        journals = db.session.query(Journal).all()
+
+        if journals is None:
+            return None
+
+        return journals

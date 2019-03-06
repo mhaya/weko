@@ -13,6 +13,8 @@
 
 from __future__ import absolute_import, print_function
 import sys
+import json
+import numpy
 
 from flask import (
     Blueprint, render_template, current_app, json, abort, jsonify)
@@ -22,6 +24,7 @@ from flask_babelex import gettext as _
 from weko_records.api import ItemTypes
 from weko_groups.api import Group
 from .api import Journals
+from .tasks import export_journal_task
 
 from .permissions import indextree_journal_permission
 
@@ -33,11 +36,12 @@ blueprint = Blueprint(
     url_prefix='/indextree/journal',
 )
 
-
 @blueprint.route("/")
-def index():
+@blueprint.route("/<int:index_id>")
+@login_required
+def index(index_id = 0):
     """Render a basic view."""
-    item_type_id = 19 # item tpye's journal = 21
+    item_type_id = 20 # item tpye's journal = 21
     lists = ItemTypes.get_latest()
     if lists is None or len(lists) == 0:
         return render_template(
@@ -49,20 +53,32 @@ def index():
     json_schema = '/indextree/journal/jsonschema/{}'.format(item_type_id)
     schema_form = '/indextree/journal/schemaform/{}'.format(item_type_id)
     
+    # Get journal info.
+    journal = []
+    journal_id = None
+    if index_id > 0:
+        journal = Journals.get_journal_by_index_id(index_id)
+        if journal is not None:
+            journal_id = journal.get("id")
+
+    json_record = journal
+
     return render_template(
         current_app.config['WEKO_INDEXTREE_JOURNAL_INDEX_TEMPLATE'],
         get_tree_json=current_app.config['WEKO_INDEX_TREE_LIST_API'],
         upt_tree_json='',
         mod_tree_detail=current_app.config['WEKO_INDEX_TREE_API'],
         mod_journal_detail=current_app.config['WEKO_INDEXTREE_JOURNAL_API'],
-        record=None,
+        record=json_record,
         jsonschema=json_schema,
         schemaform=schema_form,
         lists=lists,
         links=None,
         id=item_type_id,
         files=None,
-        pid=None
+        pid=None,
+        index_id = index_id,
+        journal_id = journal_id
     )
 
 @blueprint.route("/index/<int:index_id>")
@@ -78,8 +94,27 @@ def get_journal_by_index_id(index_id = 0):
     except:
         current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
     return abort(400)
-    
 
+@blueprint.route("/export", methods=['GET'])
+@login_required
+def export_journals():
+    try:
+        # Get all journal records in journal table.
+        journals = Journals.get_all_journals()
+        results = [obj.__dict__ for obj in journals]
+        data = numpy.asarray(results)
+        numpy.savetxt("journal.tsv", data, delimiter=",")
+
+        # jsonList = json.dumps({"results" : results})
+        # Save journals information to file
+        return jsonify({"result" : True})
+    except Exception as ex:
+        current_app.logger.debug(ex)
+    return jsonify({"result" : False})
+
+def obj_dict(obj):
+    return obj.__dict__
+    
 @blueprint.route("/right-content", methods=['GET'])
 def get_journal_content():
     """Render a content of journal."""
@@ -119,17 +154,27 @@ def get_json_schema(item_type_id=0):
     """
     try:
         result = None
+        cur_lang = current_i18n.language
+
         if item_type_id > 0:
-            result = ItemTypes.get_record(item_type_id)
-            if 'filemeta' in json.dumps(result):
-                group_list = Group.get_group_list()
-                group_enum = list(group_list.keys())
-                filemeta_group = result.get('properties').get('filemeta').get(
-                    'items').get('properties').get('groups')
-                filemeta_group['enum'] = group_enum
+            result = ItemTypes.get_by_id(item_type_id)
+
+            if result is None:
+                return '{}'
+            
+            json_schema = result.schema
+            properties = json_schema.get('properties')
+
+            for key, value in properties.items():
+                if 'validationMessage_i18n' in value:
+                    msg = {}
+                    for k, v in value['validationMessage_i18n'].items():
+                        msg[k] = v[cur_lang]
+                    value['validationMessage'] = msg
+
         if result is None:
             return '{}'
-        return jsonify(result)
+        return jsonify(json_schema)
     except:
         current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
     return abort(400)
@@ -179,10 +224,9 @@ def get_schema_form(item_type_id=0):
         current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
     return abort(400)
 
-@blueprint.route('/checkview', methods=['GET'])
+@blueprint.route('/save/kbart', methods=['GET'])
 @login_required
 def check_view(item_type_id=0):
     """Render a check view."""
-    return render_template(
-        'weko_indextree_journal/checkview.html'
-    )
+    result = export_journal_task(p_path = '')
+    return jsonify(result)

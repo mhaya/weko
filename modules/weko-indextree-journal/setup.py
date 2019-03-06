@@ -1,22 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-# This file is part of WEKO3.
-# Copyright (C) 2017 National Institute of Informatics.
+# Copyright (C) 2019 National Institute of Informatics.
 #
-# WEKO3 is free software; you can redistribute it
-# and/or modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# WEKO3 is distributed in the hope that it will be
-# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with WEKO3; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA 02111-1307, USA.
+# WEKO-Indextree-Journal is free software; you can redistribute it and/or
+# modify it under the terms of the MIT License; see LICENSE file for more
+# details.
 
 """Module of weko-indextree-journal."""
 
@@ -38,6 +26,10 @@ tests_require = [
 ]
 
 extras_require = {
+    'celery': [
+        # Needed for building the documentation until v4.2 is released.
+        'celery>=3.1.0,<4.0',
+    ],
     'docs': [
         'Sphinx>=1.5.1',
     ],
@@ -71,11 +63,11 @@ setup(
     version=version,
     description=__doc__,
     long_description=readme + '\n\n' + history,
-    keywords='weko indextree journal',
-    license='GPLv2',
+    keywords='invenio TODO',
+    license='MIT',
     author='National Institute of Informatics',
     author_email='wekosoftware@nii.ac.jp',
-    url='https://github.com/wekosoftware/weko-indextree-journal',
+    url='https://github.com/RCOSDP/weko-indextree-journal',
     packages=packages,
     zip_safe=False,
     include_package_data=True,
@@ -86,9 +78,6 @@ setup(
         ],
         'invenio_base.api_apps': [
             'weko_indextree_journal_rest = weko_indextree_journal:WekoIndextreeJournalREST',
-        ],
-        'invenio_config.module': [
-            'weko_indextree_journal = weko_indextree_journal.config',
         ],
         'invenio_base.blueprints': [
             'weko_indextree_journal = weko_indextree_journal.views:blueprint',
@@ -130,7 +119,7 @@ setup(
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
+        'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
