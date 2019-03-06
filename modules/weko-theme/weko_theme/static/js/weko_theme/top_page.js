@@ -4,7 +4,7 @@ require([
 ], function () {
     $(document).ready(function() {
 
-      $('#author-tab').on('click', function(){
+      $('#workflow-tab').on('click', function(){
         $.ajax({
           url: '/workflow',
           method: 'GET',
