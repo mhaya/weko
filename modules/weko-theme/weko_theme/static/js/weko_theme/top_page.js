@@ -10,8 +10,8 @@ require([
           method: 'GET',
           async: true,
           success: function(data, status) {
-            $('#grid-body-right').html(data);
-  
+            $('#author-body').html(data);
+
           },
           error: function(jqXHR, status) {
             alert('Load chunk format failed.');

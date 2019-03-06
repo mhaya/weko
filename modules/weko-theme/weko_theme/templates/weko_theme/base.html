@@ -236,10 +236,15 @@
 
       <div id="grid-layout" ></div>
     </div>
-    {%- block page_footer %}
-      {% include config.THEME_FOOTER_TEMPLATE %}
-    {%- endblock page_footer %}
 
+    <div class="row" class="col-md-12">
+      {%- block page_footer %}
+        {% include config.THEME_FOOTER_TEMPLATE %}
+      {%- endblock page_footer %}
+    </div>
+    <div class="row" class="col-md-12">
+      <div id="author-body" ></div>
+    </div>
 
 
     {%- endblock body_inner %}
